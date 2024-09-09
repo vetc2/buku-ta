@@ -13,7 +13,446 @@ Sistem akan dibuat dengan \lipsum[1-2]
 \section{Implementasi Alat
   \label{sec:implementasi alat}}
 
-Alat diimplementasikan dengan \lipsum[1]
+Alat diimplementasikan dengan visi komputer yang bertujjuan untuk melakukan kontrol navigasi kursi roda menggunakan YOLOv8-node untuk mendapatkan titik yang menjadi fokus. Secara umum, alur yang digunakan adalah pertama pembuatan dataset, prediksi model YOLOv8, Machine Learning untuk algoritma pembuatab keputusan, Integrasi NUC, dan terakhir dengan navigasi control pada motor kursi roda. Berikut merupakan alur implementasi
+
+\subsection{Bahan dan Peralatan yang Digunakan}
+\label{subsec:bahandanperalatan}
+Berikut ini dijabarkan beberapa Hardware dan juga Software yang digunakan pada penelitian ini sebagai berikut:
+
+\renewcommand{\labelenumi}{\arabic{enumi}.}
+\begin{enumerate}
+  \item Anaconda Navigator
+  \item Arduino IDE
+  \item Laptop
+  \item NUC
+  \item Kamera (Webcam)
+  \item ESP32 Devkit V1
+  \item 2 Kontroller Motor
+  \item 2 DC-DC Voltage Regulator
+  \item 2 DC Motor
+  \item Baterai 24V
+\end{enumerate}
+
+Hardware dan Software tersebut digunakan untuk mendukung proses pengerjaan penelitian yang disesuaikan dengan desain sistem pada gambar. Selanjutnya akan dijabarkan bagaimana metodologi dalam setiap blok dilakukan.
+
+\subsection{Skema Komunikasi Kontrol Kursi Roda}
+
+\begin{figure}[H]
+  \caption{Flowchart Program Kontrol Penggerak Kursi Roda Melalui WiFi}
+  \label{fig:flowchartWiFi}
+  \centering
+  \resizebox{0.8\linewidth}{!}{
+    \begin{tikzpicture}[node distance=2cm]
+      \node (start) [startstop] {Start};
+      \node (pro1a) [process, below of=start] {Masukkan Library Arduino \& WiFi};
+      \node (pro1b) [process, below of=pro1a] {Inisiasi PWM dan Pin};
+      \node (pro1c) [process, below of=pro1b] {Inisiasi Serial, Wifi \& Server};
+      \node (pro1d) [process, below of=pro1c] {Setup PinMode, IedcSetup, IedcAttachPin};
+      \node (a1) [connector, below of=pro1d] {A};
+
+      \node (a2) [connector, right of=start, xshift=3.5cm] {A};
+      \node (dec2a) [decision, below of= a2, yshift=-.5cm] {Perangkat terhubung?};
+      \node (dec2b) [decision, below of=dec2a, yshift=-.5cm] {Data terkirim?};
+      \node (pro2c) [process, below of=dec2b] {Read String sampai terdapat '\textbackslash n'};
+      \node (b1) [connector, below of=pro2c] {B};
+
+      \node (b2) [connector, right of=a2, xshift=3cm] {B};
+      \node (pro3a) [process, below of= b2] {Ekstrak String menjadi Arah dan Kecepatan};
+      \node (pro3b) [process, below of=pro3a, yshift=-.5cm] {Menggerakkan Motor Kursi Roda sesuai dengan Arah dan Kecepatan};
+      \node (stop) [startstop, below of=pro3b, yshift=-1cm] {Stop};
+
+      \draw [arrow] (start) -- (pro1a);
+      \draw [arrow] (pro1a) -- (pro1b);
+      \draw [arrow] (pro1b) -- (pro1c);
+      \draw [arrow] (pro1c) -- (pro1d);
+      \draw [arrow] (pro1d) -- (a1);
+
+      \draw [arrow] (a2) -- (dec2a);
+      \draw [arrow] (dec2a) -- node[anchor=west] {Ya} (dec2b);
+      \draw [arrow] (dec2b) -- node[anchor=west] {Ya} (pro2c);
+      \draw [arrow] (dec2b.west) -- ++(-0.5cm,0) |- node[anchor=south] {Tidak} (dec2a.west);
+      \draw [arrow] (pro2c) -- (b1);
+
+      \draw [arrow] (b2) -- (pro3a);
+      \draw [arrow] (pro3a) -- (pro3b);
+      \draw [arrow] (pro3b.south) -- ++(0,-0.5cm) -- ++(-2.5cm,0) |- (dec2b.east);
+      \draw [arrow] (pro3b) -- (stop);
+    \end{tikzpicture}
+  }
+\end{figure}
+
+\begin{figure}[H]
+  \caption{Flowchart Program Prediksi Python}
+  \label{fig:flowchartPredict}
+  \centering
+  \resizebox{0.8\linewidth}{!}{
+    \begin{tikzpicture}[node distance=2cm]
+      \node (start) [startstop] {Start};
+      \node (pro1a) [process, below of=start] {Masukkan Library Utilitas \& YOLO};
+      \node (pro1b) [process, below of=pro1a] {Inisiasi Model Yolov8n-pose};
+      \node (pro1c) [process, below of=pro1b] {Inisiasi Kamera, Socket, dan Memori};
+      \node (pro1d) [process, below of=pro1c] {Setup Parser dan Webcam};
+      \node (a1) [connector, below of=pro1d] {A};
+
+      \node (a2) [connector, right of=start, xshift=3cm] {A};
+      \node (io2a) [io, below of= a2] {Video Captured};
+      \node (pro2b) [process, below of=io2a] {Produces Results};
+      \node (pro2c) [process, below of=pro2b] {Process Detection};
+      \node (pro2d) [process, below of=pro2c] {Send to Socket};
+      \node (b1) [connector, below of=pro2d] {B};
+
+      \node (b2) [connector, right of=a2, xshift=3.5cm] {B};
+      \node (dec3a) [decision, below of= b2] {quit pressed?};
+      \node (pro3b) [process, below of=dec3a, yshift=-.5cm] {Clean up files and webcam};
+      \node (stop) [startstop, below of=pro3b] {Stop};
+
+      \draw [arrow] (start) -- (pro1a);
+      \draw [arrow] (pro1a) -- (pro1b);
+      \draw [arrow] (pro1b) -- (pro1c);
+      \draw [arrow] (pro1c) -- (pro1d);
+      \draw [arrow] (pro1d) -- (a1);
+
+      \draw [arrow] (a2) -- (io2a);
+      \draw [arrow] (io2a) -- (pro2b);
+      \draw [arrow] (pro2b) -- (pro2c);
+      \draw [arrow] (pro2c) -- (pro2d);
+      \draw [arrow] (pro2d) -- (b1);
+
+      \draw [arrow] (b2) -- (dec3a);
+      \draw [arrow] (dec3a) -- node[anchor=west] {Ya} (pro3b);
+      \draw [arrow] (dec3a.west) -- node[anchor=south] {Tidak} (io2a);
+      \draw [arrow] (pro3b) -- (stop);
+    \end{tikzpicture}
+  }
+\end{figure}
+
+\begin{figure}[H]
+  \caption{Flowchart Program Process Detection}
+  \label{fig:flowchartDetection}
+  \centering
+  \resizebox{0.9\linewidth}{!}{
+    \begin{tikzpicture}[node distance=2cm]
+      \node (start) [startstop] {Start};
+      \node (inp1a) [io, below of=start] {Parameter Results};
+      \node (pro1b) [process, right of=inp1a, xshift=2.5cm] {Inisiasi Tampungan Data};
+      \node (dec1c) [decision, below of=pro1b] {Manual Handle?};
+      \node (pro1d) [process, below of=dec1c, yshift=-.5cm] {Inisiasi Kelas Annotator};
+      \node (a1) [connector, below of=pro1d] {A};
+
+      \node (inp11) [io, left of=dec1c, xshift=-2.5cm] {Joystik/ Keyboard};
+
+      \node (a0) [connector, right of=start, xshift=8cm] {A};
+      \node (pro2a) [process, below of=a0] {Produces Detections};
+      \node (dec2b) [decision, below of=pro2a] {Hasil Deteksi?};
+      \node (pro2c) [process, below of=dec2b, yshift=-.5cm] {Automatic Scan};
+      % \node (b2) [connector, below of=pro2c] {B};
+
+      \node (inp3a) [io, right of=dec2b, xshift=3cm] {'C\textbackslash n'};
+      \node (pro3b) [process, below of=inp3a, yshift=-.5cm] {Masukkan ke Tampungan Data};
+      \node (pro3c) [process, below of=pro3b] {Return data terbanyak};
+      \node (stop) [startstop, below of=pro3c] {Stop}; 
+
+      \draw [arrow] (start) -- (inp1a);
+      \draw [arrow] (inp1a) -- (pro1b);
+      \draw [arrow] (pro1b) -- (dec1c);
+      \draw [arrow] (dec1c) -- node[anchor=east] {Tidak} (pro1d);
+      \draw [arrow] (pro1d) -- (a1);
+      \draw [arrow] (dec1c) -- node[anchor=south] {Ya} (inp11);
+
+      \draw [arrow] (a0) -- (pro2a);
+      \draw [arrow] (pro2a) -- (dec2b);
+      \draw [arrow] (dec2b) -- node[anchor=west] {Ya} (pro2c);
+      \draw [arrow] (dec2b) -- node[anchor=south] {Tidak} (inp3a);
+      \draw [arrow] (pro2c) -- (pro3b);
+
+      \draw [arrow] (inp3a) -- (pro3b);
+      \draw [arrow] (pro3b) -- (pro3c);
+      \draw [arrow] (pro3c) -- (stop);
+    \end{tikzpicture}
+  }
+\end{figure}
+
+\begin{figure}[H]
+  \caption{Flowchart kelas Annotator}
+  \label{fig:flowchartAnnotator}
+  \centering
+  \resizebox{0.9\linewidth}{!}{
+    \begin{tikzpicture}[node distance=2cm]
+      % Nodes
+      \node (start) [startstop] {Mulai};
+      \node (init) [process, below of=start] {Inisialisasi Variabel dan Hardware};
+      \node (getframe) [io2, below of=init] {Ambil Frame dari Kamera};
+      \node (yolodetect) [process, below of=getframe] {Deteksi Objek Menggunakan Yolo};
+      \node (A) [connector, below of=yolodetect] {A};
+      \node (D0) [connector, left of=getframe, xshift=-1.5cm] {D};
+      
+      % First branch
+      \node (A0) [connector, right of=start, xshift=4cm] {A};
+      \node (detecthuman) [decision, below of=A0] {Manusia Terdeteksi?};
+      \node (C) [connector, right of=detecthuman, xshift=1.5cm] {C};
+      \node (mediapipe) [process, below of=detecthuman, yshift=-.5cm] {Proses Hasil Deteksi menggunakan Mediapipe};
+      \node (bbox) [io2, below of=mediapipe] {Menampilkan \textit{bounding box} dan pose};
+      \node (calculate) [process, below of=bbox] {Hitung jarak dan lebar objek};
+      \node (grid) [process, below of=calculate] {Pemetaan Hasil deteksi dalam Grid};
+      \node (B) [connector, below of=grid] {B};
+      
+      % Second branch
+      \node (B0) [connector, right of=A0, xshift=5.5cm] {B};
+      \node (closerthan1m) [decision, below of=B0] {Posisi Manusia \textless 1 meter?};
+      \node (avoid) [process, below of=closerthan1m, yshift=-.5cm] {Menghindar sesuai index arah pada grid};
+      \node (turnback) [io2, below of=avoid] {Berbelok kembali sesuai arah terakhir};
+      \node (detectafterturn) [decision, below of=turnback, yshift=-1cm] {Manusia terdeteksi setelah belok?};
+      \node (D) [connector, below of=detectafterturn, yshift=-1cm] {D};
+      \node (end) [startstop, right of=detectafterturn, xshift=4cm] {Selesai};
+      
+      % Third branch
+      \node (C0) [connector, right of=B0, xshift=4cm] {C};
+      \node (lastturn) [decision, below of=C0, yshift=-1cm] {Nilai Belokan terakhir terisi?};
+      \node (counter) [decision, below of=lastturn, yshift=-1.5cm] {Counter \textgreater 2};
+      \node (setturn) [io, right of=lastturn, xshift=4cm] {Mengirim Perintah Maju};
+      \node (resetturn) [process, right of=counter, xshift=4cm] {Mereset belokan terakhir};
+
+      %central
+      \draw [arrow] (start) -- (init);
+      \draw [arrow] (init) -- (getframe);
+      \draw [arrow] (D0) -- (getframe);
+      \draw [arrow] (getframe) -- (yolodetect);
+      \draw [arrow] (yolodetect) -- (A);
+
+      % First Link
+      \draw [arrow] (A0) -- (detecthuman);
+      \draw [arrow] (detecthuman) -- node[anchor=east] {Ya} (mediapipe);
+      \draw [arrow] (detecthuman) -- node[anchor=south] {Tidak} (C);
+      \draw [arrow] (mediapipe) -- (bbox);
+      \draw [arrow] (bbox) -- (calculate);
+      \draw [arrow] (calculate) -- (grid);
+      \draw [arrow] (grid) -- (B);
+
+      %  Second Link
+      \draw [arrow] (B0) -- (closerthan1m);
+      \draw [arrow] (closerthan1m) -- node[anchor=east] {Ya} (avoid);
+      \draw [arrow] (closerthan1m) -- node[anchor=south] {Tidak} (C);
+      \draw [arrow] (avoid) -- (turnback);
+      \draw [arrow] (turnback) -- (detectafterturn);
+      \draw [arrow] (detectafterturn) -- node[anchor=south] {Tidak} (end);
+      \draw [arrow] (detectafterturn) -- node[anchor=east] {Ya} (D);
+
+      % Third Link
+      \draw [arrow] (C0) -- (lastturn);
+      \draw [arrow] (lastturn) -- node[anchor=south] {Ya} (setturn);
+      \draw [arrow] (lastturn) -- node[anchor=west] {Tidak} (counter);
+      \draw [arrow] (counter) -- node[anchor=south] {Ya} (resetturn);
+      \draw [arrow] (counter) -- node[anchor=south] {Tidak} (turnback);
+      \draw [arrow] (resetturn) -- (setturn);
+    \end{tikzpicture}
+  }
+\end{figure}
+
+% \begin{figure}[H]
+%   \caption{Flowchart tes13}
+%   \centering
+%   \resizebox{0.9\linewidth}{!}{
+%     \begin{tikzpicture}[node distance=2cm]
+
+%       \node (start) [startstop] {Mulai};
+%       \node (initVars) [process, below of=start] {Inisialisasi Variabel dan Hardware};
+%       \node (captureFrame) [process, below of=initVars] {Ambil Frame Video};
+%       \node (checkSuccess) [decision, below of=captureFrame] {Frame Berhasil?};
+%       \node (convertRGB) [process, below of=checkSuccess] {Konversi Frame ke RGB};
+%       \node (yoloInference) [process, below of=convertRGB] {YOLO Inference};
+%       \node (checkBoxes) [decision, below of=yoloInference] {Deteksi Objek?};
+%       \node (processBox) [process, below of=checkBoxes] {Proses Bounding Box};
+%       \node (A) [connector, below of=processBox] {A};
+
+%       \node (A0) [connector, right of=start, xshift=4cm] {A};
+%       \node (mediapipeProcessing) [process, below of=A0] {Proses dengan MediaPipe};
+%       \node (calcDirection) [process, below of=mediapipeProcessing] {Hitung Arah dan Jarak};
+%       \node (checkSocket) [decision, below of=calcDirection] {Socket Berhasil?};
+%       \node (controlWheelchair) [process, below of=checkSocket] {Kirim Data ke Kursi Roda};
+%       \node (logCSV) [process, below of=controlWheelchair] {Simpan Log ke CSV};
+%       \node (B) [connector, left of=checkBoxes, xshift=-1.5cm] {B};
+%       \node (display) [process, below of=logCSV] {Gambar Arah pada Frame};
+%       \node (endLoop) [decision, below of=display] {Tombol 'q' Ditekan?};
+%       \node (C) [connector, right of=endLoop, xshift=1.5cm] {C};
+%       \node (end) [startstop, below of=endLoop] {Selesai};
+
+%       \node (B0) [connector, right of=A0, xshift=3cm] {B};
+%       \node (searchPerson) [process, below of=B0] {Mencari Manusia};
+      
+%       % \draw [arrow] (start) -- (initVars);
+%       % \draw [arrow] (initVars) -- (captureFrame);
+%       % \draw [arrow] (captureFrame) -- (checkSuccess);
+%       % \draw [arrow] (checkSuccess) -- node[anchor=east] {Ya} (convertRGB);
+%       % \draw [arrow] (convertRGB) -- (yoloInference);
+%       % \draw [arrow] (yoloInference) -- (checkBoxes);
+%       % \draw [arrow] (checkBoxes) -- node[anchor=east] {Ya} (processBox);
+
+%       % \draw [arrow] (mediapipeProcessing) -- (calcDirection);
+%       % \draw [arrow] (calcDirection) -- (checkSocket);
+%       % \draw [arrow] (checkSocket) -- node[anchor=east] {Ya} (controlWheelchair);
+%       % \draw [arrow] (controlWheelchair) -- (logCSV);
+%       % \draw [arrow] (logCSV) -- (display);
+%       % \draw [arrow] (display) -- (endLoop);
+%       % \draw [arrow] (endLoop) -- node[anchor=south] {Tidak} (C);
+%       % \draw [arrow] (endLoop) -- node[anchor=west] {Ya} (end);
+      
+%       % \draw [arrow] (checkSuccess) -- node[anchor=south] {Tidak} +(3,0) -- +(3,-10) -- (end);
+%       % \draw [arrow] (checkBoxes) -- node[anchor=south] {Tidak} (B);
+%       % \draw [arrow] (searchPerson) |- (calcDirection);
+%       % \draw [arrow] (checkSocket.west) -- node[anchor=north] {Tidak} +(-1.17,0) -- +(-1.17,-10) -- (end);
+
+%     \end{tikzpicture}
+%   }
+% \end{figure}
+
+\begin{figure}[H]
+\caption{Flowchart tes13}
+\centering
+\resizebox{0.9\linewidth}{!}{
+  \begin{tikzpicture}[node distance=2cm]
+    \node (start) [startstop] {Mulai};
+    \node (initVars) [process, below of=start] {Inisialisasi Variabel dan Hardware};
+    \node (captureFrame) [io, below of=initVars] {Ambil Frame dari Kamera};
+    \node (yoloDetect) [process, below of=captureFrame] {Deteksi Objek Menggunakan Yolo};
+    \node (A) [connector, below of=yoloDetect] {A};
+    \node (C0) [connector, left of=initVars, xshift=-1.5cm, yshift=-1cm] {C};
+
+    \node (A0) [connector, right of=start, xshift=4.5cm] {A};
+    \node (checkBoxes) [decision, below of=A0] {Deteksi Objek?};
+    \node (processBox) [process, below of=checkBoxes] {Proses Bounding Box};
+    \node (trackingID) [process, below of=processBox] {Proses Tracking ID};
+    \node (mediapipeProcessing) [process, below of=trackingID] {Deteksi Landmark Pose pada MediaPipe};
+    \node (B) [connector, below of=mediapipeProcessing, xshift=1.5cm] {B};
+
+    \node (B0) [connector, right of=A0, xshift=3.5cm] {B};
+    \node (calcDirection) [process, below of=B0] {Proses Kalkulasi Arah dan Jarak};
+    \node (controlWheelchair) [io, below of=calcDirection] {Kirim Data ke Kursi Roda};
+    \node (display) [io, below of=controlWheelchair] {Gambar Arah pada Frame};
+    \node (endLoop) [decision, below of=display, yshift=-.5cm] {Tombol 'q' Ditekan?};
+    \node (C) [connector, right of=endLoop, xshift=1cm, yshift=-1.5cm] {C};
+    \node (end) [startstop, below of=endLoop, yshift=-1cm] {Selesai};
+
+    \node (searchPerson) [process, below of=mediapipeProcessing, xshift=-3cm] {Memuat Arah dan Jarak Sebelumnya};
+    
+    \draw [arrow] (start) -- (initVars);
+    \draw [arrow] (initVars) -- (captureFrame);
+    \draw [arrow] (captureFrame) -- (yoloDetect);
+    \draw [arrow] (yoloDetect) -- (A);
+    \draw [arrow] (C0) |- (captureFrame);
+
+    \draw [arrow] (A0) -- (checkBoxes);
+    \draw [arrow] (checkBoxes) -- node[anchor=west] {Ya} (processBox);
+    \draw [arrow] (processBox) -- (trackingID);
+    \draw [arrow] (trackingID) -- (mediapipeProcessing);
+    \draw [arrow] (mediapipeProcessing) -- +(0,-2cm);
+
+    \draw [arrow] (B0) -- (calcDirection);
+    \draw [arrow] (calcDirection) -- (controlWheelchair);
+    \draw [arrow] (controlWheelchair) -- (display);
+    \draw [arrow] (display) -- (endLoop);
+    \draw [arrow] (endLoop) -| node[anchor=south east] {Tidak} (C);
+    \draw [arrow] (endLoop) -- node[anchor=west] {Ya} (end);
+    
+    \draw [arrow] (checkBoxes) -| node[anchor=south west] {Tidak} (searchPerson);
+    \draw [arrow] (searchPerson) -- (B);
+  \end{tikzpicture}
+}
+\end{figure}
+
+\begin{figure}[H]
+  \caption{Flowchart tes14}
+  \centering
+  \resizebox{0.9\linewidth}{!}{
+  \begin{tikzpicture}[node distance=2cm]
+
+    \node (start) [startstop] {Mulai};
+    \node (getCurrentTime) [io, below of=start] {Ambil Waktu\\Saat ini};
+    \node (checkSocket) [decision, below of=getCurrentTime, yshift=-.5cm] {Socket Tersedia?};
+    \node (checkData) [decision, below of=checkSocket, yshift=-1cm] {Arah Tersedia?};
+    \node (A) [connector, below of=checkData, xshift=-2.5cm] {A};
+    \node (B) [connector, below of=checkData, xshift=2.5cm] {B};
+
+    \node (A0) [connector, right of=start, xshift=5.5cm] {A};
+    \node (setTime) [process, below of=A0] {Penanda berada dalam \emph{delay} yang ditentukan};
+    \node (compareData) [decision, below of=setTime, yshift=-.5cm] {Arah Berubah?};
+    \node (sendC) [io, below of=compareData, xshift=2.5cm] {Kirim 'C\textbackslash n' \\ke Socket};
+    \node (setSentFalse) [process, below of=sendC] {Penanda Belum dikirim};
+    \node (C) [connector, below of=setSentFalse, xshift=-5cm, yshift=1cm] {C};
+
+    \node (B0) [connector, right of=A0, xshift=3cm] {B};
+
+    \node (C0) [connector, right of=B0, xshift=3cm] {C};
+    \node (setData) [process, below of=C0] {Simpan Arah untuk referensi selanjutnya};
+    \node (checkInterval) [decision, below of=setData, yshift=-.5cm] {Sudah dikirim \(\lor\) \emph{delay}?};
+    \node (sendData) [io, below of=checkInterval, xshift=3cm] {Kirim Arah \\ke Socket};
+    \node (setSentTrue) [process, below of=sendData] {Penanda \\Sudah dikirim};
+    \node (end) [startstop, below of=setSentTrue, xshift=-6cm, yshift=-1cm] {Selesai};
+    
+    \draw [arrow] (start) -- (getCurrentTime);
+    \draw [arrow] (getCurrentTime) -- (checkSocket);
+    \draw [arrow] (checkSocket) -- node[anchor=east] {Ya} (checkData);
+    \draw [arrow] (checkData) -| node[anchor=north west] {Ya} (A);
+    \draw [arrow] (checkData) -| node[anchor=north east] {Tidak} (B);
+
+    \draw [arrow] (A0) -- (setTime);
+    \draw [arrow] (setTime) -- (compareData);
+    \draw [arrow] (compareData) -| node[anchor=north east] {Ya} (sendC);
+    \draw [arrow] (sendC) -- (setSentFalse);
+    \draw [arrow] (compareData) -| node[anchor=north west] {Tidak} (C);
+    \draw [arrow] (setSentFalse.west) -- +(-2.8cm,0);
+
+    \draw [arrow] (C0) -- (setData);
+    \draw [arrow] (setData) -- (checkInterval);
+    \draw [arrow] (checkInterval) -| node[anchor=north east] {Tidak} (sendData);
+    \draw [arrow] (checkInterval) -| node[anchor=north west] {Ya} (end);
+    \draw [arrow] (sendData) -- (setSentTrue);
+    \draw [arrow] (setSentTrue.south) |- +(-6cm,-1.5cm);
+
+    \draw [arrow] (B0) |- +(5cm,-3cm);
+    \draw [arrow] (checkSocket.east) -| node[anchor=north east] {Tidak} +(2cm,0) |-  +(12.7cm,-6.05cm);
+  
+  \end{tikzpicture}
+  }
+\end{figure}
+
+\begin{figure}[H]
+  \caption{Flowchart tes14}
+  \centering
+  \resizebox{0.9\linewidth}{!}{
+  \begin{tikzpicture}[node distance=2cm]
+    \node (start) [startstop] {Mulai};
+    \node (import) [process, right of=start, xshift=3cm] {Inisialisasi Arduino, WiFi, PWM dan Pin};
+    \node (init) [process, right of=start, xshift=8.5cm, yshift=.55cm] {Menyambungkan Serial WiFi dan Server};
+    \node (setup) [process, right of=start, xshift=8.5cm, yshift=-.55cm] {Setup PinMode, ledcSetup, ledcAttachPin};
+    
+    \node (device) [decision, right of=setup, xshift=4cm, yshift=-1.5cm] {Perangkat terhubung?};
+    \node (stop) [startstop, right of=device, xshift=3cm] {Selesai};
+    
+    \node (getMsg) [decision, below of=start, yshift=-2cm] {Pesan Diterima?};
+    \node (checkN) [process, right of=getMsg, xshift=3cm, yshift=.58cm] {Read String sampai terdapat '\textbackslash n'};
+    \node (extract) [process, right of=getMsg, xshift=3cm, yshift=-.58cm] {Ekstrak String menjadi Arah dan Kecepatan};
+    \node (move) [io2, right of=getMsg, xshift=8.5cm] {Menggerakkan Motor Kursi Roda};    
+
+
+    \draw [arrow] (start) -- (import);
+    \draw [arrow] (import) -- +(3.3cm,0);
+
+    \draw [arrow] (getMsg.east) -- node[anchor=south] {Ya} +(1cm,0);
+    \draw [arrow] (extract.east) |- (move);
+
+    \draw [arrow] (setup) -- +(0,0.58cm) -| +(3cm,-1.5cm);
+    \draw [arrow] (move) -| +(3cm,2cm);
+    \draw [arrow] (getMsg) |- node[anchor=north west] {Tidak} (device);
+
+    \draw [arrow] (device) -- node[anchor=west] {Ya} +(0,-4cm) -| (getMsg);
+    \draw [arrow] (device) -- node[anchor=south] {Tidak} (stop);
+
+    % \draw [arrow] (getMsg) -- node[anchor=west] {Tidak} (stop);
+
+  \end{tikzpicture}
+  }
+\end{figure}
+
 
 % Contoh pembuatan potongan kode
 \begin{lstlisting}[

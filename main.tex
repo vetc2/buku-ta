@@ -21,20 +21,37 @@
 \usepackage[table,xcdraw]{xcolor}
 
 % Pengaturan kutipan artikel
-\usepackage[style=apa, backend=biber]{biblatex}
+\usepackage[style=ieee, backend=biber]{biblatex}
 
 % Package lainnya
 \usepackage{changepage}
 \usepackage{enumitem}
 \usepackage{eso-pic}
-\usepackage{txfonts} % Font times
 \usepackage{etoolbox}
 \usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage{txfonts} % Font times
 \usepackage{lipsum}
 \usepackage{longtable}
 \usepackage{tabularx}
 \usepackage{wrapfig}
 \usepackage{float}
+
+\usepackage{tikz}
+\usepackage{relsize}
+\usetikzlibrary{shapes.geometric, arrows}
+
+\tikzstyle{startstop} = [ellipse, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=red!30]
+\tikzstyle{connector} = [circle, minimum width=1cm, minimum height=1cm, text centered, draw=black, fill=green!30]
+\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=1.5cm, minimum height=1cm, 
+                  text centered, text width=2.5cm, draw=black, fill=blue!30]
+\tikzstyle{io2} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=1.5cm, minimum height=1cm, 
+                  text centered, text width=4cm, draw=black, fill=blue!30]
+\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, text width=4cm, draw=black, fill=orange!30]
+\tikzstyle{decision} = [diamond, aspect=2, minimum width=3cm,  minimum height=1cm, inner sep=0, text centered, text width=3cm, draw=black, fill=yellow!30]
+\tikzstyle{arrow} = [thick,->,>=stealth]
 
 % Definisi untuk "Hati ini sengaja dikosongkan"
 \patchcmd{\cleardoublepage}{\hbox{}}{
