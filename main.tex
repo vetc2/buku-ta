@@ -43,15 +43,34 @@
 \usepackage{relsize}
 \usetikzlibrary{shapes.geometric, arrows}
 
-\tikzstyle{startstop} = [ellipse, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=red!30]
-\tikzstyle{connector} = [circle, minimum width=1cm, minimum height=1cm, text centered, draw=black, fill=green!30]
-\tikzstyle{io} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=1.5cm, minimum height=1cm, 
-                  text centered, text width=2.5cm, draw=black, fill=blue!30]
-\tikzstyle{io2} = [trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=1.5cm, minimum height=1cm, 
-                  text centered, text width=4cm, draw=black, fill=blue!30]
-\tikzstyle{process} = [rectangle, minimum width=3cm, minimum height=1cm, text centered, text width=4cm, draw=black, fill=orange!30]
-\tikzstyle{decision} = [diamond, aspect=2, minimum width=3cm,  minimum height=1cm, inner sep=0, text centered, text width=3cm, draw=black, fill=yellow!30]
-\tikzstyle{arrow} = [thick,->,>=stealth]
+\tikzset{
+  person/.style={
+    minimum height=1.6cm, text centered, append after command={
+      \pgfextra{
+        \draw[thick, fill=green!30] (\tikzlastnode.north) circle (0.4cm);
+        \draw[thick] (\tikzlastnode.north) ++(0,-0.4) -- ++(0,-0.8) -- ++(-0.4,-0.4); % Tubuh dan kaki kiri
+        \draw[thick] (\tikzlastnode.north) ++(0,-0.4) -- ++(0,-0.8) -- ++(0.4,-0.4);  % Tubuh dan kaki kanan
+        \draw[thick] (\tikzlastnode.north) ++(0,-0.4) -- ++(-0.4,-0.4); % Tangan kiri
+        \draw[thick] (\tikzlastnode.north) ++(0,-0.4) -- ++(0.4,-0.4);  % Tangan kanan
+      }
+    }
+  },
+  motor/.style={
+    draw, inner sep=0pt, append after command={
+      \pgfextra{
+        \draw[thick] (\tikzlastnode.south west) -- (\tikzlastnode.south east)
+                    -- ++(0.5,1.5) -- ++(-3,0) -- cycle; % Menggambar trapesium manual
+      }
+    }
+  },
+  startstop/.style={ellipse, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=red!30},
+  connector/.style={circle, minimum width=1cm, minimum height=1cm, text centered, draw=black, fill=green!30},
+  io/.style={trapezium, trapezium left angle=70, trapezium right angle=110, minimum width=1.5cm, minimum height=1cm, 
+                text centered, text width=2.5cm, draw=black, fill=blue!30},
+  process/.style={rectangle, minimum width=3cm, minimum height=1cm, text centered, text width=4cm, draw=black, fill=orange!30},
+  decision/.style={diamond, aspect=2, minimum width=3cm, minimum height=1cm, inner sep=0, text centered, text width=3cm, draw=black, fill=yellow!30},
+  arrow/.style={thick,->,>=stealth}
+}
 
 % Definisi untuk "Hati ini sengaja dikosongkan"
 \patchcmd{\cleardoublepage}{\hbox{}}{
