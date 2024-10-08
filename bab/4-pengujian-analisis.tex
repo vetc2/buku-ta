@@ -3,31 +3,104 @@
 
 % Ubah bagian-bagian berikut dengan isi dari pengujian dan analisis
 
-Pada penelitian ini dipaparkan \lipsum[1][1-5]
+Pada penelitian ini dipaparkan skenario pengujian yang dilakukan, termasuk kondisi lingkungan pengujian, perangkat keras dan perangkat lunak yang digunakan, serta parameter-parameter yang diuji. Informasi detail mengenai konfigurasi dan prosedur pengujian disajikan agar hasil pengujian dapat direplikasi dengan konsisten.
 
-\section{Skenario Pengujian}
-\label{sec:skenariopengujian}
+\section{Hasil Pengujian Performa Menggunakan Confusion Matrix}
+\label{sec:hasilperformaconfisionMatrix}
 
-Pengujian dilakukan dengan \lipsum[1-2]
+Bagian ini membahas hasil pengujian performa deteksi objek menggunakan Confusion Matrix. Nilai seperti True Positive, True Negative, False Positive, dan False Negative dianalisis untuk menilai akurasi dan efektivitas deteksi.
 
-\section{Evaluasi Pengujian}
-\label{sec:analisispengujian}
+\section{Pengujian Berdasarkan FPS}
+\label{sec:pengujianberdasarkanfps}
 
-Dari pengujian yang \lipsum[1]
+Pengujian ini dilakukan untuk menganalisis kecepatan pemrosesan sistem dalam satuan Frame per Second (FPS). FPS yang tinggi menunjukkan bahwa sistem dapat bekerja dengan baik secara real-time. Grafik hasil pengujian disertakan untuk memudahkan visualisasi performa.
 
-% Contoh pembuatan tabel
-\begin{longtable}{|c|c|c|}
-  \caption{Hasil Pengukuran Energi dan Kecepatan}
-  \label{tb:EnergiKecepatan}                                   \\
-  \hline
-  \rowcolor[HTML]{C0C0C0}
-  \textbf{Energi} & \textbf{Jarak Tempuh} & \textbf{Kecepatan} \\
-  \hline
-  10 J            & 1000 M                & 200 M/s            \\
-  20 J            & 2000 M                & 400 M/s            \\
-  30 J            & 4000 M                & 800 M/s            \\
-  40 J            & 8000 M                & 1600 M/s           \\
-  \hline
-\end{longtable}
+\section{Pengujian Berdasarkan Response Time}
+\label{sec:pengujianberdasarkanresponsetime}
 
-\lipsum[2-4]
+Bagian ini mengukur waktu yang dibutuhkan sistem untuk merespons setiap perubahan lingkungan atau perintah yang diterima. Response Time sangat penting untuk mengukur responsivitas sistem dalam skenario dinamis.
+
+\section{Pengujian Kesesuaian Jarak Deteksi}
+\label{sec:pengujiankesesuaianjarakdeteksi}
+
+Pengujian dilakukan untuk mengukur kemampuan sistem dalam mendeteksi objek pada berbagai jarak, yaitu 150 cm, 100 cm, dan 50 cm. Setiap subbagian akan menjelaskan hasil pengujian dan menganalisis performa sistem pada jarak-jarak tersebut.
+
+\subsection{Pengujian Kesesuaian Jarak Deteksi 150 cm}
+\label{sec:pengujiankesesuaianjarakdeteksi150cm}
+
+Hasil pengujian pada jarak 150 cm dianalisis untuk melihat kemampuan deteksi pada jarak jauh.
+
+\subsection{Pengujian Kesesuaian Jarak Deteksi 100 cm}
+\label{sec:pengujiankesesuaianjarakdeteksi100cm}
+
+Pada jarak 100 cm, sistem diuji untuk mengetahui seberapa baik model bekerja pada jarak menengah.
+
+\subsection{Pengujian Kesesuaian Jarak Deteksi 50 cm}
+\label{sec:pengujiankesesuaianjarakdeteksi50cm}
+
+Pengujian pada jarak 50 cm menunjukkan kemampuan deteksi pada jarak dekat dan tantangan yang mungkin dihadapi.
+
+\section{Performa Keberhasilan Tracking}
+\label{sec:performakeberhasiltracking}
+
+Bagian ini mengevaluasi keberhasilan sistem dalam melakukan tracking terhadap objek target. Tingkat keberhasilan dianalisis untuk mengetahui keandalan sistem dalam berbagai skenario.
+
+\section{Performa Akurasi Mengikuti Objek}
+\label{sec:performaakurasiobjek}
+
+Analisis dilakukan untuk mengukur seberapa akurat sistem dapat mengikuti objek target, termasuk mempertahankan jarak yang tepat dan tidak kehilangan objek dalam berbagai kondisi.
+
+\section{Performa Keberhasilan Mengikuti saat Belok Kiri}
+\label{sec:performabelokkiri}
+
+Bagian ini membahas kemampuan sistem dalam mengikuti objek saat berbelok ke kiri. Tantangan yang dihadapi dan solusi yang diterapkan diuraikan.
+
+\section{Performa Keberhasilan Mengikuti saat Belok Kanan}
+\label{sec:performabelokkanan}
+
+Bagian ini membahas kemampuan sistem dalam mengikuti objek saat berbelok ke kanan, mirip dengan bagian sebelumnya.
+
+\section{Performa Keberhasilan Mengikuti Lajur Khusus}
+\label{sec:performalajurkhusus}
+
+Bagian ini menguji apakah sistem dapat mengikuti objek pada lajur khusus, seperti jalur sempit atau berbelok yang membutuhkan manuver khusus.
+
+\section{Pembahasan Hasil}
+\label{sec:pembahasanhasil}
+
+Bagian ini membahas hasil-hasil pengujian secara keseluruhan dan memberikan insight mengenai performa sistem.
+
+\subsection{Performa Deteksi Objek}
+\label{sec:performadeteksiobjek}
+
+Bagian ini menjelaskan kekuatan dan kelemahan deteksi objek yang ditemukan selama pengujian.
+
+\subsection{Kecepatan Pemrosesan (FPS)}
+\label{sec:kecepatanpemrosesan}
+
+Menganalisis kecepatan pemrosesan secara keseluruhan dan pengaruhnya terhadap performa sistem real-time.
+
+\subsection{Response Time}
+\label{sec:responsetime}
+
+Membahas hasil pengujian response time dan faktor-faktor yang mempengaruhi waktu respons.
+
+\subsection{Kesesuaian Jarak Deteksi}
+\label{sec:kesesuaianjarak}
+
+Diskusi tentang performa sistem dalam mendeteksi objek pada berbagai jarak yang telah diuji.
+
+\subsection{Performa Keberhasilan Tracking}
+\label{sec:performatracking}
+
+Membahas tingkat keberhasilan sistem dalam melacak objek dan kondisi yang mempengaruhi performa.
+
+\subsection{Performa Akurasi Mengikuti Objek}
+\label{sec:akurasiikutiobjek}
+
+Evaluasi akurasi dalam mengikuti objek target, termasuk kondisi yang dapat menyebabkan kegagalan.
+
+\subsection{Performa Keberhasilan Mengikuti}
+\label{sec:keberhasilanmengikuti}
+
+Menguraikan keberhasilan sistem dalam mengikuti objek saat menghadapi belokan dan lajur khusus.

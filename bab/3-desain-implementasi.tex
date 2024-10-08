@@ -14,7 +14,7 @@ Pada tahap ini, kursi roda otonom dikembangkan untuk dapat mengikuti manusia men
 Sistem ini terdiri dari:
 
 \begin{enumerate}[nolistsep]
-    \item \textbf{Anaconda Navigator}: Digunakan sebagai lingkungan pengembangan untuk menjalankan kode terkait YOLOv8 dan analisis lainnya.
+    \item \textbf{VS Code}: Digunakan sebagai lingkungan pengembangan untuk menjalankan kode terkait YOLOv8 dan analisis lainnya.
     \item \textbf{Arduino IDE}: Mengembangkan dan mengunggah kode ke ESP32 yang mengendalikan motor dan sensor.
     \item \textbf{Laptop}: Berfungsi sebagai pusat pemrosesan data yang lebih kompleks dan pengembangan perangkat lunak.
     \item \textbf{Kamera (OV5640 5MP)}: Menangkap gambar lingkungan secara real-time dan mendeteksi target (manusia) menggunakan YOLOv8.
@@ -36,11 +36,100 @@ Arsitektur sistem dirancang agar kamera menangkap gambar secara terus-menerus, k
 Desain perangkat keras melibatkan integrasi antara beberapa komponen yang disebutkan sebelumnya. Kamera dipasang di bagian depan kursi roda untuk mendapatkan sudut pandang optimal terhadap target. Mikroprosesor ESP32 ditempatkan di bagian bawah kursi roda bersama dengan driver motor dan baterai untuk menjaga keseimbangan.
 
 \begin{itemize}[nolistsep]
-    \item \textbf{Laptop}: Digunakan sebagai pusat pemrosesan utama untuk menjalankan YOLOv8 dan menganalisis hasil deteksi. Laptop ini juga berfungsi untuk mengembangkan perangkat lunak dan melatih model menggunakan Anaconda Navigator.
-    \item \textbf{Kamera OV5640}: Kamera ini terhubung ke ESP32 untuk melakukan streaming video dengan resolusi lebih tinggi karena menggunakan sensor 5MP, yang memungkinkan pengenalan target lebih akurat. Posisi kamera memungkinkan pengenalan target secara optimal ketika pengguna bergerak.
-    \item \textbf{ESP32 sebagai Pengontrol}: ESP32 bertindak sebagai otak dari kursi roda otonom. Perangkat ini menerima data dari kamera dan kemudian menjalankan algoritma YOLOv8 untuk mendeteksi target, lalu mengirim sinyal kontrol ke driver motor.
+    \item \textbf{Unit Kontrol}: Unit Kontrol seperti komputer atau laptop digunakan sebagai pusat pemrosesan utama untuk menjalankan YOLOv8 dan mediapipe, menganalisis hasil deteksi dan menghasilkan keputusan berupa kode instruksi.
+    \item \textbf{Kamera OV5640}: Kamera ini terhubung ke ESP32 untuk menangkap frame dengan menggunakan sensor 5MP.
+    \item \textbf{ESP32}: Microcontroller ini menerima data dari kamera dan kemudian menjalankan algoritma untuk diproses pada komputer, lalu mengirim sinyal kontrol ke driver motor.
     \item \textbf{Driver Motor L298N}: Driver ini digunakan untuk mengontrol kecepatan dan arah putaran motor DC yang menggerakkan kursi roda.
 \end{itemize}
+
+\subsection{Laptop}
+\label{subsec:laptop}
+Pada sistem ini, unit kontrol utama yang digunakan adalah laptop pribadi akan berperan sebagai pengolah data utama selama pengujian. Laptop ini memiliki spesifikasi yang dirancang untuk menangani beban komputasi tinggi yang cocok untuk pengolahan data secara real-time seperti pada tabel.Pada sistem ini, unit kontrol utama yang digunakan adalah laptop pribadi yang berperan sebagai pengolah data utama selama pengujian. Laptop ini memiliki spesifikasi yang dirancang untuk menangani beban komputasi tinggi, sangat cocok untuk pengolahan data secara real-time, sebagaimana ditunjukkan pada tabel.
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|l|l|}
+  \hline
+  \textbf{Komponen}       & \textbf{Spesifikasi}                     \\ \hline
+  Model Laptop            & MSI GF63                                 \\ \hline
+  Prosesor                & Intel Core i7-10750H, 6 core, 12 threads \\ \hline
+  GPU                     & NVIDIA RTX 3050                          \\ \hline
+  RAM                     & 16GB DDR4, 3200 MHz                      \\ \hline
+  Penyimpanan             & SSD M.2                                  \\ \hline
+  Konektivitas WiFi       & WiFi 802.11ac (MU-MIMO)                  \\ \hline
+  Pengolahan Data         & Inferensi model, ESP dan Python (venv)   \\ \hline
+  \end{tabular}
+  \caption{Spesifikasi Laptop MSI GF63 untuk Unit Kontrol}
+\end{table}
+
+Salah satu aspek penting dari unit kontrol dalam proyek ini adalah dukungan WiFi yang cepat dan stabil dalam komunikasi antar perangkat. Sistem bergantung pada data video yang dikirim oleh kamera OV5640 melalui ESP32 ke laptop untuk diolah, dan proses ini harus berlangsung tanpa hambatan. Konektivitas WiFi yang disediakan oleh laptop ini memungkinkan pengiriman data dalam waktu nyata dengan minim latensi, yang sangat penting untuk deteksi target secara cepat.
+
+Kemampuan untuk menjaga kestabilan koneksi WiFi pada jarak yang lebih jauh dari router juga penting dalam pengujian di area yang luas. Laptop ini mampu menangani beberapa perangkat yang terhubung secara simultan, memungkinkan komunikasi yang efisien antara ESP32 tanpa penurunan performa. Teknologi ini sangat penting untuk memastikan bahwa laptop dapat terus memproses data video yang dikirimkan oleh kamera dan memberikan instruksi dengan respons yang cepat.
+
+\subsection{Kamera}
+\label{subsec:kamera}
+Kamera yang digunakan dalam sistem ini adalah OV5640, sebuah sensor kamera CMOS (Complementary Metal-Oxide-Semiconductor) dengan resolusi 5 megapiksel (MP). Sensor ini memiliki kemampuan menangkap gambar hingga resolusi maksimum 2592x1944 piksel, yang memberikan hasil citra dengan detail yang sangat baik. Sensor ini mendukung pengambilan gambar dan video secara real-time, dengan frame rate mencapai 30 frame per detik (fps) pada resolusi 1080p, sehingga ideal untuk aplikasi yang memerlukan pengolahan citra secara langsung.
+
+Selain resolusinya yang tinggi, OV5640 juga dilengkapi dengan berbagai fitur canggih untuk pengolahan gambar otomatis. Berdasarkan datasheet, fitur seperti auto white balance, auto exposure, dan auto focus memungkinkan kamera ini beradaptasi secara otomatis terhadap perubahan kondisi pencahayaan dan jarak, sehingga tetap menghasilkan gambar berkualitas tinggi dalam berbagai situasi. OV5640 juga mendukung fitur face detection dan image scaling, yang sangat berguna dalam mendeteksi objek atau target manusia secara cepat dan akurat.
+
+\subsection{ESP32}
+\label{subsec:ESP32}
+ESP32 akan menerima data arah dari hasil klasifikasi deteksi manusia dalam bentuk karakter huruf seperti A, B, C, D, atau E. Berdasarkan penelitian sebelumnya, proses penerimaan data string oleh ESP32 dari perangkat yang terhubung sangat penting untuk kelancaran sistem.
+
+Setelah data diterima dan disimpan, string tersebut diekstrak menjadi informasi tentang arah dan kecepatan. Tahap ekstraksi ini krusial untuk mengubah string menjadi format yang dapat digunakan oleh program dalam mengendalikan motor kursi roda. Data yang telah diekstrak kemudian ditampilkan untuk memastikan bahwa arah dan kecepatan yang diterima sesuai dengan yang diharapkan. Dengan informasi arah dan kecepatan yang sudah siap, ESP32 dapat mengirimkan instruksi ke motor kursi roda agar bergerak sesuai dengan data yang diterima. Proses ini akan terus berulang selama perangkat tetap terhubung dan data terus mengalir.
+
+Untuk memberikan pemahaman yang lebih jelas mengenai instruksi yang diterima dari hasil klasifikasi deteksi manusia, berikut disajikan kode instruksi yang digunakan dalam program ini:
+\begin{table}[H]
+\centering
+\caption{Kode Instruksi dari Hasil Klasifikasi}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Klasifikasi Pose} & \textbf{Kode Instruksi} \\
+\hline
+Kiri & A \\
+\hline
+Maju & B \\
+\hline
+Stop & C \\
+\hline
+Mundur & D \\
+\hline
+Kanan & E \\
+\hline
+\end{tabular}
+\end{table}
+
+Kode instruksi tersebut digunakan untuk mengarahkan motor kursi roda sesuai dengan deteksi yang dilakukan oleh model klasifikasi YOLOv8. Misalnya, jika arah yang terdeteksi adalah "Kiri", maka kode instruksi 'A' akan dikirim untuk menggerakkan kursi roda ke kiri. Demikian pula, jika terdeteksi arah "Maju", instruksi 'B' akan dikirim untuk menggerakkan kursi roda maju. Kode 'C' digunakan untuk menghentikan kursi roda saat terdeteksi "Stop", 'D' untuk bergerak mundur ketika terdeteksi "Mundur", dan 'E' untuk bergerak ke kanan saat terdeteksi "Kanan".
+
+Program ini memastikan bahwa ESP32 berfungsi secara efektif sebagai server yang menerima data dari NUC dan menggunakannya untuk mengendalikan motor kursi roda. Dengan langkah-langkah yang telah dijelaskan, program ini dirancang untuk berjalan secara kontinu tanpa henti, menunggu dan memproses data yang dikirim oleh perangkat yang terhubung.
+
+\subsection{Driver Motor L298N}
+\label{subsec:drivermotor}
+Driver motor yang digunakan dalam sistem ini adalah L298N, yang berperan penting dalam pengendalian motor DC pada kursi roda. Driver ini berfungsi sebagai perantara antara mikrokontroler dan motor, dengan menerima sinyal kontrol dari ESP32 dan meneruskannya ke motor. Penggunaan driver L298N memungkinkan sinyal digital diubah menjadi sinyal yang dapat diterima oleh motor, sehingga motor dapat beroperasi sesuai dengan instruksi yang diberikan.
+
+Driver L298N mampu mengendalikan dua motor DC secara simultan dengan fitur pengaturan kecepatan dan arah putaran motor. Driver ini bekerja dengan prinsip rangkaian H-Bridge, yang memungkinkan perubahan arah arus untuk mengatur rotasi motor maju atau mundur. Selain itu, L298N dilengkapi dengan fitur pengaturan kecepatan melalui teknik Pulse Width Modulation (PWM), yang memberikan kendali yang lebih akurat terhadap kecepatan motor. Dengan fitur ini, kursi roda dapat bergerak maju, mundur, berbelok, atau berhenti sesuai instruksi yang diterima.
+
+\subsection{Skematik Alat}
+\label{subsec:skematikalat}
+
+Dari penelitian yang telah dilakukan, telah dirancang sebuah sistem kontrol untuk motor kursi roda dengan skematik alat yang ditampilkan pada Gambar \ref{fig:Skematik Kontrol motor Kursi roda.}. ESP32 akan terhubung dengan dua buah H-Bridge Motor Driver dan sebuah DC-DC Converter. Setiap H-Bridge Motor Driver terhubung langsung ke motor roda kiri dan motor roda kanan untuk menggerakkan roda kursi roda secara efektif. Dalam skematik ini, ESP32 berfungsi sebagai otak dari sistem, mengirimkan sinyal kontrol ke motor driver berdasarkan data yang diterima melalui koneksi WiFi. \parencite{ekatama2024perancangan}
+
+Dalam penelitian ini, digunakan dua metode kontrol untuk menggerakkan kursi roda. Metode pertama adalah differential drive, ketika kursi roda berbelok ke kanan, roda kanan akan bergerak mundur dan berbelok ke kiri, sedangkan roda kiri bergerak maju dan berbelok ke kanan. Sebaliknya, ketika berbelok ke kiri, roda kiri akan bergerak mundur dan berbelok ke kanan, sedangkan roda kanan bergerak maju dan berbelok ke kiri. Metode kedua adalah pergerakan biasa, ketika kursi roda berbelok ke kanan, roda kanan akan diam sedangkan roda kiri bergerak maju dan berbelok ke kanan, dan sebaliknya untuk berbelok ke kiri. Saat bergerak maju atau mundur, kedua roda bergerak secara bersamaan ke arah yang diinginkan. Untuk penelitian kali ini, metode kedua digunakan untuk menggerakkan roda pada kursi roda.
+
+Dengan demikian, program ini memastikan bahwa ESP32 dapat berfungsi secara efektif sebagai pengontrol motor kursi roda. Setiap langkah dalam flowchart dirancang untuk memastikan bahwa sistem dapat berjalan secara efisien dan responsif terhadap perintah yang diterima melalui jaringan WiFi. Sistem ini dirancang untuk beroperasi secara real-time, memberikan respon cepat terhadap perubahan perintah, dan mengendalikan kursi roda secara akurat berdasarkan data yang diterima.
+
+Skematik yang ditampilkan memberikan gambaran yang jelas mengenai alur kerja dan koneksi perangkat keras yang digunakan dalam sistem kontrol ini. Dengan penjelasan yang mendetail, setiap aspek dari sistem ini dapat dipahami dengan baik, memastikan implementasi yang tepat dan operasi yang efisien dari kursi roda yang dikendalikan secara otonom. \parencite{ekatama2024perancangan}
+
+\begin{figure}[H]
+  \centering
+
+  % Ubah dengan nama file gambar dan ukuran yang akan digunakan
+  \includegraphics[scale=0.3]{gambar/Schematics.png}
+
+  % Ubah dengan keterangan gambar yang diinginkan
+  \caption{Skematik kontrol motor kursi roda}
+  \label{fig:Skematik Kontrol motor Kursi roda.}
+\end{figure}
 
 \section{Perangkat Lunak}
 \label{sec:perangkatlunak}
@@ -49,7 +138,7 @@ Perangkat lunak yang digunakan dalam sistem ini terdiri dari beberapa modul, yan
 
 \begin{itemize}[nolistsep]
     \item \textbf{Algoritma Deteksi YOLOv8}: YOLOv8 digunakan untuk mendeteksi manusia dalam gambar yang ditangkap oleh kamera. Model ini dilatih untuk mengenali bentuk dan posisi manusia sehingga kursi roda dapat mengikuti target dengan tepat.
-    \item \textbf{Estimasi Pose MediaPipe}: MediaPipe digunakan untuk mendeteksi landmark tubuh manusia setelah objek terdeteksi menggunakan YOLOv8. Framework ini dipilih karena kemampuannya dalam mendeteksi keypoints pada tubuh manusia dengan akurasi tinggi, bahkan dalam kondisi pencahayaan yang beragam.
+    \item \textbf{Estimasi Pose MediaPipe}: MediaPipe digunakan untuk mendeteksi landmark tubuh manusia setelah objek terkunci. Framework ini dipilih karena kemampuannya dalam mendeteksi keypoints pada tubuh manusia dengan akurasi tinggi, bahkan dalam kondisi pencahayaan yang beragam.
     \item \textbf{Komunikasi Data}: Sistem menggunakan protokol MQTT untuk mengirimkan data antara ESP32 yang terhubung ke kamera dan unit kontrol utama.
     \item \textbf{Kontrol Motor}: Modul kontrol motor diimplementasikan pada ESP32 untuk mengatur arah dan kecepatan motor berdasarkan posisi target yang terdeteksi.
 \end{itemize}
@@ -116,7 +205,7 @@ Pemrosesan citra dilakukan untuk meningkatkan kualitas gambar yang diambil dari 
 \subsubsection{3.3.5.1 Pembuatan Tracking ID untuk Mengunci Target}
 \label{subsubsec:tracking_id}
 
-Sistem menggunakan YOLOv8 untuk mendeteksi target manusia dalam frame, dan kemudian memberikan ID unik pada setiap objek yang terdeteksi. Tracking ID ini digunakan untuk mengidentifikasi dan melacak individu yang sama pada frame berikutnya, sehingga kursi roda dapat terus mengikuti target meskipun ada pergerakan dalam frame. Algoritma ini membantu kursi roda untuk tetap fokus pada target yang sama selama proses pelacakan.
+Sistem ini memanfaatkan Ultralytics YOLO untuk mendeteksi target manusia dalam setiap frame, lalu memberikan ID unik pada setiap objek yang terdeteksi. ID tersebut berfungsi untuk mengidentifikasi dan melacak individu yang sama pada frame berikutnya, memungkinkan untuk terus mengikuti target meskipun terjadi pergerakan dalam frame. Deteksi yang akurat dan pemberian ID ini sangat penting agar kursi roda dapat merespons secara tepat terhadap perubahan posisi target.
 
 \subsubsection{3.3.5.2 Keputusan untuk Bergerak Maju}
 \label{subsubsec:keputusan_bergerak_maju}
@@ -136,14 +225,14 @@ Sebaliknya, jika target bergerak ke arah kanan dan keluar dari batas tengah fram
 \subsubsection{3.3.5.5 Keputusan Jika Target Menghilang dari Frame}
 \label{subsubsec:keputusan_target_menghilang}
 
-Apabila target menghilang dari frame, sistem akan mencari target berdasarkan posisi terakhir yang terdeteksi. Jika target tidak ditemukan dalam jangka waktu tertentu, kursi roda akan berhenti untuk menghindari pergerakan yang tidak diinginkan. Namun, jika ada target baru yang terdeteksi di frame, sistem akan membuat tracking ID baru dan melanjutkan pelacakan terhadap target tersebut. Sistem akan menunggu hingga target muncul kembali dalam frame atau mendeteksi target baru untuk melanjutkan pelacakan. Pendekatan ini memastikan bahwa kursi roda tidak bergerak tanpa arah yang jelas ketika target tidak terlihat.
+Apabila target menghilang dari frame, sistem akan mencari target berdasarkan posisi terakhir yang terdeteksi. Jika ada target baru yang terdeteksi di frame, sistem akan membuat tracking ID baru dan melanjutkan pelacakan terhadap target tersebut. Sistem akan menunggu hingga target muncul kembali dalam frame atau mendeteksi target baru untuk melanjutkan pelacakan. Pendekatan ini memastikan bahwa kursi roda bergerak sesuai arah terakhir ketika target tidak terlihat.
 
 \subsection{Komunikasi Data}
 \label{subsec:komunikasi_data}
 
-Pada sistem ini, komunikasi data dilakukan menggunakan protokol MQTT. MQTT adalah protokol yang ringan dan ideal untuk aplikasi yang membutuhkan pengiriman data secara efisien dan real-time. Dalam proyek ini, MQTT digunakan untuk mengirimkan data antara ESP32 yang terhubung dengan kamera dan unit kontrol utama yang bertanggung jawab atas analisis data dan kontrol motor. Protokol ini memungkinkan ESP32 dan unit kontrol utama untuk bertukar informasi secara cepat, yang sangat penting dalam memastikan bahwa kursi roda dapat bereaksi terhadap perubahan posisi target dengan segera.
+Pada sistem ini, komunikasi data dilakukan menggunakan kombinasi WiFi dan ESP-NOW. WiFi digunakan untuk membangun Access Point pada ESP32 yang terhubung dengan kamera, memungkinkan streaming video real-time ke unit kontrol melalui jaringan lokal. Stream ini dapat diakses melalui server HTTP di port 81, di mana data video dari kamera diproses oleh unit kontrol untuk deteksi target.
 
-Kamera yang terhubung ke ESP32 menangkap gambar secara real-time dan mengirimkannya ke unit kontrol melalui server WiFi. Data dari kamera, setelah diolah oleh YOLOv8, dikirim ke unit kontrol untuk analisis lebih lanjut melalui MQTT. ESP32 lainnya, yang berfungsi sebagai pengontrol motor, juga menerima instruksi melalui MQTT untuk menentukan pergerakan yang sesuai. Dengan menggunakan MQTT, sistem dapat memelihara komunikasi yang cepat dan stabil, memastikan bahwa seluruh komponen bekerja secara sinkron.
+Selain itu, ESP-NOW digunakan untuk pengiriman data secara langsung antara dua perangkat ESP32. Data yang diterima dari port 80 oleh ESP32 yang terhubung dengan kamera dikirimkan ke ESP32 lainnya (yang mengendalikan motor) melalui ESP-NOW. Protokol ini memungkinkan pertukaran data dengan latensi rendah tanpa memerlukan koneksi internet atau router eksternal. Dengan kombinasi ini, sistem dapat mempertahankan komunikasi yang cepat dan stabil, memastikan kursi roda dapat merespons pergerakan target secara real-time.
 
 \subsection{Kontrol Motor}
 \label{subsec:kontrol_motor}
@@ -157,9 +246,9 @@ Motor dikendalikan melalui sinyal PWM (Pulse Width Modulation) yang dihasilkan o
 
 Kode program yang digunakan dalam penelitian ini dimulai dengan inisialisasi variabel dan perangkat keras yang diperlukan, termasuk mengaktifkan kamera untuk menangkap gambar secara real-time. Setelah gambar diperoleh, algoritma YOLOv8 digunakan untuk mendeteksi keberadaan manusia dalam frame tersebut. Jika manusia terdeteksi, program melanjutkan dengan mengidentifikasi bounding box dan memberi label pada objek, yang kemudian digunakan untuk melacak objek tersebut di frame berikutnya. Setelah itu, framework MediaPipe diimplementasikan untuk mendeteksi landmark tubuh, seperti bahu, siku, dan pergelangan tangan, yang memungkinkan sistem memperoleh pose manusia secara lebih rinci.
 
-\begin{figure}[!ht]
+\begin{figure}[H]
   \centering
-  \resizebox{0.9\linewidth}{!}{
+  \resizebox{0.8\linewidth}{!}{
     \begin{tikzpicture}[node distance=2cm]
       \node (start) [startstop] {Mulai};
       \node (initVars) [process, below of=start] {Inisialisasi Variabel dan Hardware};
@@ -213,7 +302,7 @@ Kode program yang digunakan dalam penelitian ini dimulai dengan inisialisasi var
 
 Program kemudian menghitung arah dan jarak target, yang digunakan untuk menentukan instruksi pergerakan kursi roda. Instruksi tersebut dikirimkan ke ESP32, yang mengendalikan motor kursi roda untuk mengikuti manusia secara otomatis. Selain itu, arah pergerakan digambarkan pada frame video yang ditampilkan sebagai bentuk visualisasi dari proses yang sedang berjalan. Program akan terus melakukan loop, menangkap gambar baru, memproses deteksi, dan mengirimkan perintah hingga pengguna menekan tombol 'q' untuk mengakhiri program.
 
-\begin{figure}[!ht]
+\begin{figure}[H]
   \centering
   \resizebox{0.9\linewidth}{!}{
   \begin{tikzpicture}[node distance=2cm]
@@ -252,7 +341,7 @@ Program kemudian menghitung arah dan jarak target, yang digunakan untuk menentuk
     \draw [arrow] (compareData) -| node[anchor=north east] {Ya} (sendC);
     \draw [arrow] (sendC) -- (setSentFalse);
     \draw [arrow] (compareData) -| node[anchor=north west] {Tidak} (C);
-    \draw [arrow] (setSentFalse.west) -- +(-2.5cm,0);
+    \draw [arrow] (setSentFalse.west) -- +(-2.9cm,0);
 
     \draw [arrow] (C0) -- (setData);
     \draw [arrow] (setData) -- (checkInterval);
@@ -271,18 +360,73 @@ Program kemudian menghitung arah dan jarak target, yang digunakan untuk menentuk
 
 Regulasi arah kursi roda dilakukan melalui pengiriman data arah ke socket yang berhubungan dengan ESP32. Program mengecek apakah socket tersedia dan apakah data arah berubah, serta menetapkan penanda untuk menghindari pengiriman data yang berulang. Sebelum arah diubah, data 'C\textbackslash n' dikirim terlebih dahulu untuk memastikan kursi roda berhenti dan stabil sebelum menerima instruksi arah baru. Hal ini penting untuk mencegah gerakan yang tidak diinginkan atau perubahan arah yang terlalu mendadak. Setiap kali arah berubah setelah berhenti, data baru akan dikirim ke socket untuk mengontrol motor kursi roda.
 
-\begin{figure}[t]
+Untuk ESP32 CAM, sistem dimulai dengan inisialisasi kamera yang terhubung ke ESP32. Langkah pertama adalah pengaturan kamera agar siap menangkap gambar lingkungan secara real-time. Kamera yang digunakan adalah OV5640 dengan resolusi 5MP, yang memungkinkan pengambilan gambar berkualitas tinggi untuk deteksi yang lebih akurat.
+
+\begin{figure}[H]
   \centering
-  \resizebox{0.9\linewidth}{!}{
+  \resizebox{0.7\linewidth}{!}{
+  \begin{tikzpicture}[node distance=2cm]
+    \node (start) [startstop] {Mulai};
+    \node (camera) [process, below of=start] {Inisialisasi Kamera};
+    \node (wifi) [process, below of=camera] {Set Wi-Fi sebagai Access Point dan Station};
+    \node (server) [process, below of=wifi] {Mulai Wifi Server di port 80 dan 81};
+    \node (espNow) [process, below of=server] {Inisialisasi ESP-NOW dengan Peer ESP B};
+    \node (A) [connector, below of=espNow, xshift=3cm] {A};
+
+    \node (A0) [connector, right of=start, xshift=4cm] {A};
+    \node (stream) [decision, below of=A0, text width=2cm] {Stream Terhubung?};
+    \node (peer) [io, below of=stream, text width=4.5cm] {Stream frame via 192.168.4.1:81/stream};
+    \node (client) [decision, below of=peer, text width=2cm] {Client Terhubung?};
+    \node (readData) [process, right of=client, xshift=3cm] {Baca Data dari Client di port 80};
+    \node (sendESPNow) [io, below of=readData, text width=3cm] {Kirim Data via ESP-NOW};
+    \node (clientStop) [process, below of=client] {Client Terputus};
+
+    \node (stop) [startstop, right of=stream, xshift=3cm] {Selesai};
+
+    % Arrows
+    \draw [arrow] (start) -- (camera);
+    \draw [arrow] (camera) -- (wifi);
+    \draw [arrow] (wifi) -- (server);
+    \draw [arrow] (server) -- (espNow);
+    \draw [arrow] (espNow) |- ++(0,-1cm) -| (A);
+
+    \draw [arrow] (A0) -- (stream);
+    \draw [arrow] (stream) -- node[anchor=south] {Tidak} (stop);
+    \draw [arrow] (stream) -- node[anchor=east] {Ya} (peer);
+    \draw [arrow] (peer) -- (client);
+
+    \draw [arrow] (client) -- node[anchor=north] {Ya} (readData);
+    \draw [arrow] (client) -- node[anchor=east] {Tidak} (clientStop);
+    \draw [arrow] (readData) -- (sendESPNow);
+    \draw [arrow] (sendESPNow) -- (clientStop);
+    \draw [arrow] (clientStop) |- ++(0,-1cm) -| (A);
+  \end{tikzpicture}
+  }
+  \caption{Flowchart ESP A}
+\end{figure}
+
+Setelah inisialisasi kamera, sistem kemudian mengatur ESP32 untuk berfungsi sebagai WiFi Access Point. Pengaturan ini memungkinkan ESP32 menciptakan jaringan WiFi yang dapat digunakan untuk berkomunikasi dengan perangkat lain. Server WiFi diatur pada port 80 untuk menerima permintaan data dan port 81 untuk melakukan streaming data video secara real-time. Dengan streaming ini, gambar yang ditangkap oleh kamera dapat langsung diakses dan dianalisis oleh unit kontrol.
+
+Setelah WiFi dan server diinisialisasi, ESP-NOW digunakan untuk komunikasi antara kedua ESP32. ESP-NOW adalah protokol komunikasi peer-to-peer yang memungkinkan transmisi data antar perangkat ESP32 tanpa memerlukan jaringan WiFi eksternal. Hal ini sangat penting karena memungkinkan komunikasi data yang cepat dan efisien antara ESP32 yang terhubung ke kamera (ESP32 A) dan ESP32 yang bertanggung jawab atas kontrol motor (ESP32 B). ESP-NOW memiliki latensi rendah, sehingga sangat cocok untuk aplikasi real-time seperti ini.
+
+Dengan menggunakan protokol ESP-NOW, data yang ditangkap oleh kamera pada ESP32 A dapat langsung diteruskan ke ESP32 B tanpa keterlambatan. Protokol ini juga lebih hemat daya dibandingkan menggunakan jaringan WiFi umum, sehingga sangat cocok untuk aplikasi mobile seperti kursi roda otonom. Kombinasi dari server WiFi untuk streaming data dan ESP-NOW untuk transmisi instruksi memastikan bahwa sistem dapat mengirim dan menerima data dengan cepat, menjaga kursi roda tetap sinkron dengan pergerakan target manusia.
+
+Selain itu, penggunaan server WiFi memungkinkan unit kontrol (seperti komputer atau laptop) mengakses data gambar secara langsung melalui jaringan lokal. Hal ini sangat berguna untuk menganalisis gambar secara lebih rinci dan mengambil keputusan kontrol yang lebih kompleks, seperti perubahan arah atau kecepatan kursi roda berdasarkan posisi target dalam frame. Dengan demikian, proses ini memberikan fleksibilitas yang tinggi dalam mengatur pergerakan kursi roda berdasarkan data yang diperoleh dari kamera.
+
+Frame yang ditangkap oleh kamera dikirim melalui alamat IP tertentu yang juga digunakan dalam kode program Python untuk melakukan streaming data. Data arah yang diterima dari client kemudian diteruskan ke ESP32 B melalui ESP-NOW untuk mengontrol kursi roda. Sistem ini dirancang untuk memastikan komunikasi yang cepat dan handal antara ESP32 A dan ESP32 B, sehingga kursi roda dapat merespons pergerakan target dengan tepat.
+
+\begin{figure}[H]
+  \centering
+  \resizebox{0.7\linewidth}{!}{
   \begin{tikzpicture}[node distance=2cm]
     % Nodes
     \node (start) [startstop] {Mulai};
     \node (init) [process, below of=start] {Inisialisasi Arduino, WiFi, PWM dan Pin};
     \node (connect) [process, below of=init] {Menyambungkan Serial WiFi dan Server};
     \node (setup) [process, below of=connect] {Setup PinMode, ledc-Setup, ledcAttachPin};
-    \node (A) [connector, below of=setup, xshift=2cm, yshift=-.5cm] {A};
+    \node (A) [connector, below of=setup, xshift=3cm, yshift=-.5cm] {A};
 
-    \node (A0) [connector, right of=start, xshift=3cm] {A};
+    \node (A0) [connector, right of=start, xshift=4cm] {A};
     \node (connected?) [decision, below of=A0, text width=2cm] {Perangkat Terhubung?};
     \node (msg?) [decision, below of=connected?, yshift=-.5cm] {Pesan Diterima?};
 
@@ -302,7 +446,7 @@ Regulasi arah kursi roda dilakukan melalui pengiriman data arah ke socket yang b
     \draw [arrow] (connected?) -- node[anchor=east] {Ya} (msg?);
     \draw [arrow] (connected?) -- node[anchor=south] {Tidak} (stop);
     \draw [arrow] (msg?) -- node[anchor=south] {Ya} (readstr);
-    \draw [arrow] (msg?.west) -| node[anchor=north west] {Tidak} ++(-.5,0) |- (connected?);
+    \draw [arrow] (msg?.west) -| node[anchor=north west] {Tidak} (A);
     \draw [arrow] (readstr) -- (extract);
     \draw [arrow] (extract) -- (move);
     \draw [arrow] (move.south) |- ++(0,-.5) -| (A);
@@ -311,79 +455,4 @@ Regulasi arah kursi roda dilakukan melalui pengiriman data arah ke socket yang b
   \caption{Flowchart ESP B}
 \end{figure}
 
-Untuk ESP32 CAM, sistem dimulai dengan inisialisasi kamera dan pengaturan WiFi sebagai Access Point. Server WiFi kemudian dijalankan pada port 80 dan 81 untuk melakukan streaming data secara real-time. Setelah konfigurasi ini, ESP-NOW digunakan untuk komunikasi antara kedua ESP32, yang memungkinkan transmisi data tanpa harus terhubung ke jaringan WiFi eksternal.
-
-Frame yang ditangkap oleh kamera dikirim melalui alamat IP tertentu, yaitu `http://192.168.4.1:81/stream`, yang juga digunakan dalam kode program Python untuk melakukan streaming data. Data arah yang diterima dari client kemudian diteruskan ke ESP32 B melalui ESP-NOW untuk mengontrol kursi roda. Sistem ini dirancang untuk memastikan komunikasi yang cepat dan handal antara ESP32 A dan ESP32 B, sehingga kursi roda dapat merespons pergerakan target dengan tepat.
-
-\begin{figure}[!ht]
-  \centering
-  \resizebox{0.9\linewidth}{!}{
-  \begin{tikzpicture}[node distance=2cm]
-    \node (start) [startstop] {Mulai};
-    \node (camera) [process, below of=start] {Inisialisasi Kamera};
-    \node (wifi) [process, below of=camera] {Set Wi-Fi sebagai Access Point dan Station};
-    \node (server) [process, below of=wifi] {Mulai Wifi Server di port 80 dan 81};
-    \node (espNow) [process, below of=server] {Inisialisasi ESP-NOW dengan Peer ESP B};
-    \node (A) [connector, below of=espNow] {A};
-
-    \node (A0) [connector, right of=start, xshift=4cm] {A};
-    \node (stream) [decision, below of=A0, text width=2cm] {Stream Terhubung?};
-    \node (peer) [io, below of=stream, text width=4.5cm] {Stream frame via 192.168.4.1:81/stream};
-    \node (client) [decision, below of=peer, text width=2cm] {Client Terhubung?};
-    \node (readData) [process, right of=client, xshift=3cm] {Baca Data dari Client di port 80};
-    \node (sendESPNow) [io, below of=readData, text width=3cm] {Kirim Data via ESP-NOW};
-    \node (clientStop) [process, below of=client] {Client Terputus};
-    \node (A1) [connector, below of=clientStop] {A};
-
-    \node (stop) [startstop, right of=stream, xshift=3cm] {Selesai};
-
-    % Arrows
-    \draw [arrow] (start) -- (camera);
-    \draw [arrow] (camera) -- (wifi);
-    \draw [arrow] (wifi) -- (server);
-    \draw [arrow] (server) -- (espNow);
-    \draw [arrow] (espNow) -- (A);
-
-    \draw [arrow] (A0) -- (stream);
-    \draw [arrow] (stream) -- (peer);
-    \draw [arrow] (peer) -- (client);
-
-    \draw [arrow] (client) -- node[anchor=north] {Ya} (readData);
-    \draw [arrow] (client) -- node[anchor=east] {Tidak} (clientStop);
-    \draw [arrow] (readData) -- (sendESPNow);
-    \draw [arrow] (sendESPNow) -- (clientStop);
-    \draw [arrow] (clientStop) -- (A1);
-  \end{tikzpicture}
-  }
-  \caption{Flowchart ESP A}
-\end{figure}
-
 Pada sisi ESP32 Motor, perangkat dimulai dengan inisialisasi berbagai komponen, seperti PWM, WiFi, dan pin untuk mengendalikan motor. Setelah terhubung ke WiFi, ESP32 B menunggu pesan dari server yang berfungsi sebagai pusat kendali. Jika pesan diterima, string yang mengandung informasi arah dan kecepatan akan diekstrak, kemudian diolah untuk menentukan pergerakan motor kursi roda. Sistem menggunakan data ini untuk mengatur arah dan kecepatan motor, yang memastikan kursi roda dapat mengikuti target secara akurat dan responsif. Proses ini dilakukan secara berulang untuk setiap update data yang diterima, memungkinkan kursi roda menyesuaikan gerakan dengan perubahan posisi target secara real-time.
-
-
-
-
-% Contoh pembuatan potongan kode
-\begin{lstlisting}[
-  language=C++,
-  caption={Program halo dunia.},
-  label={lst:halodunia}
-]
-#include <iostream>
-
-int main() {
-    std::cout << "Halo Dunia!";
-    return 0;
-}
-\end{lstlisting}
-
-\lipsum[2-3]
-
-% Contoh input potongan kode dari file
-\lstinputlisting[
-  language=Python,
-  caption={Program perhitungan bilangan prima.},
-  label={lst:bilanganprima}
-]{program/bilangan-prima.py}
-
-\lipsum[4]
