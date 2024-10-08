@@ -13,7 +13,7 @@ Pada tahap ini, kursi roda otonom dikembangkan untuk dapat mengikuti manusia men
 
 Sistem ini terdiri dari:
 
-\begin{itemize}
+\begin{enumerate}[nolistsep]
     \item \textbf{Anaconda Navigator}: Digunakan sebagai lingkungan pengembangan untuk menjalankan kode terkait YOLOv8 dan analisis lainnya.
     \item \textbf{Arduino IDE}: Mengembangkan dan mengunggah kode ke ESP32 yang mengendalikan motor dan sensor.
     \item \textbf{Laptop}: Berfungsi sebagai pusat pemrosesan data yang lebih kompleks dan pengembangan perangkat lunak.
@@ -23,7 +23,7 @@ Sistem ini terdiri dari:
     \item \textbf{2 DC-DC Voltage Regulator}: Mengatur tegangan untuk komponen elektronik agar tetap stabil.
     \item \textbf{2 Motor DC}: Menggerakkan kursi roda, dikontrol melalui driver motor yang menerima sinyal dari mikroprosesor.
     \item \textbf{Baterai 24V}: Sebagai sumber daya utama untuk keseluruhan sistem, termasuk mikroprosesor, motor, dan perangkat lainnya.
-\end{itemize}
+\end{enumerate}
 
 \subsection{Arsitektur Sistem}
 \label{subsec:arsitektursistem}
@@ -35,7 +35,7 @@ Arsitektur sistem dirancang agar kamera menangkap gambar secara terus-menerus, k
 
 Desain perangkat keras melibatkan integrasi antara beberapa komponen yang disebutkan sebelumnya. Kamera dipasang di bagian depan kursi roda untuk mendapatkan sudut pandang optimal terhadap target. Mikroprosesor ESP32 ditempatkan di bagian bawah kursi roda bersama dengan driver motor dan baterai untuk menjaga keseimbangan.
 
-\begin{itemize}
+\begin{itemize}[nolistsep]
     \item \textbf{Laptop}: Digunakan sebagai pusat pemrosesan utama untuk menjalankan YOLOv8 dan menganalisis hasil deteksi. Laptop ini juga berfungsi untuk mengembangkan perangkat lunak dan melatih model menggunakan Anaconda Navigator.
     \item \textbf{Kamera OV5640}: Kamera ini terhubung ke ESP32 untuk melakukan streaming video dengan resolusi lebih tinggi karena menggunakan sensor 5MP, yang memungkinkan pengenalan target lebih akurat. Posisi kamera memungkinkan pengenalan target secara optimal ketika pengguna bergerak.
     \item \textbf{ESP32 sebagai Pengontrol}: ESP32 bertindak sebagai otak dari kursi roda otonom. Perangkat ini menerima data dari kamera dan kemudian menjalankan algoritma YOLOv8 untuk mendeteksi target, lalu mengirim sinyal kontrol ke driver motor.
@@ -47,7 +47,7 @@ Desain perangkat keras melibatkan integrasi antara beberapa komponen yang disebu
 
 Perangkat lunak yang digunakan dalam sistem ini terdiri dari beberapa modul, yang meliputi:
 
-\begin{itemize}
+\begin{itemize}[nolistsep]
     \item \textbf{Algoritma Deteksi YOLOv8}: YOLOv8 digunakan untuk mendeteksi manusia dalam gambar yang ditangkap oleh kamera. Model ini dilatih untuk mengenali bentuk dan posisi manusia sehingga kursi roda dapat mengikuti target dengan tepat.
     \item \textbf{Estimasi Pose MediaPipe}: MediaPipe digunakan untuk mendeteksi landmark tubuh manusia setelah objek terdeteksi menggunakan YOLOv8. Framework ini dipilih karena kemampuannya dalam mendeteksi keypoints pada tubuh manusia dengan akurasi tinggi, bahkan dalam kondisi pencahayaan yang beragam.
     \item \textbf{Komunikasi Data}: Sistem menggunakan protokol MQTT untuk mengirimkan data antara ESP32 yang terhubung ke kamera dan unit kontrol utama.
@@ -73,11 +73,11 @@ Fitur augmentasi data juga disediakan untuk menambah variasi pada dataset. Augme
 
 Dalam proses klasifikasi, setiap citra yang telah melalui proses labeling dikenali dengan menggunakan YOLOv8 yang telah dilatih untuk mendeteksi manusia pada citra. Model ini mampu mendeteksi keberadaan manusia secara akurat dan real-time, memungkinkan sistem untuk mengidentifikasi target dengan efisien. Setiap citra diproses oleh model YOLOv8, yang kemudian memberikan output berupa bounding box dan confidence score yang menunjukkan keberadaan manusia serta keyakinan model terhadap deteksi tersebut. Proses ini dilakukan secara real-time, memungkinkan sistem untuk memberikan umpan balik langsung ke kontrol kursi roda berdasarkan deteksi manusia dalam gambar.
 
-Model YOLOv8 yang digunakan memiliki output kelas utama yaitu manusia. Model ini menghasilkan bounding box, yang menunjukkan area lokasi objek, dan confidence score untuk memberikan keyakinan deteksi. Algoritma YOLOv8 menggunakan Convolutional Neural Network (CNN) sebagai basisnya, yang berfungsi untuk mengekstraksi fitur dari gambar input, lalu memprediksi bounding box dan kelas objek langsung dari gambar tersebut. Proses ini diilustrasikan pada Gambar \ref{fig:Arsitektur YoloV8}, yang menunjukkan blok diagram arsitektur model YOLOv8.
+Model YOLOv8 yang digunakan memiliki output kelas utama yaitu manusia. Model ini menghasilkan bounding box, yang menunjukkan area lokasi objek, dan confidence score untuk memberikan keyakinan deteksi. Algoritma YOLOv8 menggunakan Convolutional Neural Network (CNN) sebagai basisnya, yang berfungsi untuk mengekstraksi fitur dari gambar input, lalu memprediksi bounding box dan kelas objek langsung dari gambar tersebut. Proses ini diilustrasikan pada Gambar, yang menunjukkan blok diagram arsitektur model YOLOv8.
 
 YOLOv8 terdiri dari beberapa lapisan, antara lain Conv2D (Convolutional 2D), Blok C2f, Blok SPPF (Spatial Pyramid Pooling Fast), lapisan Upsampling, dan lapisan Concatenate. Setiap lapisan ini memiliki peran tertentu dalam memproses gambar, mengekstraksi fitur, dan membuat prediksi yang tepat. Lapisan Conv2D digunakan untuk mengekstraksi fitur dari gambar input, sementara Blok C2f dan SPPF membantu dalam pemrosesan informasi dari berbagai skala untuk menangkap detail yang lebih baik. Lapisan Upsampling digunakan untuk meningkatkan resolusi fitur, sementara lapisan Concatenate menggabungkan berbagai informasi dari jalur yang berbeda untuk membuat representasi yang lebih kuat.
 
-Gambar \ref{fig:Arsitektur YoloV8 VisualKeras} menunjukkan setiap jenis lapisan dalam YOLOv8 dengan warna yang berbeda, seperti lapisan Conv2D yang ditampilkan dalam warna biru, Blok C2f dengan warna kuning, lapisan SPPF dengan warna hijau muda, lapisan Upsampling dengan warna merah muda, dan lapisan Concatenate dengan warna ungu. Visualisasi ini membantu memahami bagaimana model YOLOv8 memproses gambar dan bagaimana setiap lapisan berkontribusi dalam menghasilkan bounding box dan prediksi kelas yang akurat. Selain itu, input dan output dari setiap lapisan dapat dilihat pada Gambar \ref{fig:YoloV8 IO}, yang menggambarkan detail dari tiap proses pemrosesan dalam model YOLOv8.
+Gambar menunjukkan setiap jenis lapisan dalam YOLOv8 dengan warna yang berbeda, seperti lapisan Conv2D yang ditampilkan dalam warna biru, Blok C2f dengan warna kuning, lapisan SPPF dengan warna hijau muda, lapisan Upsampling dengan warna merah muda, dan lapisan Concatenate dengan warna ungu. Visualisasi ini membantu memahami bagaimana model YOLOv8 memproses gambar dan bagaimana setiap lapisan berkontribusi dalam menghasilkan bounding box dan prediksi kelas yang akurat. Selain itu, input dan output dari setiap lapisan dapat dilihat pada Gambar, yang menggambarkan detail dari tiap proses pemrosesan dalam model YOLOv8.
 
 Lapisan deteksi pada YOLOv8 menghasilkan output yang mencakup bounding box dan confidence score untuk manusia yang terdeteksi, yang kemudian digunakan sebagai acuan dalam sistem untuk mengikuti target. Model ini dioptimalkan untuk dapat mengenali manusia dengan berbagai posisi dan kondisi pencahayaan, sehingga kursi roda dapat beradaptasi dengan pergerakan target dalam berbagai situasi secara efektif.
 
@@ -88,7 +88,7 @@ Pada penelitian ini, pose manusia dideteksi menggunakan Python dengan library Op
 
 Proses deteksi diawali dengan inisialisasi kamera yang menangkap frame secara real-time. Setelah frame diterima, dilakukan pra-pengolahan seperti konversi gambar ke skala abu-abu untuk mengurangi kompleksitas dan meningkatkan kecepatan deteksi. Gambar yang telah dipra-pengolah tersebut kemudian diproses oleh model MediaPipe untuk mendeteksi pose.
 
-Dalam penelitian ini, beberapa landmark yang dipilih untuk analisis adalah titik-titik pada siku, lengan bawah, dan bahu kanan serta kiri. Pemilihan titik-titik ini didasarkan pada visibilitas dan konsistensi dalam proses deteksi. Tabel \ref{tab:keypoints} menampilkan nomor dan nama keypoint yang digunakan dalam estimasi pose:
+Dalam penelitian ini, beberapa landmark yang dipilih untuk analisis adalah titik-titik pada siku, lengan bawah, dan bahu kanan serta kiri. Pemilihan titik-titik ini didasarkan pada visibilitas dan konsistensi dalam proses deteksi. Tabel menampilkan nomor dan nama keypoint yang digunakan dalam estimasi pose:
 
 \begin{table}[H]
 \centering
@@ -113,28 +113,28 @@ Setelah landmark diperoleh, jarak antar titik pada piksel dihitung. Pengukuran i
 
 Pemrosesan citra dilakukan untuk meningkatkan kualitas gambar yang diambil dari kamera dan mempermudah deteksi objek. Langkah-langkah pemrosesan citra meliputi konversi warna, penghilangan noise, dan pemfilteran tepi untuk menyorot bagian-bagian penting dari gambar.
 
-\subsection{Pembuatan Tracking ID untuk Mengunci Target}
-\label{subsec:tracking_id}
+\subsubsection{3.3.5.1 Pembuatan Tracking ID untuk Mengunci Target}
+\label{subsubsec:tracking_id}
 
 Sistem menggunakan YOLOv8 untuk mendeteksi target manusia dalam frame, dan kemudian memberikan ID unik pada setiap objek yang terdeteksi. Tracking ID ini digunakan untuk mengidentifikasi dan melacak individu yang sama pada frame berikutnya, sehingga kursi roda dapat terus mengikuti target meskipun ada pergerakan dalam frame. Algoritma ini membantu kursi roda untuk tetap fokus pada target yang sama selama proses pelacakan.
 
-\subsection{Keputusan untuk Bergerak Maju}
-\label{subsec:keputusan_bergerak_maju}
+\subsubsection{3.3.5.2 Keputusan untuk Bergerak Maju}
+\label{subsubsec:keputusan_bergerak_maju}
 
 Setelah target terdeteksi dan tracking ID dibuat, sistem akan menghitung jarak antara kursi roda dengan target. Jika jarak target berada dalam kisaran yang aman dan berada di tengah frame, sistem akan mengirimkan perintah untuk bergerak maju. Hal ini dilakukan dengan menggunakan algoritma yang menghitung jarak dari bounding box target dan memastikan bahwa target berada pada posisi yang tepat untuk diikuti.
 
-\subsection{Keputusan untuk Berbelok ke Kiri}
-\label{subsec:keputusan_belok_kiri}
+\subsubsection{3.3.5.3 Keputusan untuk Berbelok ke Kiri}
+\label{subsubsec:keputusan_belok_kiri}
 
 Jika target bergerak ke arah kiri dan keluar dari batas tengah frame, kursi roda akan mengirimkan perintah untuk berbelok ke kiri. Sistem mendeteksi posisi target di bagian kiri frame dan memberikan instruksi ke motor untuk mengarahkan kursi roda ke kiri agar tetap dapat mengikuti pergerakan target secara optimal.
 
-\subsection{Keputusan untuk Berbelok ke Kanan}
-\label{subsec:keputusan_belok_kanan}
+\subsubsection{3.3.5.4 Keputusan untuk Berbelok ke Kanan}
+\label{subsubsec:keputusan_belok_kanan}
 
 Sebaliknya, jika target bergerak ke arah kanan dan keluar dari batas tengah frame, sistem akan mengirimkan perintah untuk berbelok ke kanan. Posisi target yang berada di sisi kanan frame akan memicu motor untuk berbelok ke kanan, memastikan kursi roda dapat menyesuaikan posisinya dengan target yang bergerak.
 
-\subsection{Keputusan Jika Target Menghilang dari Frame}
-\label{subsec:keputusan_target_menghilang}
+\subsubsection{3.3.5.5 Keputusan Jika Target Menghilang dari Frame}
+\label{subsubsec:keputusan_target_menghilang}
 
 Apabila target menghilang dari frame, sistem akan mencari target berdasarkan posisi terakhir yang terdeteksi. Jika target tidak ditemukan dalam jangka waktu tertentu, kursi roda akan berhenti untuk menghindari pergerakan yang tidak diinginkan. Namun, jika ada target baru yang terdeteksi di frame, sistem akan membuat tracking ID baru dan melanjutkan pelacakan terhadap target tersebut. Sistem akan menunggu hingga target muncul kembali dalam frame atau mendeteksi target baru untuk melanjutkan pelacakan. Pendekatan ini memastikan bahwa kursi roda tidak bergerak tanpa arah yang jelas ketika target tidak terlihat.
 
@@ -157,340 +157,63 @@ Motor dikendalikan melalui sinyal PWM (Pulse Width Modulation) yang dihasilkan o
 
 Kode program yang digunakan dalam penelitian ini dimulai dengan inisialisasi variabel dan perangkat keras yang diperlukan, termasuk mengaktifkan kamera untuk menangkap gambar secara real-time. Setelah gambar diperoleh, algoritma YOLOv8 digunakan untuk mendeteksi keberadaan manusia dalam frame tersebut. Jika manusia terdeteksi, program melanjutkan dengan mengidentifikasi bounding box dan memberi label pada objek, yang kemudian digunakan untuk melacak objek tersebut di frame berikutnya. Setelah itu, framework MediaPipe diimplementasikan untuk mendeteksi landmark tubuh, seperti bahu, siku, dan pergelangan tangan, yang memungkinkan sistem memperoleh pose manusia secara lebih rinci.
 
+\begin{figure}[!ht]
+  \centering
+  \resizebox{0.9\linewidth}{!}{
+    \begin{tikzpicture}[node distance=2cm]
+      \node (start) [startstop] {Mulai};
+      \node (initVars) [process, below of=start] {Inisialisasi Variabel dan Hardware};
+      \node (captureFrame) [io, below of=initVars] {Ambil Frame dari Kamera};
+      \node (yoloDetect) [process, below of=captureFrame] {Deteksi Objek Menggunakan Yolo};
+      \node (A) [connector, below of=yoloDetect] {A};
+      \node (C0) [connector, left of=initVars, xshift=-1.5cm, yshift=-1cm] {C};
+  
+      \node (A0) [connector, right of=start, xshift=4.5cm] {A};
+      \node (checkBoxes) [decision, below of=A0] {Deteksi Objek?};
+      \node (processBox) [process, below of=checkBoxes] {Proses Bounding Box};
+      \node (trackingID) [process, below of=processBox] {Proses Tracking ID};
+      \node (mediapipeProcessing) [process, below of=trackingID] {Deteksi Landmark Pose pada MediaPipe};
+      \node (B) [connector, below of=mediapipeProcessing, xshift=1.5cm] {B};
+  
+      \node (B0) [connector, right of=A0, xshift=3.5cm] {B};
+      \node (calcDirection) [process, below of=B0] {Proses Kalkulasi Arah dan Jarak};
+      \node (controlWheelchair) [io, below of=calcDirection] {Kirim Data ke Kursi Roda};
+      \node (display) [io, below of=controlWheelchair] {Gambar Arah pada Frame};
+      \node (endLoop) [decision, below of=display, yshift=-.5cm] {Tombol 'q' Ditekan?};
+      \node (C) [connector, right of=endLoop, xshift=1cm, yshift=-1.5cm] {C};
+      \node (end) [startstop, below of=endLoop, yshift=-1cm] {Selesai};
+  
+      \node (searchPerson) [process, below of=mediapipeProcessing, xshift=-3cm] {Memuat Arah dan Jarak Sebelumnya};
+      
+      \draw [arrow] (start) -- (initVars);
+      \draw [arrow] (initVars) -- (captureFrame);
+      \draw [arrow] (captureFrame) -- (yoloDetect);
+      \draw [arrow] (yoloDetect) -- (A);
+      \draw [arrow] (C0) |- (captureFrame);
+  
+      \draw [arrow] (A0) -- (checkBoxes);
+      \draw [arrow] (checkBoxes) -- node[anchor=west] {Ya} (processBox);
+      \draw [arrow] (processBox) -- (trackingID);
+      \draw [arrow] (trackingID) -- (mediapipeProcessing);
+      \draw [arrow] (mediapipeProcessing) -- +(0,-2cm);
+  
+      \draw [arrow] (B0) -- (calcDirection);
+      \draw [arrow] (calcDirection) -- (controlWheelchair);
+      \draw [arrow] (controlWheelchair) -- (display);
+      \draw [arrow] (display) -- (endLoop);
+      \draw [arrow] (endLoop) -| node[anchor=south east] {Tidak} (C);
+      \draw [arrow] (endLoop) -- node[anchor=west] {Ya} (end);
+      
+      \draw [arrow] (checkBoxes) -| node[anchor=south west] {Tidak} (searchPerson);
+      \draw [arrow] (searchPerson) -- (B);
+    \end{tikzpicture}
+  }
+  \caption{Flowchart program python}
+\end{figure}
+
 Program kemudian menghitung arah dan jarak target, yang digunakan untuk menentukan instruksi pergerakan kursi roda. Instruksi tersebut dikirimkan ke ESP32, yang mengendalikan motor kursi roda untuk mengikuti manusia secara otomatis. Selain itu, arah pergerakan digambarkan pada frame video yang ditampilkan sebagai bentuk visualisasi dari proses yang sedang berjalan. Program akan terus melakukan loop, menangkap gambar baru, memproses deteksi, dan mengirimkan perintah hingga pengguna menekan tombol 'q' untuk mengakhiri program.
 
-Regulasi arah kursi roda dilakukan melalui pengiriman data arah ke socket yang berhubungan dengan ESP32. Program mengecek apakah socket tersedia dan apakah data arah berubah, serta menetapkan penanda untuk menghindari pengiriman data yang berulang. Sebelum arah diubah, data 'C\n' dikirim terlebih dahulu untuk memastikan kursi roda berhenti dan stabil sebelum menerima instruksi arah baru. Hal ini penting untuk mencegah gerakan yang tidak diinginkan atau perubahan arah yang terlalu mendadak. Setiap kali arah berubah setelah berhenti, data baru akan dikirim ke socket untuk mengontrol motor kursi roda.
-
-Untuk ESP32 CAM, sistem dimulai dengan inisialisasi kamera dan pengaturan WiFi sebagai Access Point. Server WiFi kemudian dijalankan pada port 80 dan 81 untuk melakukan streaming data secara real-time. Setelah konfigurasi ini, ESP-NOW digunakan untuk komunikasi antara kedua ESP32, yang memungkinkan transmisi data tanpa harus terhubung ke jaringan WiFi eksternal.
-
-Frame yang ditangkap oleh kamera dikirim melalui alamat IP tertentu, yaitu `http://192.168.4.1:81/stream`, yang juga digunakan dalam kode program Python untuk melakukan streaming data. Data arah yang diterima dari client kemudian diteruskan ke ESP32 B melalui ESP-NOW untuk mengontrol kursi roda. Sistem ini dirancang untuk memastikan komunikasi yang cepat dan handal antara ESP32 A dan ESP32 B, sehingga kursi roda dapat merespons pergerakan target dengan tepat.
-
-Pada sisi ESP32 Motor, perangkat dimulai dengan inisialisasi berbagai komponen, seperti PWM, WiFi, dan pin untuk mengendalikan motor. Setelah terhubung ke WiFi, ESP32 B menunggu pesan dari server yang berfungsi sebagai pusat kendali. Jika pesan diterima, string yang mengandung informasi arah dan kecepatan akan diekstrak, kemudian diolah untuk menentukan pergerakan motor kursi roda. Sistem menggunakan data ini untuk mengatur arah dan kecepatan motor, yang memastikan kursi roda dapat mengikuti target secara akurat dan responsif. Proses ini dilakukan secara berulang untuk setiap update data yang diterima, memungkinkan kursi roda menyesuaikan gerakan dengan perubahan posisi target secara real-time.
-
-\begin{figure}[H]
-  \caption{Flowchart Program Kontrol Penggerak Kursi Roda Melalui WiFi}
-  \label{fig:flowchartWiFi}
-  \centering
-  \resizebox{0.8\linewidth}{!}{
-    \begin{tikzpicture}[node distance=2cm]
-      \node (start) [person] {Warga};
-      \node (pro1a) [process, below of=start] {Masukkan Library Arduino \& WiFi};
-      \node (pro1b) [process, below of=pro1a] {Inisiasi PWM dan Pin};
-      \node (pro1c) [process, below of=pro1b] {Inisiasi Serial, Wifi \& Server};
-      \node (pro1d) [process, below of=pro1c] {Setup PinMode, IedcSetup, IedcAttachPin};
-      \node (a1) [connector, below of=pro1d] {A};
-
-      \node (a2) [connector, right of=start, xshift=3.5cm] {A};
-      \node (dec2a) [decision, below of= a2, yshift=-.5cm] {Perangkat terhubung?};
-      \node (dec2b) [decision, below of=dec2a, yshift=-.5cm] {Data terkirim?};
-      \node (pro2c) [process, below of=dec2b] {Read String sampai terdapat '\textbackslash n'};
-      \node (b1) [connector, below of=pro2c] {B};
-
-      \node (b2) [connector, right of=a2, xshift=3cm] {B};
-      \node (pro3a) [process, below of= b2] {Ekstrak String menjadi Arah dan Kecepatan};
-      \node (pro3b) [process, below of=pro3a, yshift=-.5cm] {Menggerakkan Motor Kursi Roda sesuai dengan Arah dan Kecepatan};
-      \node (stop) [startstop, below of=pro3b, yshift=-1cm] {Stop};
-
-      \draw [arrow] (start) -- (pro1a);
-      \draw [arrow] (pro1a) -- (pro1b);
-      \draw [arrow] (pro1b) -- (pro1c);
-      \draw [arrow] (pro1c) -- (pro1d);
-      \draw [arrow] (pro1d) -- (a1);
-
-      \draw [arrow] (a2) -- (dec2a);
-      \draw [arrow] (dec2a) -- node[anchor=west] {Ya} (dec2b);
-      \draw [arrow] (dec2b) -- node[anchor=west] {Ya} (pro2c);
-      \draw [arrow] (dec2b.west) -- ++(-0.5cm,0) |- node[anchor=south] {Tidak} (dec2a.west);
-      \draw [arrow] (pro2c) -- (b1);
-
-      \draw [arrow] (b2) -- (pro3a);
-      \draw [arrow] (pro3a) -- (pro3b);
-      \draw [arrow] (pro3b.south) -- ++(0,-0.5cm) -- ++(-2.5cm,0) |- (dec2b.east);
-      \draw [arrow] (pro3b) -- (stop);
-    \end{tikzpicture}
-  }
-\end{figure}
-
-\begin{figure}[H]
-  \caption{Flowchart Program Prediksi Python}
-  \label{fig:flowchartPredict}
-  \centering
-  \resizebox{0.8\linewidth}{!}{
-    \begin{tikzpicture}[node distance=2cm]
-      \node (start) [startstop] {Start};
-      \node (pro1a) [process, below of=start] {Masukkan Library Utilitas \& YOLO};
-      \node (pro1b) [process, below of=pro1a] {Inisiasi Model Yolov8n-pose};
-      \node (pro1c) [process, below of=pro1b] {Inisiasi Kamera, Socket, dan Memori};
-      \node (pro1d) [process, below of=pro1c] {Setup Parser dan Webcam};
-      \node (a1) [connector, below of=pro1d] {A};
-
-      \node (a2) [connector, right of=start, xshift=3cm] {A};
-      \node (io2a) [io, below of= a2] {Video Captured};
-      \node (pro2b) [process, below of=io2a] {Produces Results};
-      \node (pro2c) [process, below of=pro2b] {Process Detection};
-      \node (pro2d) [process, below of=pro2c] {Send to Socket};
-      \node (b1) [connector, below of=pro2d] {B};
-
-      \node (b2) [connector, right of=a2, xshift=3.5cm] {B};
-      \node (dec3a) [decision, below of= b2] {quit pressed?};
-      \node (pro3b) [process, below of=dec3a, yshift=-.5cm] {Clean up files and webcam};
-      \node (stop) [startstop, below of=pro3b] {Stop};
-
-      \draw [arrow] (start) -- (pro1a);
-      \draw [arrow] (pro1a) -- (pro1b);
-      \draw [arrow] (pro1b) -- (pro1c);
-      \draw [arrow] (pro1c) -- (pro1d);
-      \draw [arrow] (pro1d) -- (a1);
-
-      \draw [arrow] (a2) -- (io2a);
-      \draw [arrow] (io2a) -- (pro2b);
-      \draw [arrow] (pro2b) -- (pro2c);
-      \draw [arrow] (pro2c) -- (pro2d);
-      \draw [arrow] (pro2d) -- (b1);
-
-      \draw [arrow] (b2) -- (dec3a);
-      \draw [arrow] (dec3a) -- node[anchor=west] {Ya} (pro3b);
-      \draw [arrow] (dec3a.west) -- node[anchor=south] {Tidak} (io2a);
-      \draw [arrow] (pro3b) -- (stop);
-    \end{tikzpicture}
-  }
-\end{figure}
-
-\begin{figure}[H]
-  \caption{Flowchart Program Process Detection}
-  \label{fig:flowchartDetection}
-  \centering
-  \resizebox{0.9\linewidth}{!}{
-    \begin{tikzpicture}[node distance=2cm]
-      \node (start) [startstop] {Start};
-      \node (inp1a) [io, below of=start] {Parameter Results};
-      \node (pro1b) [process, right of=inp1a, xshift=2.5cm] {Inisiasi Tampungan Data};
-      \node (dec1c) [decision, below of=pro1b] {Manual Handle?};
-      \node (pro1d) [process, below of=dec1c, yshift=-.5cm] {Inisiasi Kelas Annotator};
-      \node (a1) [connector, below of=pro1d] {A};
-
-      \node (inp11) [io, left of=dec1c, xshift=-2.5cm] {Joystik/ Keyboard};
-
-      \node (a0) [connector, right of=start, xshift=8cm] {A};
-      \node (pro2a) [process, below of=a0] {Produces Detections};
-      \node (dec2b) [decision, below of=pro2a] {Hasil Deteksi?};
-      \node (pro2c) [process, below of=dec2b, yshift=-.5cm] {Automatic Scan};
-      % \node (b2) [connector, below of=pro2c] {B};
-
-      \node (inp3a) [io, right of=dec2b, xshift=3cm] {'C\textbackslash n'};
-      \node (pro3b) [process, below of=inp3a, yshift=-.5cm] {Masukkan ke Tampungan Data};
-      \node (pro3c) [process, below of=pro3b] {Return data terbanyak};
-      \node (stop) [startstop, below of=pro3c] {Stop}; 
-
-      \draw [arrow] (start) -- (inp1a);
-      \draw [arrow] (inp1a) -- (pro1b);
-      \draw [arrow] (pro1b) -- (dec1c);
-      \draw [arrow] (dec1c) -- node[anchor=east] {Tidak} (pro1d);
-      \draw [arrow] (pro1d) -- (a1);
-      \draw [arrow] (dec1c) -- node[anchor=south] {Ya} (inp11);
-
-      \draw [arrow] (a0) -- (pro2a);
-      \draw [arrow] (pro2a) -- (dec2b);
-      \draw [arrow] (dec2b) -- node[anchor=west] {Ya} (pro2c);
-      \draw [arrow] (dec2b) -- node[anchor=south] {Tidak} (inp3a);
-      \draw [arrow] (pro2c) -- (pro3b);
-
-      \draw [arrow] (inp3a) -- (pro3b);
-      \draw [arrow] (pro3b) -- (pro3c);
-      \draw [arrow] (pro3c) -- (stop);
-    \end{tikzpicture}
-  }
-\end{figure}
-
-\begin{figure}[H]
-  \caption{Flowchart kelas Annotator}
-  \label{fig:flowchartAnnotator}
-  \centering
-  \resizebox{0.9\linewidth}{!}{
-    \begin{tikzpicture}[node distance=2cm]
-      % Nodes
-      \node (start) [startstop] {Mulai};
-      \node (init) [process, below of=start] {Inisialisasi Variabel dan Hardware};
-      \node (getframe) [io, text width=4cm, below of=init] {Ambil Frame dari Kamera};
-      \node (yolodetect) [process, below of=getframe] {Deteksi Objek Menggunakan Yolo};
-      \node (A) [connector, below of=yolodetect] {A};
-      \node (D0) [connector, left of=getframe, xshift=-1.5cm] {D};
-      
-      % First branch
-      \node (A0) [connector, right of=start, xshift=4cm] {A};
-      \node (detecthuman) [decision, below of=A0] {Manusia Terdeteksi?};
-      \node (C) [connector, right of=detecthuman, xshift=1.5cm] {C};
-      \node (mediapipe) [process, below of=detecthuman, yshift=-.5cm] {Proses Hasil Deteksi menggunakan Mediapipe};
-      \node (bbox) [io, text width=4cm, below of=mediapipe] {Menampilkan \textit{bounding box} dan pose};
-      \node (calculate) [process, below of=bbox] {Hitung jarak dan lebar objek};
-      \node (grid) [process, below of=calculate] {Pemetaan Hasil deteksi dalam Grid};
-      \node (B) [connector, below of=grid] {B};
-      
-      % Second branch
-      \node (B0) [connector, right of=A0, xshift=5.5cm] {B};
-      \node (closerthan1m) [decision, below of=B0] {Posisi Manusia \textless 1 meter?};
-      \node (avoid) [process, below of=closerthan1m, yshift=-.5cm] {Menghindar sesuai index arah pada grid};
-      \node (turnback) [io, text width=4cm, below of=avoid] {Berbelok kembali sesuai arah terakhir};
-      \node (detectafterturn) [decision, below of=turnback, yshift=-1cm] {Manusia terdeteksi setelah belok?};
-      \node (D) [connector, below of=detectafterturn, yshift=-1cm] {D};
-      \node (end) [startstop, right of=detectafterturn, xshift=4cm] {Selesai};
-      
-      % Third branch
-      \node (C0) [connector, right of=B0, xshift=4cm] {C};
-      \node (lastturn) [decision, below of=C0, yshift=-1cm] {Nilai Belokan terakhir terisi?};
-      \node (counter) [decision, below of=lastturn, yshift=-1.5cm] {Counter \textgreater 2};
-      \node (setturn) [io, right of=lastturn, xshift=4cm] {Mengirim Perintah Maju};
-      \node (resetturn) [process, right of=counter, xshift=4cm] {Mereset belokan terakhir};
-
-      %central
-      \draw [arrow] (start) -- (init);
-      \draw [arrow] (init) -- (getframe);
-      \draw [arrow] (D0) -- (getframe);
-      \draw [arrow] (getframe) -- (yolodetect);
-      \draw [arrow] (yolodetect) -- (A);
-
-      % First Link
-      \draw [arrow] (A0) -- (detecthuman);
-      \draw [arrow] (detecthuman) -- node[anchor=east] {Ya} (mediapipe);
-      \draw [arrow] (detecthuman) -- node[anchor=south] {Tidak} (C);
-      \draw [arrow] (mediapipe) -- (bbox);
-      \draw [arrow] (bbox) -- (calculate);
-      \draw [arrow] (calculate) -- (grid);
-      \draw [arrow] (grid) -- (B);
-
-      %  Second Link
-      \draw [arrow] (B0) -- (closerthan1m);
-      \draw [arrow] (closerthan1m) -- node[anchor=east] {Ya} (avoid);
-      \draw [arrow] (closerthan1m) -- node[anchor=south] {Tidak} (C);
-      \draw [arrow] (avoid) -- (turnback);
-      \draw [arrow] (turnback) -- (detectafterturn);
-      \draw [arrow] (detectafterturn) -- node[anchor=south] {Tidak} (end);
-      \draw [arrow] (detectafterturn) -- node[anchor=east] {Ya} (D);
-
-      % Third Link
-      \draw [arrow] (C0) -- (lastturn);
-      \draw [arrow] (lastturn) -- node[anchor=south] {Ya} (setturn);
-      \draw [arrow] (lastturn) -- node[anchor=west] {Tidak} (counter);
-      \draw [arrow] (counter) -- node[anchor=south] {Ya} (resetturn);
-      \draw [arrow] (counter) -- node[anchor=south] {Tidak} (turnback);
-      \draw [arrow] (resetturn) -- (setturn);
-    \end{tikzpicture}
-  }
-\end{figure}
-
-% \begin{figure}[H]
-%   \caption{Flowchart tes13}
-%   \centering
-%   \resizebox{0.9\linewidth}{!}{
-%     \begin{tikzpicture}[node distance=2cm]
-
-%       \node (start) [startstop] {Mulai};
-%       \node (initVars) [process, below of=start] {Inisialisasi Variabel dan Hardware};
-%       \node (captureFrame) [process, below of=initVars] {Ambil Frame Video};
-%       \node (checkSuccess) [decision, below of=captureFrame] {Frame Berhasil?};
-%       \node (convertRGB) [process, below of=checkSuccess] {Konversi Frame ke RGB};
-%       \node (yoloInference) [process, below of=convertRGB] {YOLO Inference};
-%       \node (checkBoxes) [decision, below of=yoloInference] {Deteksi Objek?};
-%       \node (processBox) [process, below of=checkBoxes] {Proses Bounding Box};
-%       \node (A) [connector, below of=processBox] {A};
-
-%       \node (A0) [connector, right of=start, xshift=4cm] {A};
-%       \node (mediapipeProcessing) [process, below of=A0] {Proses dengan MediaPipe};
-%       \node (calcDirection) [process, below of=mediapipeProcessing] {Hitung Arah dan Jarak};
-%       \node (checkSocket) [decision, below of=calcDirection] {Socket Berhasil?};
-%       \node (controlWheelchair) [process, below of=checkSocket] {Kirim Data ke Kursi Roda};
-%       \node (logCSV) [process, below of=controlWheelchair] {Simpan Log ke CSV};
-%       \node (B) [connector, left of=checkBoxes, xshift=-1.5cm] {B};
-%       \node (display) [process, below of=logCSV] {Gambar Arah pada Frame};
-%       \node (endLoop) [decision, below of=display] {Tombol 'q' Ditekan?};
-%       \node (C) [connector, right of=endLoop, xshift=1.5cm] {C};
-%       \node (end) [startstop, below of=endLoop] {Selesai};
-
-%       \node (B0) [connector, right of=A0, xshift=3cm] {B};
-%       \node (searchPerson) [process, below of=B0] {Mencari Manusia};
-      
-%       % \draw [arrow] (start) -- (initVars);
-%       % \draw [arrow] (initVars) -- (captureFrame);
-%       % \draw [arrow] (captureFrame) -- (checkSuccess);
-%       % \draw [arrow] (checkSuccess) -- node[anchor=east] {Ya} (convertRGB);
-%       % \draw [arrow] (convertRGB) -- (yoloInference);
-%       % \draw [arrow] (yoloInference) -- (checkBoxes);
-%       % \draw [arrow] (checkBoxes) -- node[anchor=east] {Ya} (processBox);
-
-%       % \draw [arrow] (mediapipeProcessing) -- (calcDirection);
-%       % \draw [arrow] (calcDirection) -- (checkSocket);
-%       % \draw [arrow] (checkSocket) -- node[anchor=east] {Ya} (controlWheelchair);
-%       % \draw [arrow] (controlWheelchair) -- (logCSV);
-%       % \draw [arrow] (logCSV) -- (display);
-%       % \draw [arrow] (display) -- (endLoop);
-%       % \draw [arrow] (endLoop) -- node[anchor=south] {Tidak} (C);
-%       % \draw [arrow] (endLoop) -- node[anchor=west] {Ya} (end);
-      
-%       % \draw [arrow] (checkSuccess) -- node[anchor=south] {Tidak} +(3,0) -- +(3,-10) -- (end);
-%       % \draw [arrow] (checkBoxes) -- node[anchor=south] {Tidak} (B);
-%       % \draw [arrow] (searchPerson) |- (calcDirection);
-%       % \draw [arrow] (checkSocket.west) -- node[anchor=north] {Tidak} +(-1.17,0) -- +(-1.17,-10) -- (end);
-
-%     \end{tikzpicture}
-%   }
-% \end{figure}
-
-\begin{figure}[H]
-\caption{Flowchart program python}
-\centering
-\resizebox{0.9\linewidth}{!}{
-  \begin{tikzpicture}[node distance=2cm]
-    \node (start) [startstop] {Mulai};
-    \node (initVars) [process, below of=start] {Inisialisasi Variabel dan Hardware};
-    \node (captureFrame) [io, below of=initVars] {Ambil Frame dari Kamera};
-    \node (yoloDetect) [process, below of=captureFrame] {Deteksi Objek Menggunakan Yolo};
-    \node (A) [connector, below of=yoloDetect] {A};
-    \node (C0) [connector, left of=initVars, xshift=-1.5cm, yshift=-1cm] {C};
-
-    \node (A0) [connector, right of=start, xshift=4.5cm] {A};
-    \node (checkBoxes) [decision, below of=A0] {Deteksi Objek?};
-    \node (processBox) [process, below of=checkBoxes] {Proses Bounding Box};
-    \node (trackingID) [process, below of=processBox] {Proses Tracking ID};
-    \node (mediapipeProcessing) [process, below of=trackingID] {Deteksi Landmark Pose pada MediaPipe};
-    \node (B) [connector, below of=mediapipeProcessing, xshift=1.5cm] {B};
-
-    \node (B0) [connector, right of=A0, xshift=3.5cm] {B};
-    \node (calcDirection) [process, below of=B0] {Proses Kalkulasi Arah dan Jarak};
-    \node (controlWheelchair) [io, below of=calcDirection] {Kirim Data ke Kursi Roda};
-    \node (display) [io, below of=controlWheelchair] {Gambar Arah pada Frame};
-    \node (endLoop) [decision, below of=display, yshift=-.5cm] {Tombol 'q' Ditekan?};
-    \node (C) [connector, right of=endLoop, xshift=1cm, yshift=-1.5cm] {C};
-    \node (end) [startstop, below of=endLoop, yshift=-1cm] {Selesai};
-
-    \node (searchPerson) [process, below of=mediapipeProcessing, xshift=-3cm] {Memuat Arah dan Jarak Sebelumnya};
-    
-    \draw [arrow] (start) -- (initVars);
-    \draw [arrow] (initVars) -- (captureFrame);
-    \draw [arrow] (captureFrame) -- (yoloDetect);
-    \draw [arrow] (yoloDetect) -- (A);
-    \draw [arrow] (C0) |- (captureFrame);
-
-    \draw [arrow] (A0) -- (checkBoxes);
-    \draw [arrow] (checkBoxes) -- node[anchor=west] {Ya} (processBox);
-    \draw [arrow] (processBox) -- (trackingID);
-    \draw [arrow] (trackingID) -- (mediapipeProcessing);
-    \draw [arrow] (mediapipeProcessing) -- +(0,-2cm);
-
-    \draw [arrow] (B0) -- (calcDirection);
-    \draw [arrow] (calcDirection) -- (controlWheelchair);
-    \draw [arrow] (controlWheelchair) -- (display);
-    \draw [arrow] (display) -- (endLoop);
-    \draw [arrow] (endLoop) -| node[anchor=south east] {Tidak} (C);
-    \draw [arrow] (endLoop) -- node[anchor=west] {Ya} (end);
-    
-    \draw [arrow] (checkBoxes) -| node[anchor=south west] {Tidak} (searchPerson);
-    \draw [arrow] (searchPerson) -- (B);
-  \end{tikzpicture}
-}
-\end{figure}
-
-\begin{figure}[H]
-  \caption{Flowchart regulasi arah}
+\begin{figure}[!ht]
   \centering
   \resizebox{0.9\linewidth}{!}{
   \begin{tikzpicture}[node distance=2cm]
@@ -543,48 +266,56 @@ Pada sisi ESP32 Motor, perangkat dimulai dengan inisialisasi berbagai komponen, 
   
   \end{tikzpicture}
   }
+  \caption{Flowchart regulasi arah}
 \end{figure}
 
-\begin{figure}[H]
-  \caption{Flowchart ESP B}
+Regulasi arah kursi roda dilakukan melalui pengiriman data arah ke socket yang berhubungan dengan ESP32. Program mengecek apakah socket tersedia dan apakah data arah berubah, serta menetapkan penanda untuk menghindari pengiriman data yang berulang. Sebelum arah diubah, data 'C\textbackslash n' dikirim terlebih dahulu untuk memastikan kursi roda berhenti dan stabil sebelum menerima instruksi arah baru. Hal ini penting untuk mencegah gerakan yang tidak diinginkan atau perubahan arah yang terlalu mendadak. Setiap kali arah berubah setelah berhenti, data baru akan dikirim ke socket untuk mengontrol motor kursi roda.
+
+\begin{figure}[t]
   \centering
   \resizebox{0.9\linewidth}{!}{
   \begin{tikzpicture}[node distance=2cm]
+    % Nodes
     \node (start) [startstop] {Mulai};
-    \node (import) [process, right of=start, xshift=3cm] {Inisialisasi Arduino, WiFi, PWM dan Pin};
-    \node (init) [process, right of=start, xshift=8.5cm, yshift=.55cm] {Menyambungkan Serial WiFi dan Server};
-    \node (setup) [process, right of=start, xshift=8.5cm, yshift=-.55cm] {Setup PinMode, ledcSetup, ledcAttachPin};
-    
-    \node (device) [decision, right of=setup, xshift=4cm, yshift=-1.5cm] {Perangkat terhubung?};
-    \node (stop) [startstop, right of=device, xshift=3cm] {Selesai};
-    
-    \node (getMsg) [decision, below of=start, yshift=-2cm] {Pesan Diterima?};
-    \node (checkN) [process, right of=getMsg, xshift=3cm, yshift=.58cm] {Read String sampai terdapat '\textbackslash n'};
-    \node (extract) [process, right of=getMsg, xshift=3cm, yshift=-.58cm] {Ekstrak String menjadi Arah dan Kecepatan};
-    \node (move) [io, text width=4cm, right of=getMsg, xshift=8.5cm] {Menggerakkan Motor Kursi Roda};    
+    \node (init) [process, below of=start] {Inisialisasi Arduino, WiFi, PWM dan Pin};
+    \node (connect) [process, below of=init] {Menyambungkan Serial WiFi dan Server};
+    \node (setup) [process, below of=connect] {Setup PinMode, ledc-Setup, ledcAttachPin};
+    \node (A) [connector, below of=setup, xshift=2cm, yshift=-.5cm] {A};
+
+    \node (A0) [connector, right of=start, xshift=3cm] {A};
+    \node (connected?) [decision, below of=A0, text width=2cm] {Perangkat Terhubung?};
+    \node (msg?) [decision, below of=connected?, yshift=-.5cm] {Pesan Diterima?};
+
+    \node (stop) [startstop, right of=connected?, xshift=3cm] {Stop};
+    \node (readstr) [process, right of=msg?, xshift=3cm] {Read String sampai terdapat '\textbackslash n'};
+    \node (extract) [process, below of=readstr] {Ekstrak String menjadi Arah dan Kecepatan};
+    \node (move) [io, below of=msg?, text width=3.5cm] {Menggerakkan Motor Kursi Roda};
 
 
-    \draw [arrow] (start) -- (import);
-    \draw [arrow] (import) -- +(3.3cm,0);
+    % Arrows
+    \draw [arrow] (start) -- (init);
+    \draw [arrow] (init) -- (connect);
+    \draw [arrow] (connect) -- (setup);
+    \draw [arrow] (setup) |- ++(0,-1.55cm) -| (A);
 
-    \draw [arrow] (getMsg.east) -- node[anchor=south] {Ya} +(1cm,0);
-    \draw [arrow] (extract.east) |- (move);
-
-    \draw [arrow] (setup) -- +(0,0.58cm) -| +(3cm,-1.5cm);
-    \draw [arrow] (move) -| +(3cm,2cm);
-    \draw [arrow] (getMsg) |- node[anchor=north west] {Tidak} (device);
-
-    \draw [arrow] (device) -- node[anchor=west] {Ya} +(0,-4cm) -| (getMsg);
-    \draw [arrow] (device) -- node[anchor=south] {Tidak} (stop);
-
-    % \draw [arrow] (getMsg) -- node[anchor=west] {Tidak} (stop);
-
+    \draw [arrow] (A0) -- (connected?);
+    \draw [arrow] (connected?) -- node[anchor=east] {Ya} (msg?);
+    \draw [arrow] (connected?) -- node[anchor=south] {Tidak} (stop);
+    \draw [arrow] (msg?) -- node[anchor=south] {Ya} (readstr);
+    \draw [arrow] (msg?.west) -| node[anchor=north west] {Tidak} ++(-.5,0) |- (connected?);
+    \draw [arrow] (readstr) -- (extract);
+    \draw [arrow] (extract) -- (move);
+    \draw [arrow] (move.south) |- ++(0,-.5) -| (A);
   \end{tikzpicture}
   }
+  \caption{Flowchart ESP B}
 \end{figure}
 
-\begin{figure}[H]
-  \caption{Flowchart ESP A}
+Untuk ESP32 CAM, sistem dimulai dengan inisialisasi kamera dan pengaturan WiFi sebagai Access Point. Server WiFi kemudian dijalankan pada port 80 dan 81 untuk melakukan streaming data secara real-time. Setelah konfigurasi ini, ESP-NOW digunakan untuk komunikasi antara kedua ESP32, yang memungkinkan transmisi data tanpa harus terhubung ke jaringan WiFi eksternal.
+
+Frame yang ditangkap oleh kamera dikirim melalui alamat IP tertentu, yaitu `http://192.168.4.1:81/stream`, yang juga digunakan dalam kode program Python untuk melakukan streaming data. Data arah yang diterima dari client kemudian diteruskan ke ESP32 B melalui ESP-NOW untuk mengontrol kursi roda. Sistem ini dirancang untuk memastikan komunikasi yang cepat dan handal antara ESP32 A dan ESP32 B, sehingga kursi roda dapat merespons pergerakan target dengan tepat.
+
+\begin{figure}[!ht]
   \centering
   \resizebox{0.9\linewidth}{!}{
   \begin{tikzpicture}[node distance=2cm]
@@ -624,7 +355,12 @@ Pada sisi ESP32 Motor, perangkat dimulai dengan inisialisasi berbagai komponen, 
     \draw [arrow] (clientStop) -- (A1);
   \end{tikzpicture}
   }
+  \caption{Flowchart ESP A}
 \end{figure}
+
+Pada sisi ESP32 Motor, perangkat dimulai dengan inisialisasi berbagai komponen, seperti PWM, WiFi, dan pin untuk mengendalikan motor. Setelah terhubung ke WiFi, ESP32 B menunggu pesan dari server yang berfungsi sebagai pusat kendali. Jika pesan diterima, string yang mengandung informasi arah dan kecepatan akan diekstrak, kemudian diolah untuk menentukan pergerakan motor kursi roda. Sistem menggunakan data ini untuk mengatur arah dan kecepatan motor, yang memastikan kursi roda dapat mengikuti target secara akurat dan responsif. Proses ini dilakukan secara berulang untuk setiap update data yang diterima, memungkinkan kursi roda menyesuaikan gerakan dengan perubahan posisi target secara real-time.
+
+
 
 
 % Contoh pembuatan potongan kode
