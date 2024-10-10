@@ -184,6 +184,7 @@
 % Label tabel dan gambar dalam bahasa indonesia
 \renewcommand{\figurename}{Gambar}
 \renewcommand{\tablename}{Tabel}
+\renewcommand{\lstlistingname}{Program}
 
 % Pengaturan ukuran indentasi paragraf
 \setlength{\parindent}{2em}
@@ -236,6 +237,12 @@
 \listoftables
 \cleardoublepage
 
+% Daftar program
+\renewcommand*\lstlistingname{DAFTAR PROGRAM}
+\addcontentsline{toc}{chapter}{\lstlistingname}
+\lstlistoflistings
+\cleardoublepage
+
 % Nomor halaman isi dimulai dari sini
 \pagenumbering{arabic}
 
@@ -268,6 +275,10 @@
 \def\chapter*#1{}
 \printbibliography
 \endgroup
+\cleardoublepage
+
+% Bab 6 lampiran
+\input{lainnya/lampiran.tex}
 \cleardoublepage
 
 % Biografi penulis

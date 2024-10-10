@@ -6,16 +6,11 @@
 \section{Latar Belakang}
 \label{sec:latarbelakang}
 
-Navigasi kursiroda telah mengalami perkembangan pesat, dan sistem autopilot menjadi fokus utama dalam meningkatkan kenyamanan dan keamanan pengguna. Deteksi pose manusia memainkan peran krusial dalam mengidentifikasi posisi dan gerakan pengguna. YOLOv8n-pose, sebagai model deteksi pose yang lebih canggih, menawarkan potensi untuk meningkatkan akurasi dan efisiensi dalam pemantauan manusia pada kursiroda.
-Mobilitas merupakan aspek penting dalam kehidupan manusia, yang memungkinkan individu untuk beraktivitas, berinteraksi dengan lingkungan, dan mencapai kemandirian. Kursi roda telah menjadi alat bantu mobilitas yang krusial bagi jutaan orang di seluruh dunia, terutama bagi mereka yang mengalami keterbatasan fisik.
+Teknologi \emph{Internet of Things (IoT)} dan \emph{deep learning} semakin banyak diadopsi dalam pengembangan sistem kendali otonom, khususnya untuk aplikasi kesehatan dan mobilitas. Kursi roda otonom merupakan salah satu solusi yang dapat meningkatkan kualitas hidup penyandang disabilitas dengan memberikan kemandirian dalam bergerak. Salah satu teknologi utama yang dapat mendukung pengembangan kursi roda otonom adalah modul \emph{ESP32}. Berdasarkan penelitian yang dilakukan oleh \emph{Ekatama} (2024), \emph{ESP32} mampu mengendalikan perangkat secara nirkabel dengan memanfaatkan konektivitas \emph{Wi-Fi} dan \emph{Bluetooth}, memberikan fleksibilitas yang lebih besar dalam mengontrol kursi roda. Penggunaan modul ini memungkinkan pengguna untuk mengontrol kursi roda secara efektif tanpa perlu mengandalkan kontrol manual yang terbatas \cite{ekatama2024perancangan}.
 
-Namun, memastikan keamanan dan kemandirian pengguna kursi roda, terutama di lingkungan yang kompleks dan dinamis, masih menjadi tantangan yang signifikan. Pemantauan tradisional, seperti pengawasan oleh pengasuh atau penggunaan kamera CCTV, memiliki keterbatasan dalam hal jangkauan, efektivitas, dan privasi.
-Sistem pemantauan otomatis menawarkan solusi yang lebih komprehensif dan terintegrasi, dengan potensi untuk meningkatkan keamanan dan kemandirian pengguna kursi roda.
+Selain aspek kendali nirkabel, sistem otonom yang mengikuti pergerakan pengguna membutuhkan teknologi yang mampu mendeteksi gerakan tubuh secara real-time. Penelitian oleh \emph{Wijaya et al.} (2022) telah menunjukkan keandalan algoritma \emph{YOLO V3} dalam mendeteksi objek secara cepat dan akurat, yang dapat digunakan untuk melacak pergerakan manusia. Namun, dalam penelitian ini, algoritma \emph{YOLOv8}, versi terbaru dari \emph{YOLO}, diintegrasikan dengan \emph{MediaPipe Pose}, sebuah framework yang dapat mendeteksi dan melacak posisi tubuh manusia. Kombinasi kedua teknologi ini memungkinkan sistem untuk secara akurat mengikuti gerakan pengguna berdasarkan sudut pandang optimal yang diperoleh dari kamera yang dipasang pada kacamata pengguna. Dengan pendekatan ini, kursi roda dapat mengikuti pergerakan pengguna secara alami, mendukung otonomi yang lebih tinggi \cite{wijaya2022deteksi}.
 
-Sistem dapat membantu pengguna kursi roda untuk menavigasi lingkungan yang kompleks dengan aman: Sistem dapat mendeteksi rintangan, kendaraan, dan bahaya lainnya, dan memberikan peringatan kepada pengguna.
-Sistem mengikuti pendamping atau orang di depan dengan melacak pergerakan pendamping atau orang di depan dan mengarahkan kursi roda secara otomatis untuk mengikuti mereka.
-Sistem juga memperoleh bantuan saat dibutuhkan dengan mendeteksi situasi darurat, seperti jatuh, dan secara otomatis meminta bantuan.
-
+Sistem kursi roda otonom yang dikembangkan dalam penelitian ini memanfaatkan modul \emph{ESP32} sebagai perangkat keras utama yang mengontrol keseluruhan sistem secara nirkabel. Dalam penelitian yang dilakukan oleh \emph{Narwaria et al.} (2024), \emph{ESP32-CAM} telah terbukti mampu menangkap dan mengolah data visual dengan efisiensi tinggi, yang dapat diterapkan untuk berbagai aplikasi berbasis \emph{IoT}. Sistem yang dikembangkan tidak hanya dirancang untuk mendeteksi objek, tetapi lebih berfokus pada pelacakan gerakan tubuh pengguna melalui teknologi \emph{MediaPipe Pose}. Dengan integrasi ini, sistem dapat memastikan bahwa pergerakan kursi roda tetap sejalan dengan pergerakan pengguna tanpa memerlukan input manual tambahan \cite{10696374}.
 
 \section{Permasalahan}
 \label{sec:permasalahan}
@@ -23,32 +18,15 @@ Sistem juga memperoleh bantuan saat dibutuhkan dengan mendeteksi situasi darurat
 Dari permasalahan tersebut maka pemantauan manusia pada kursi roda dengan fokus pada kemandirian menghadapi beberapa tantangan utama:
 
 \begin{enumerate}[nolistsep]
-
-      \item Kompleksitas lingkungan: Lingkungan yang dinamis dan tidak terstruktur, seperti trotoar, jalan raya, dan area publik, menghadirkan berbagai rintangan dan bahaya yang sulit diprediksi.
-
-      \item Keterbatasan deteksi tradisional: Metode deteksi tradisional, seperti sensor inframerah atau kamera statis, mungkin tidak dapat mendeteksi semua potensi bahaya secara akurat dan tepat waktu.
-
-      \item Privasi dan etika: Sistem pemantauan harus mempertimbangkan privasi pengguna kursi roda dan menghindari pengumpulan data yang tidak perlu atau sensitif.
-
+      \item \textbf{Keterbatasan Sistem Kursi Roda Otonom Eksisting:} Sistem kursi roda otonom yang ada saat ini mungkin belum mampu mendeteksi dan mengikuti pengguna dengan efisien karena penempatan kamera yang kurang optimal dan penggunaan algoritma deteksi yang kurang canggih.
+      \item \textbf{Tantangan dalam Deteksi dan Pelacakan Gerakan Manusia secara Real-Time:} Kesulitan dalam mendeteksi dan melacak pergerakan manusia secara akurat dan real-time, terutama dalam lingkungan yang dinamis, akibat keterbatasan algoritma dan perangkat keras.
+      \item \textbf{Integrasi Algoritma Deteksi Lanjutan dengan Sudut Pandang Optimal:} Tantangan dalam mengintegrasikan algoritma deteksi seperti YOLOv8 dan MediaPipe Pose dengan sistem pengambilan gambar yang memiliki sudut pandang optimal untuk meningkatkan akurasi dan responsivitas kursi roda.
 \end{enumerate}
-\newpage
 
 \section{Tujuan}
 \label{sec:Tujuan}
 
-Tujuan dari penelitian ini bertujuan untuk mengembangkan sistem pemantauan manusia pada kursi roda yang efektif, handal, dan berfokus pada privasi. Sistem ini akan memanfaatkan algoritma kecerdasan buatan (AI) canggih untuk:
-
-\begin{enumerate}[nolistsep]
-
-      \item Melacak kursi roda dan pendamping atau orang di depan: Sistem akan menggunakan deteksi objek dan pelacakan untuk mengikuti pergerakan kursi roda dan pendamping atau orang di depan.
-
-      \item Memperkirakan pose pengguna: Sistem akan menggunakan estimasi pose untuk mengidentifikasi posisi bahu dan pinggul pengguna, yang dapat membantu dalam mendeteksi potensi bahaya dan memberikan peringatan.
-
-      \item Mendeteksi bahaya dan memberikan peringatan: Sistem akan menggunakan pengenalan objek dan klasifikasi untuk mendeteksi rintangan, kendaraan, dan bahaya lainnya, dan memberikan peringatan kepada pengguna melalui suara, getaran, atau visual.
-
-      \item Mengontrol kursi roda secara otomatis: Sistem akan menggunakan algoritma kontrol cerdas untuk mengarahkan kursi roda secara otomatis mengikuti pendamping atau orang di depan, dengan mempertimbangkan keamanan dan kenyamanan pengguna.
-
-\end{enumerate}
+Tujuan dari penelitian ini adalah mengembangkan sistem kursi roda otonom yang dapat mengikuti pergerakan pengguna secara real-time, dengan rancangan dan implementasi sistem kendali kursi roda yang dapat mengikuti pergerakan pengguna dengan memanfaatkan sudut pandang optimal dari kamera yang ditempatkan pada kacamata.
 
 \section{Batasan Masalah}
 \label{sec:batasanmasalah}
@@ -56,50 +34,13 @@ Tujuan dari penelitian ini bertujuan untuk mengembangkan sistem pemantauan manus
 Batasan-batasan dari penelitian ini diharapkan memberikan kontribusi signifikan dalam bidang pemantauan manusia pada kursi roda dengan fokus pada kemandirian dan kontrol otomatis, dengan:
 
 \begin{enumerate}[nolistsep]
-
-      \item Mengembangkan algoritma deteksi objek, pelacakan, dan estimasi pose yang akurat dan robust untuk lingkungan yang kompleks.
-
-      \item Merancang sistem kontrol kursi roda otomatis yang aman, nyaman, dan adaptif terhadap berbagai kondisi lingkungan.
-
-      \item Memastikan privasi pengguna kursi roda dengan meminimalkan pengumpulan data sensitif dan menerapkan teknik anonimisasi.
-
-      \item Menyediakan sistem yang mudah digunakan, portabel, dan hemat biaya untuk meningkatkan aksesibilitas bagi pengguna kursi roda.
-
+      \item \textbf{Penempatan Kamera Terbatas pada Sudut Pandang Optimal:} Sistem hanya menggunakan kamera yang ditempatkan pada kacamata pengguna, sehingga deteksi terbatas pada objek dan pergerakan yang berada dalam garis pandang pengguna.
+      \item \textbf{Penggunaan Algoritma dan Perangkat Keras Tertentu:} Sistem deteksi dan pelacakan dibatasi pada penggunaan algoritma YOLOv8 dan MediaPipe Pose, serta perangkat keras yang mendukung implementasi algoritma tersebut.
+      \item \textbf{Lingkungan Operasional Terkendali:} Pengujian dan implementasi sistem dilakukan dalam lingkungan yang terkendali, seperti di dalam ruangan dengan kondisi pencahayaan dan hambatan yang minimal.
+      \item \textbf{Keterbatasan Pemrosesan Waktu Nyata:} Kemampuan pemrosesan real-time sistem dibatasi oleh kapasitas perangkat keras yang digunakan, sehingga mungkin tidak optimal dalam situasi dengan kompleksitas tinggi.
 \end{enumerate}
 
-\section{Sistematika Penulisan}
-\label{sec:sistematikapenulisan}
+\section{Manfaat}
+\label{sec:manfaat}
 
-Laporan penelitian tugas akhir ini terbagi menjadi \lipsum[1][1-3] yaitu:
-
-\begin{enumerate}[nolistsep]
-
-      \item \textbf{BAB I Pendahuluan}
-
-            Bab ini berisi \lipsum[2][1-5]
-
-            \vspace{2ex}
-
-      \item \textbf{BAB II Tinjauan Pustaka}
-
-            Bab ini berisi \lipsum[3][1-5]
-
-            \vspace{2ex}
-
-      \item \textbf{BAB III Desain dan Implementasi Sistem}
-
-            Bab ini berisi \lipsum[4][1-5]
-
-            \vspace{2ex}
-
-      \item \textbf{BAB IV Pengujian dan Analisa}
-
-            Bab ini berisi \lipsum[5][1-5]
-
-            \vspace{2ex}
-
-      \item \textbf{BAB V Penutup}
-
-            Bab ini berisi \lipsum[6][1-5]
-
-\end{enumerate}
+Manfaat pada penelitian ini untuk membuat sistem yang dapat mendeteksi manusia untuk mengontrol gerak dari kursi roda.

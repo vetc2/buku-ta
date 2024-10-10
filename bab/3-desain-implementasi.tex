@@ -48,6 +48,7 @@ Pada sistem ini, unit kontrol utama yang digunakan adalah laptop pribadi akan be
 
 \begin{table}[H]
   \centering
+  \caption{Spesifikasi Laptop MSI GF63 untuk Unit Kontrol}
   \begin{tabular}{|l|l|}
   \hline
   \textbf{Komponen}       & \textbf{Spesifikasi}                     \\ \hline
@@ -59,7 +60,6 @@ Pada sistem ini, unit kontrol utama yang digunakan adalah laptop pribadi akan be
   Konektivitas WiFi       & WiFi 802.11ac (MU-MIMO)                  \\ \hline
   Pengolahan Data         & Inferensi model, ESP dan Python (venv)   \\ \hline
   \end{tabular}
-  \caption{Spesifikasi Laptop MSI GF63 untuk Unit Kontrol}
 \end{table}
 
 Salah satu aspek penting dari unit kontrol dalam proyek ini adalah dukungan WiFi yang cepat dan stabil dalam komunikasi antar perangkat. Sistem bergantung pada data video yang dikirim oleh kamera OV5640 melalui ESP32 ke laptop untuk diolah, dan proses ini harus berlangsung tanpa hambatan. Konektivitas WiFi yang disediakan oleh laptop ini memungkinkan pengiriman data dalam waktu nyata dengan minim latensi, yang sangat penting untuk deteksi target secara cepat.
@@ -180,19 +180,19 @@ Proses deteksi diawali dengan inisialisasi kamera yang menangkap frame secara re
 Dalam penelitian ini, beberapa landmark yang dipilih untuk analisis adalah titik-titik pada siku, lengan bawah, dan bahu kanan serta kiri. Pemilihan titik-titik ini didasarkan pada visibilitas dan konsistensi dalam proses deteksi. Tabel menampilkan nomor dan nama keypoint yang digunakan dalam estimasi pose:
 
 \begin{table}[H]
-\centering
-\begin{tabular}{|c|c|}
-\hline
-Nomor Keypoint & Nama Keypoint \\
-\hline
-11 & RIGHT SHOULDER \\
-12 & LEFT SHOULDER \\
-14 & RIGHT ELBOW \\
-16 & RIGHT WRIST \\
-\hline
-\end{tabular}
-\caption{Tabel Keypoint yang digunakan}
-\label{tab:keypoints}
+  \centering
+  \caption{Tabel Keypoint yang digunakan}
+  \label{tab:keypoints}
+  \begin{tabular}{|c|c|}
+    \hline
+    Nomor Keypoint & Nama Keypoint \\
+    \hline
+    11 & RIGHT SHOULDER \\
+    12 & LEFT SHOULDER \\
+    14 & RIGHT ELBOW \\
+    16 & RIGHT WRIST \\
+    \hline
+  \end{tabular}
 \end{table}
 
 Setelah landmark diperoleh, jarak antar titik pada piksel dihitung. Pengukuran ini dilakukan dengan menggunakan jarak Euclidean antara dua titik kunci, yang merupakan metode efisien untuk menghitung jarak dalam ruang dua dimensi. Nilai jarak ini kemudian digunakan sebagai acuan untuk pergerakan kursi roda mengikuti target di depan.

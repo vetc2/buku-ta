@@ -20,48 +20,43 @@ Pengujian ini dilakukan untuk menganalisis kecepatan pemrosesan sistem dalam sat
 
 Bagian ini mengukur waktu yang dibutuhkan sistem untuk merespons setiap perubahan lingkungan atau perintah yang diterima. Response Time sangat penting untuk mengukur responsivitas sistem dalam skenario dinamis.
 
-\section{Pengujian Kesesuaian Jarak Deteksi}
-\label{sec:pengujiankesesuaianjarakdeteksi}
-
-Pengujian dilakukan untuk mengukur kemampuan sistem dalam mendeteksi objek pada berbagai jarak, yaitu 150 cm, 100 cm, dan 50 cm. Setiap subbagian akan menjelaskan hasil pengujian dan menganalisis performa sistem pada jarak-jarak tersebut.
-
-\subsection{Pengujian Kesesuaian Jarak Deteksi 150 cm}
-\label{sec:pengujiankesesuaianjarakdeteksi150cm}
-
-Hasil pengujian pada jarak 150 cm dianalisis untuk melihat kemampuan deteksi pada jarak jauh.
-
-\subsection{Pengujian Kesesuaian Jarak Deteksi 100 cm}
-\label{sec:pengujiankesesuaianjarakdeteksi100cm}
-
-Pada jarak 100 cm, sistem diuji untuk mengetahui seberapa baik model bekerja pada jarak menengah.
-
-\subsection{Pengujian Kesesuaian Jarak Deteksi 50 cm}
-\label{sec:pengujiankesesuaianjarakdeteksi50cm}
-
-Pengujian pada jarak 50 cm menunjukkan kemampuan deteksi pada jarak dekat dan tantangan yang mungkin dihadapi.
-
 \section{Performa Keberhasilan Tracking}
 \label{sec:performakeberhasiltracking}
 
 Bagian ini mengevaluasi keberhasilan sistem dalam melakukan tracking terhadap objek target. Tingkat keberhasilan dianalisis untuk mengetahui keandalan sistem dalam berbagai skenario.
 
-\section{Performa Akurasi Mengikuti Objek}
+\section{Pengujian Kesesuaian Jarak Deteksi}
+\label{sec:pengujiankesesuaianjarakdeteksi}
+
+Pengujian dilakukan untuk mengukur kemampuan sistem dalam mendeteksi objek pada berbagai jarak  dan menganalisis performa sistem pada jarak-jarak tersebut.
+
+\section{Performa Pergerakan Mengikuti Objek}
 \label{sec:performaakurasiobjek}
 
 Analisis dilakukan untuk mengukur seberapa akurat sistem dapat mengikuti objek target, termasuk mempertahankan jarak yang tepat dan tidak kehilangan objek dalam berbagai kondisi.
 
-\section{Performa Keberhasilan Mengikuti saat Belok Kiri}
-\label{sec:performabelokkiri}
+\subsection{Belok Kiri saat berada didalam frame}
+\label{subsec:belokkiridalamframe}
 
 Bagian ini membahas kemampuan sistem dalam mengikuti objek saat berbelok ke kiri. Tantangan yang dihadapi dan solusi yang diterapkan diuraikan.
 
-\section{Performa Keberhasilan Mengikuti saat Belok Kanan}
-\label{sec:performabelokkanan}
+\subsection{Belok Kiri saat berada diluar frame}
+\label{subsec:belokkiriluarframe}
+
+Bagian ini membahas kemampuan sistem dalam mengikuti objek saat berbelok ke kiri. Tantangan yang dihadapi dan solusi yang diterapkan diuraikan.
+
+\subsection{Belok Kanan saat berada didalam frame}
+\label{subsec:belokkanandalamframe}
 
 Bagian ini membahas kemampuan sistem dalam mengikuti objek saat berbelok ke kanan, mirip dengan bagian sebelumnya.
 
-\section{Performa Keberhasilan Mengikuti Lajur Khusus}
-\label{sec:performalajurkhusus}
+\subsection{Belok Kanan saat berada diluar frame}
+\label{subsec:belokkananluarframe}
+
+Bagian ini membahas kemampuan sistem dalam mengikuti objek saat berbelok ke kanan, mirip dengan bagian sebelumnya.
+
+\section{Performa Keberhasilan Mengikuti}
+\label{sec:performamengikuti}
 
 Bagian ini menguji apakah sistem dapat mengikuti objek pada lajur khusus, seperti jalur sempit atau berbelok yang membutuhkan manuver khusus.
 
@@ -85,17 +80,17 @@ Menganalisis kecepatan pemrosesan secara keseluruhan dan pengaruhnya terhadap pe
 
 Membahas hasil pengujian response time dan faktor-faktor yang mempengaruhi waktu respons.
 
-\subsection{Kesesuaian Jarak Deteksi}
-\label{sec:kesesuaianjarak}
-
-Diskusi tentang performa sistem dalam mendeteksi objek pada berbagai jarak yang telah diuji.
-
 \subsection{Performa Keberhasilan Tracking}
 \label{sec:performatracking}
 
 Membahas tingkat keberhasilan sistem dalam melacak objek dan kondisi yang mempengaruhi performa.
 
-\subsection{Performa Akurasi Mengikuti Objek}
+\subsection{Kesesuaian Jarak Deteksi}
+\label{sec:kesesuaianjarak}
+
+Diskusi tentang performa sistem dalam mendeteksi objek pada berbagai jarak yang telah diuji.
+
+\subsection{Performa Pergerakan Mengikuti Objek}
 \label{sec:akurasiikutiobjek}
 
 Evaluasi akurasi dalam mengikuti objek target, termasuk kondisi yang dapat menyebabkan kegagalan.

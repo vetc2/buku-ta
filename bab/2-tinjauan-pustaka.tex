@@ -6,38 +6,26 @@
 \label{sec:roketluarangkasa}
 Pada subbab berikut akan dijabarkan penelitian terdahulu.
 
-\subsection{Deep Learning-Based Object Detection, Localisation and Tracking for Smart Wheelchair Healthcare Mobility}
-\label{subsec:DL Object Detection}
+\subsection{Deteksi Objek Menggunakan YOLO V3}
+\label{subsec:deteksiobjekmenggunakanyolov3}
 
-Pada 24 December 2020 telah dilakukan penelitian mengenai “	Deep Learning-Based Object Detection, Localisation and Tracking for Smart Wheelchair Healthcare Mobility” oleh Lecrosnier, L. \parencite{lecrosnier2021deep}
+Penelitian oleh \emph{Wijaya et al.} (2022) berfokus pada pengembangan sistem deteksi objek yang menggunakan \emph{algoritma YOLO V3} untuk meningkatkan keamanan dalam sistem mobilitas. \emph{Algoritma YOLO V3} merupakan salah satu metode \emph{deep learning} yang dirancang untuk melakukan deteksi objek secara cepat dan akurat pada gambar atau video. Penelitian ini memanfaatkan \emph{YOLO V3} untuk mendeteksi rintangan yang ada di lingkungan sekitar sistem, sehingga dapat membantu dalam menghindari potensi bahaya yang diakibatkan oleh tabrakan dengan objek yang tidak terdeteksi.
 
-Penelitian ini bertujuan untuk mengembangkan Sistem Bantuan Pengemudi Lanjutan untuk kursi roda listrik pintar guna meningkatkan kemandirian orang-orang dengan disabilitas. Penelitian ini berfokus pada deteksi, lokalisisasi, dan pelacakan objek di dalam ruangan untuk kursi roda, khususnya pintu dan pegangan pintu.
+Fitur utama dalam penelitian ini adalah implementasi \emph{YOLO V3} sebagai algoritma deteksi objek \emph{real-time}. Algoritma ini memiliki keunggulan dalam kecepatan dan akurasinya, memungkinkan sistem untuk mendeteksi berbagai objek dengan lebih cepat dibandingkan metode deteksi lainnya. \emph{YOLO V3} juga memungkinkan sistem untuk secara simultan mengenali beberapa objek dalam satu \emph{frame} gambar, yang sangat penting dalam lingkungan yang dinamis. Penelitian ini menekankan bahwa penggunaan \emph{YOLO V3} dapat secara signifikan meningkatkan keamanan sistem yang memerlukan deteksi objek secara \emph{real-time} \cite{wijaya2022deteksi}.
 
-Tujuan utama dari penelitian ini adalah meningkatkan kemampuan kursi roda otonom, yang memungkinkan deteksi objek-objek tersebut di sekitarnya secara tepat. Langkah pertama dalam penelitian ini adalah mengadaptasi algoritma deteksi objek YOLOv3 ke dalam kasus penggunaannya. Selanjutnya, penelitian ini menggunakan kamera Intel RealSense untuk melakukan estimasi kedalaman. Terakhir, sebagai langkah ketiga dan terakhir, penelitian ini menggunakan pendekatan pelacakan objek 3D berbasis algoritma SORT.
+\subsection{Perancangan Sistem Kontrol Motor Kursi Roda}
+\label{subsec:perancangansistemkontrolmotorkursiroda}
 
-Untuk memvalidasi semua pengembangan tersebut, penelitian dilakukan dengan melakukan berbagai eksperimen di lingkungan dalam yang terkontrol. Deteksi, estimasi jarak, dan pelacakan objek diuji menggunakan dataset yang disiapkan sendiri, yang mencakup pintu dan pegangan pintu. Dengan demikian, penelitian ini bertujuan untuk meningkatkan kemampuan kursi roda pintar dalam memahami dan berinteraksi dengan lingkungannya, khususnya dalam mengenali objek-objek penting seperti pintu dan pegangannya. \parencite{lecrosnier2021deep}
+Penelitian yang dilakukan oleh \emph{Ekatama} (2024) membahas tentang perancangan sistem kontrol motor kursi roda yang dioperasikan secara nirkabel dengan menggunakan \emph{ESP32}. Dalam penelitian ini, \emph{ESP32} dimanfaatkan sebagai pusat kendali yang mampu mengatur pergerakan motor kursi roda tanpa menggunakan koneksi kabel. Penggunaan koneksi nirkabel ini memungkinkan pengendalian kursi roda dari jarak jauh melalui perangkat yang mendukung \emph{Wi-Fi} atau \emph{Bluetooth}, menawarkan kemudahan dan kenyamanan bagi pengguna dalam mengendalikan kursi roda mereka.
 
-\subsection{Deteksi Objek Menggunakan YOLOv3 Untuk Keamanan Pada Pergerakan Kursi Roda Elektrik}
-\label{subsec:YOLOv3}
+Fitur utama dari penelitian ini melibatkan penggunaan \emph{ESP32} sebagai platform utama untuk mengatur pergerakan motor kursi roda. \emph{ESP32} dipilih karena kemampuannya dalam menyediakan komunikasi nirkabel yang stabil dan efisien. Selain itu, penelitian ini menyoroti bagaimana sistem yang dirancang dapat beroperasi dengan konsumsi daya yang rendah, yang merupakan faktor penting dalam perangkat yang diharapkan memiliki masa penggunaan yang lama. Dengan demikian, sistem ini dioptimalkan untuk menjaga efisiensi daya tanpa mengorbankan kinerja atau responsivitas \cite{ekatama2024perancangan}.
 
-Pada 12 Desember 2022 telah dilakukan penelitian mengenai “Deteksi Objek Menggunakan YOLOv3 Untuk Keamanan Pada Pergerakan Kursi Roda Elektrik”  oleh Wahyu Krisna Wijaya dan I Komang Somawirata. \parencite{wijaya2022deteksi}
+\subsection{Deteksi Objek Berbasis ESP32-CAM}
+\label{subsec:deteksiobjekberbasisesp32cam}
 
-Penelitian ini bertujuan untuk mengembangkan sistem pengolahan citra menggunakan algoritma You Only Look Once (YOLO), untuk meningkatkan keamanan pergerakan kursi roda elektrik. Sistem ini dirancang untuk mendeteksi objek di depan kursi roda, termasuk halangan di permukaan jalan dan objek yang dapat menghalangi pergerakan kursi roda tersebut contohnya seperti meja, kursi dan barang - barang yang ada di lingkungan sehari-hari.
+Penelitian yang dilakukan oleh \emph{Narwaria et al.} (2024) mengeksplorasi penggunaan \emph{ESP32-CAM} dalam mengembangkan sistem deteksi objek berbasis \emph{YOLO}. \emph{ESP32-CAM} adalah modul kamera yang dirancang untuk menangkap gambar secara efisien dan cocok untuk aplikasi \emph{Internet of Things (IoT)}. Penelitian ini menggunakan \emph{ESP32-CAM} bersama dengan algoritma \emph{YOLO} untuk mendeteksi dan mengenali objek secara \emph{real-time}. Sistem ini dirancang untuk menangani kebutuhan deteksi objek di berbagai aplikasi, seperti sistem pengawasan, pengenalan objek, dan visi komputer.
 
-Dengan menggunakan teknologi pengolahan citra, sistem ini dapat secara otomatis mendeteksi objek-objek tersebut saat kursi roda bergerak. Hasil pendeteksian tersebut kemudian ditampilkan pada layar monitor di depan pengemudi, memungkinkan mereka untuk merespons dengan cepat terhadap potensi bahaya di jalur perjalanan.
-
-Tujuan utama dari penelitian ini adalah untuk meningkatkan keamanan pengguna kursi roda elektrik dengan fokus pada pendeteksian objek di sekitar kursi roda. Dengan demikian, sistem ini memberikan kontribusi dalam mendukung sistem keamanan kursi roda elektrik, khususnya dalam menghadapi situasi saat ada halangan di depan atau di sekitar kursi roda yang dapat membahayakan pengguna.
-
-\subsection{Deteksi Plat Nama Ruangan untuk Kendali Kursi Roda Pintar menggunakan YOLOv5 dan EasyOCR berbasis TX2}
-\label{subsec:YOLOv5}
-
-Pada 2 Maret 2023 telah dilakukan penelitian mengenai "Deteksi Plat Nama Ruangan untuk Kendali Kursi Roda Pintar menggunakan YOLOv5 dan EasyOCR berbasis TX2" oleh Muhammad Fadhel Haidar dan Fitri Utaminingrum.\parencite{Haidar_Utaminingrum_2023}
-
-Penelitian ini bertujuan untuk Mengembangankan sistem deteksi nama ruangan otomatis untuk kursi roda pintar untuk membantu penyandang disabilitas mendapatkan mobilitas yang lebih baik. Menggunakan kamera, sistem ini dapat mengenali plat nama ruangan melalui metode YOLOv5 dan EasyOCR.
-
-Penelitian ini menunjukkan bahwa metode YOLOv5 memiliki akurasi 60\% dalam mendeteksi nama ruangan, sementara EasyOCR mencapai 100\%. Hasil ini memvalidasi kemungkinan integrasi sistem deteksi objek dan pengenalan karakter untuk meningkatkan navigasi kursi roda otonom.
-
-Kesimpulan dari penelitian tersebut adalah bahwa sistem deteksi nama ruangan otomatis pada kursi roda pintar yang menggunakan metode YOLOv5 dan EasyOCR terbukti efektif dalam membantu navigasi penyandang disabilitas. Meskipun metode YOLOv5 menunjukkan akurasi yang lebih rendah (60\%) dibandingkan EasyOCR (100\%), integrasi kedua metode tersebut meningkatkan kemampuan kursi roda untuk bergerak secara otonom menuju tujuan yang diinginkan berdasarkan pengenalan plat nama ruangan. Ini membuka peluang untuk pengembangan lebih lanjut dalam teknologi bantu mobilitas bagi penyandang disabilitas.\parencite{Haidar_Utaminingrum_2023}
+Fitur utama dari penelitian ini adalah kombinasi antara \emph{ESP32-CAM} dan \emph{algoritma YOLO}. \emph{ESP32-CAM} memberikan platform \emph{hardware} yang hemat daya dan biaya rendah, sementara \emph{YOLO} menyediakan kemampuan deteksi objek yang cepat dan akurat. Penelitian ini menunjukkan bahwa penggunaan \emph{Python} dan \emph{OpenCV} sebagai \emph{tools} dalam memrogram dan mengolah data visual memungkinkan sistem untuk menangani pemrosesan gambar dan deteksi objek dengan efisiensi yang tinggi. Solusi ini menunjukkan potensi besar dalam mengembangkan sistem deteksi objek untuk berbagai aplikasi \emph{real-time} \cite{10696374}.
 
 \section{Object Detection}
 \label{sec:detection}
@@ -136,6 +124,7 @@ Fungsi \emph{loss} dalam \emph{YOLOv8} terdiri dari beberapa komponen utama yang
 \end{equation}
 
 Pada persamaan ini, \(S\) adalah ukuran grid, \(B\) adalah jumlah \emph{bounding boxes} per \emph{grid cell}, \(\mathbb{1}_{ij}^{\mathrm{obj}}\) adalah indikator bahwa \emph{bounding box} j di \emph{cell} i memprediksi objek, dan \(\lambda_{\mathrm{coord}}\) dan \(\lambda_{\mathrm{noobj}}\) adalah hyperparameter yang mengontrol pentingnya masing-masing \emph{loss}.
+\newpage
 
 \subsubsection{YOLOv8 Pose}
 \label{subsubsec: YOLOv8 Pose}
