@@ -1,0 +1,606 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{ekatama2024perancangan}{thesis}{}{}
+      \name{author}{1}{}{%
+        {{hash=42ed4258d217aa4be84ffc1da7581d3a}{%
+           family={Ekatama},
+           familyi={E\bibinitperiod},
+           given={I},
+           giveni={I\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Institut Teknologi Sepuluh Nopember}%
+      }
+      \strng{namehash}{42ed4258d217aa4be84ffc1da7581d3a}
+      \strng{fullhash}{42ed4258d217aa4be84ffc1da7581d3a}
+      \strng{fullhashraw}{42ed4258d217aa4be84ffc1da7581d3a}
+      \strng{bibnamehash}{42ed4258d217aa4be84ffc1da7581d3a}
+      \strng{authorbibnamehash}{42ed4258d217aa4be84ffc1da7581d3a}
+      \strng{authornamehash}{42ed4258d217aa4be84ffc1da7581d3a}
+      \strng{authorfullhash}{42ed4258d217aa4be84ffc1da7581d3a}
+      \strng{authorfullhashraw}{42ed4258d217aa4be84ffc1da7581d3a}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Perancangan Sistem Kontrol Motor Kursi Roda Secara Nirkabel Berbasis ESP32}
+      \field{type}{phdthesis}
+      \field{year}{2024}
+    \endentry
+    \entry{wijaya2022deteksi}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=654324d6e626e5384981c5c75b98a859}{%
+           family={Wijaya},
+           familyi={W\bibinitperiod},
+           given={Wahyu\bibnamedelima Krisna},
+           giveni={W\bibinitperiod\bibinitdelim K\bibinitperiod}}}%
+        {{hash=f8f157d0edb78053156d15510eca7069}{%
+           family={Somawirata},
+           familyi={S\bibinitperiod},
+           given={I\bibnamedelima Komang},
+           giveni={I\bibinitperiod\bibinitdelim K\bibinitperiod}}}%
+        {{hash=215f9d49fd2972b91752c829042064c7}{%
+           family={Labib},
+           familyi={L\bibinitperiod},
+           given={Radimas\bibnamedelimb Putra\bibnamedelimb Muhammad\bibnamedelima Davi},
+           giveni={R\bibinitperiod\bibinitdelim P\bibinitperiod\bibinitdelim M\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+      }
+      \strng{namehash}{fc053a3343eb028478c63c118ea828b0}
+      \strng{fullhash}{fc053a3343eb028478c63c118ea828b0}
+      \strng{fullhashraw}{fc053a3343eb028478c63c118ea828b0}
+      \strng{bibnamehash}{fc053a3343eb028478c63c118ea828b0}
+      \strng{authorbibnamehash}{fc053a3343eb028478c63c118ea828b0}
+      \strng{authornamehash}{fc053a3343eb028478c63c118ea828b0}
+      \strng{authorfullhash}{fc053a3343eb028478c63c118ea828b0}
+      \strng{authorfullhashraw}{fc053a3343eb028478c63c118ea828b0}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Nucleus Journal}
+      \field{number}{2}
+      \field{title}{Deteksi Objek Menggunakan YOLO V3 Untuk Keamanan Pada Pergerakan Kursi Roda Elektrik}
+      \field{volume}{1}
+      \field{year}{2022}
+      \field{pages}{94\bibrangedash 98}
+      \range{pages}{5}
+    \endentry
+    \entry{10696374}{inproceedings}{}{}
+      \name{author}{5}{}{%
+        {{hash=d88915eb8182ff42a00c04dd7358d74c}{%
+           family={Narwaria},
+           familyi={N\bibinitperiod},
+           given={Ravindra\bibnamedelima Pratap},
+           giveni={R\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
+        {{hash=98bacd42fd9a293c757d82cc42f71a1e}{%
+           family={Ahirwar},
+           familyi={A\bibinitperiod},
+           given={Anand},
+           giveni={A\bibinitperiod}}}%
+        {{hash=9256e223b33852dfa046cc869c61a824}{%
+           family={Prajapati},
+           familyi={P\bibinitperiod},
+           given={Abhinay\bibnamedelima K.},
+           giveni={A\bibinitperiod\bibinitdelim K\bibinitperiod}}}%
+        {{hash=6f760ca30acf637bd3ec08e61e594522}{%
+           family={Kumar},
+           familyi={K\bibinitperiod},
+           given={Abhishek},
+           giveni={A\bibinitperiod}}}%
+        {{hash=d9e76c3d6ae2ca00b1563c7a3ff50bee}{%
+           family={Tiwari},
+           familyi={T\bibinitperiod},
+           given={Arin\bibnamedelima K.},
+           giveni={A\bibinitperiod\bibinitdelim K\bibinitperiod}}}%
+      }
+      \strng{namehash}{d34aaa3a4dfde39f3fc365d552c40be7}
+      \strng{fullhash}{3d9a90c9acdabbb7729733ef7f03270e}
+      \strng{fullhashraw}{3d9a90c9acdabbb7729733ef7f03270e}
+      \strng{bibnamehash}{3d9a90c9acdabbb7729733ef7f03270e}
+      \strng{authorbibnamehash}{3d9a90c9acdabbb7729733ef7f03270e}
+      \strng{authornamehash}{d34aaa3a4dfde39f3fc365d552c40be7}
+      \strng{authorfullhash}{3d9a90c9acdabbb7729733ef7f03270e}
+      \strng{authorfullhashraw}{3d9a90c9acdabbb7729733ef7f03270e}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{2024 Second International Conference on Intelligent Cyber Physical Systems and Internet of Things (ICoICI)}
+      \field{title}{Smart Object Detection Using ESP32-CAM Based on YOLO Algorithm}
+      \field{year}{2024}
+      \field{pages}{817\bibrangedash 820}
+      \range{pages}{4}
+      \verb{doi}
+      \verb 10.1109/ICoICI62503.2024.10696374
+      \endverb
+      \keyw{YOLO;Computer vision;Technological innovation;Surveillance;Software algorithms;Refining;Programming;Real-time systems;Hardware;Python;ESP32-CAM Module;Computer Vision;Real-time Object Detection;Machine Learning (ML);Surveillance Systems;Object Recognition;Python Programming;Image Processing;YOLO;Open CV}
+    \endentry
+    \entry{aharon2022botsortrobustassociationsmultipedestrian}{misc}{}{}
+      \name{author}{3}{}{%
+        {{hash=a30cb5d4a7ccee60bc9581847cb26613}{%
+           family={Aharon},
+           familyi={A\bibinitperiod},
+           given={Nir},
+           giveni={N\bibinitperiod}}}%
+        {{hash=e32f1d857ac5a579d3b3ca47845bf860}{%
+           family={Orfaig},
+           familyi={O\bibinitperiod},
+           given={Roy},
+           giveni={R\bibinitperiod}}}%
+        {{hash=c1743cbf25c65a33eea6c5adad587105}{%
+           family={Bobrovsky},
+           familyi={B\bibinitperiod},
+           given={Ben-Zion},
+           giveni={B\bibinithyphendelim Z\bibinitperiod}}}%
+      }
+      \strng{namehash}{f451a756a0ca7f8b535b87d554bfe289}
+      \strng{fullhash}{f451a756a0ca7f8b535b87d554bfe289}
+      \strng{fullhashraw}{f451a756a0ca7f8b535b87d554bfe289}
+      \strng{bibnamehash}{f451a756a0ca7f8b535b87d554bfe289}
+      \strng{authorbibnamehash}{f451a756a0ca7f8b535b87d554bfe289}
+      \strng{authornamehash}{f451a756a0ca7f8b535b87d554bfe289}
+      \strng{authorfullhash}{f451a756a0ca7f8b535b87d554bfe289}
+      \strng{authorfullhashraw}{f451a756a0ca7f8b535b87d554bfe289}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprintclass}{cs.CV}
+      \field{eprinttype}{arXiv}
+      \field{title}{BoT-SORT: Robust Associations Multi-Pedestrian Tracking}
+      \field{year}{2022}
+      \verb{eprint}
+      \verb 2206.14651
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/2206.14651
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/2206.14651
+      \endverb
+    \endentry
+    \entry{bewley2016simple}{inproceedings}{}{}
+      \name{author}{5}{}{%
+        {{hash=bcbacb46da933474a6ca4e4a69b7bfdc}{%
+           family={Bewley},
+           familyi={B\bibinitperiod},
+           given={Alex},
+           giveni={A\bibinitperiod}}}%
+        {{hash=dbfc282073c3c0a824d475bb3e3dfca4}{%
+           family={Ge},
+           familyi={G\bibinitperiod},
+           given={Zongyuan},
+           giveni={Z\bibinitperiod}}}%
+        {{hash=fb8eb6ad8616d52c1a1ec4235cd9e9cc}{%
+           family={Ott},
+           familyi={O\bibinitperiod},
+           given={Lionel},
+           giveni={L\bibinitperiod}}}%
+        {{hash=506f85a881fe35bf140a4b7d845c70d7}{%
+           family={Ramos},
+           familyi={R\bibinitperiod},
+           given={Fabio},
+           giveni={F\bibinitperiod}}}%
+        {{hash=5c5358fbf9113fcf41a77a4b847721c7}{%
+           family={Upcroft},
+           familyi={U\bibinitperiod},
+           given={Ben},
+           giveni={B\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{46b9641d6ac5c17e654800471830a552}
+      \strng{fullhash}{2a677301068897509d01d3287d9a96f2}
+      \strng{fullhashraw}{2a677301068897509d01d3287d9a96f2}
+      \strng{bibnamehash}{2a677301068897509d01d3287d9a96f2}
+      \strng{authorbibnamehash}{2a677301068897509d01d3287d9a96f2}
+      \strng{authornamehash}{46b9641d6ac5c17e654800471830a552}
+      \strng{authorfullhash}{2a677301068897509d01d3287d9a96f2}
+      \strng{authorfullhashraw}{2a677301068897509d01d3287d9a96f2}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{ICIP}
+      \field{title}{Simple online and realtime tracking}
+      \field{year}{2016}
+      \field{pages}{3464\bibrangedash 3468}
+      \range{pages}{5}
+    \endentry
+    \entry{wojke2017simple}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=b926658d6906979bd0ae465c48154351}{%
+           family={Wojke},
+           familyi={W\bibinitperiod},
+           given={Nicolai},
+           giveni={N\bibinitperiod}}}%
+        {{hash=bcbacb46da933474a6ca4e4a69b7bfdc}{%
+           family={Bewley},
+           familyi={B\bibinitperiod},
+           given={Alex},
+           giveni={A\bibinitperiod}}}%
+        {{hash=1f5c853f3ca8527ecb2a0b427e774073}{%
+           family={Paulus},
+           familyi={P\bibinitperiod},
+           given={Dietrich},
+           giveni={D\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{27fcc3aedd10236cc79b384a3481a278}
+      \strng{fullhash}{27fcc3aedd10236cc79b384a3481a278}
+      \strng{fullhashraw}{27fcc3aedd10236cc79b384a3481a278}
+      \strng{bibnamehash}{27fcc3aedd10236cc79b384a3481a278}
+      \strng{authorbibnamehash}{27fcc3aedd10236cc79b384a3481a278}
+      \strng{authornamehash}{27fcc3aedd10236cc79b384a3481a278}
+      \strng{authorfullhash}{27fcc3aedd10236cc79b384a3481a278}
+      \strng{authorfullhashraw}{27fcc3aedd10236cc79b384a3481a278}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{2017 IEEE international conference on image processing (ICIP)}
+      \field{title}{Simple online and realtime tracking with a deep association metric}
+      \field{year}{2017}
+      \field{pages}{3645\bibrangedash 3649}
+      \range{pages}{5}
+    \endentry
+    \entry{shi1994good}{inproceedings}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{1}{}{%
+        {{hash=159989720a07cffdf1f8afdcf19f925d}{%
+           family={Shi},
+           familyi={S\bibinitperiod},
+           given={Jianbo},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {IEEE}%
+      }
+      \strng{namehash}{e83be7c4bb307fa59cc44ff971a7658d}
+      \strng{fullhash}{e83be7c4bb307fa59cc44ff971a7658d}
+      \strng{fullhashraw}{e83be7c4bb307fa59cc44ff971a7658d}
+      \strng{bibnamehash}{e83be7c4bb307fa59cc44ff971a7658d}
+      \strng{authorbibnamehash}{e83be7c4bb307fa59cc44ff971a7658d}
+      \strng{authornamehash}{e83be7c4bb307fa59cc44ff971a7658d}
+      \strng{authorfullhash}{e83be7c4bb307fa59cc44ff971a7658d}
+      \strng{authorfullhashraw}{e83be7c4bb307fa59cc44ff971a7658d}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{1994 Proceedings of IEEE conference on computer vision and pattern recognition}
+      \field{title}{Good features to track}
+      \field{year}{1994}
+      \field{pages}{593\bibrangedash 600}
+      \range{pages}{8}
+    \endentry
+    \entry{Bouguet1999PyramidalIO}{inproceedings}{}{}
+      \name{author}{1}{}{%
+        {{hash=106abb17e51093073a9ec900e933602b}{%
+           family={Bouguet},
+           familyi={B\bibinitperiod},
+           given={J.-Y.},
+           giveni={J\bibinithyphendelim Y\bibinitperiod}}}%
+      }
+      \strng{namehash}{106abb17e51093073a9ec900e933602b}
+      \strng{fullhash}{106abb17e51093073a9ec900e933602b}
+      \strng{fullhashraw}{106abb17e51093073a9ec900e933602b}
+      \strng{bibnamehash}{106abb17e51093073a9ec900e933602b}
+      \strng{authorbibnamehash}{106abb17e51093073a9ec900e933602b}
+      \strng{authornamehash}{106abb17e51093073a9ec900e933602b}
+      \strng{authorfullhash}{106abb17e51093073a9ec900e933602b}
+      \strng{authorfullhashraw}{106abb17e51093073a9ec900e933602b}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Pyramidal implementation of the lucas kanade feature tracker}
+      \field{year}{1999}
+    \endentry
+    \entry{fischler1981random}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=53af7a5ea8715d6c3922933be034062f}{%
+           family={Fischler},
+           familyi={F\bibinitperiod},
+           given={Martin\bibnamedelima A},
+           giveni={M\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=40bae40d0cc01a890e3631288dd8ffa2}{%
+           family={Bolles},
+           familyi={B\bibinitperiod},
+           given={Robert\bibnamedelima C},
+           giveni={R\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {ACM New York, NY, USA}%
+      }
+      \strng{namehash}{fd6cd035a6e3f6ec978ad866925826c7}
+      \strng{fullhash}{fd6cd035a6e3f6ec978ad866925826c7}
+      \strng{fullhashraw}{fd6cd035a6e3f6ec978ad866925826c7}
+      \strng{bibnamehash}{fd6cd035a6e3f6ec978ad866925826c7}
+      \strng{authorbibnamehash}{fd6cd035a6e3f6ec978ad866925826c7}
+      \strng{authornamehash}{fd6cd035a6e3f6ec978ad866925826c7}
+      \strng{authorfullhash}{fd6cd035a6e3f6ec978ad866925826c7}
+      \strng{authorfullhashraw}{fd6cd035a6e3f6ec978ad866925826c7}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Communications of the ACM}
+      \field{number}{6}
+      \field{title}{Random sample consensus: a paradigm for model fitting with applications to image analysis and automated cartography}
+      \field{volume}{24}
+      \field{year}{1981}
+      \field{pages}{381\bibrangedash 395}
+      \range{pages}{15}
+    \endentry
+    \entry{milan2016mot16}{article}{}{}
+      \name{author}{5}{}{%
+        {{hash=a2755b6237e8539dcb507043b9ceeb20}{%
+           family={Milan},
+           familyi={M\bibinitperiod},
+           given={Anton},
+           giveni={A\bibinitperiod}}}%
+        {{hash=9d77cb1dfed191a63c5284a2f4456909}{%
+           family={Leal-Taixé},
+           familyi={L\bibinithyphendelim T\bibinitperiod},
+           given={Laura},
+           giveni={L\bibinitperiod}}}%
+        {{hash=8d82839be6afd59c432fc7cf084f4326}{%
+           family={Reid},
+           familyi={R\bibinitperiod},
+           given={Ian},
+           giveni={I\bibinitperiod}}}%
+        {{hash=507b5db9b42e37f1dc7fd50bac7cd869}{%
+           family={Roth},
+           familyi={R\bibinitperiod},
+           given={Stefan},
+           giveni={S\bibinitperiod}}}%
+        {{hash=205714eb0cc6921c15493da21a574130}{%
+           family={Schindler},
+           familyi={S\bibinitperiod},
+           given={Konrad},
+           giveni={K\bibinitperiod}}}%
+      }
+      \strng{namehash}{0886d1eddfc31c1eeaa9db9388c7dbf4}
+      \strng{fullhash}{af2b3ac7cd191b9ad3be9bf8b2390be3}
+      \strng{fullhashraw}{af2b3ac7cd191b9ad3be9bf8b2390be3}
+      \strng{bibnamehash}{af2b3ac7cd191b9ad3be9bf8b2390be3}
+      \strng{authorbibnamehash}{af2b3ac7cd191b9ad3be9bf8b2390be3}
+      \strng{authornamehash}{0886d1eddfc31c1eeaa9db9388c7dbf4}
+      \strng{authorfullhash}{af2b3ac7cd191b9ad3be9bf8b2390be3}
+      \strng{authorfullhashraw}{af2b3ac7cd191b9ad3be9bf8b2390be3}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{arXiv preprint arXiv:1603.00831}
+      \field{title}{MOT16: A benchmark for multi-object tracking}
+      \field{year}{2016}
+    \endentry
+    \entry{he2020fastreid}{article}{}{}
+      \name{author}{6}{}{%
+        {{hash=1b028c7284ea1cdfcb7ad0455a18ce02}{%
+           family={He},
+           familyi={H\bibinitperiod},
+           given={Lingxiao},
+           giveni={L\bibinitperiod}}}%
+        {{hash=553f2a62ee86ba4e7215c1d3532f2e82}{%
+           family={Liao},
+           familyi={L\bibinitperiod},
+           given={Xingyu},
+           giveni={X\bibinitperiod}}}%
+        {{hash=557d3ff5dd16e37221d352cd10367173}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Wu},
+           giveni={W\bibinitperiod}}}%
+        {{hash=fd0b7069b4e20f1f1b32606c55afc0fb}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Xinchen},
+           giveni={X\bibinitperiod}}}%
+        {{hash=c3845395037befcdb569dc974daf082c}{%
+           family={Cheng},
+           familyi={C\bibinitperiod},
+           given={Peng},
+           giveni={P\bibinitperiod}}}%
+        {{hash=de1c1ab4ad3b6904d54368d83000758c}{%
+           family={Mei},
+           familyi={M\bibinitperiod},
+           given={Tao},
+           giveni={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{5f6bda3245580e209741fa4bfb3dbf16}
+      \strng{fullhash}{0ea7d876aaf0b452542b0831b51d5006}
+      \strng{fullhashraw}{0ea7d876aaf0b452542b0831b51d5006}
+      \strng{bibnamehash}{0ea7d876aaf0b452542b0831b51d5006}
+      \strng{authorbibnamehash}{0ea7d876aaf0b452542b0831b51d5006}
+      \strng{authornamehash}{5f6bda3245580e209741fa4bfb3dbf16}
+      \strng{authorfullhash}{0ea7d876aaf0b452542b0831b51d5006}
+      \strng{authorfullhashraw}{0ea7d876aaf0b452542b0831b51d5006}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{arXiv preprint arXiv:2006.02631}
+      \field{title}{FastReID: A Pytorch Toolbox for General Instance Re-identification}
+      \field{year}{2020}
+    \endentry
+    \entry{zhang2020resnest}{article}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{10}{}{%
+        {{hash=df428416bb33b1ea50cc8131fd7dd043}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Hang},
+           giveni={H\bibinitperiod}}}%
+        {{hash=f3d25f99c890af62c2b1bbb4279f58dc}{%
+           family={Wu},
+           familyi={W\bibinitperiod},
+           given={Chongruo},
+           giveni={C\bibinitperiod}}}%
+        {{hash=d94d9e971e0438cf0f8911aa33b1eb3a}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Zhongyue},
+           giveni={Z\bibinitperiod}}}%
+        {{hash=017c8fdccfa4d7fe6b3cf42ea7acad7a}{%
+           family={Zhu},
+           familyi={Z\bibinitperiod},
+           given={Yi},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=8833c1a70636c9f1a358d75d2e8c50f7}{%
+           family={Lin},
+           familyi={L\bibinitperiod},
+           given={Haibin},
+           giveni={H\bibinitperiod}}}%
+        {{hash=b96e05ed0e1b08189597f7c933749b97}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Zhi},
+           giveni={Z\bibinitperiod}}}%
+        {{hash=326d4ee1ee142ffde057d20bb5f1252f}{%
+           family={Sun},
+           familyi={S\bibinitperiod},
+           given={Yue},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=399cf1aabecf0867957b50a0628a019a}{%
+           family={He},
+           familyi={H\bibinitperiod},
+           given={Tong},
+           giveni={T\bibinitperiod}}}%
+        {{hash=18bfb87c822518f97f37f8c7feab27a9}{%
+           family={Mueller},
+           familyi={M\bibinitperiod},
+           given={Jonas},
+           giveni={J\bibinitperiod}}}%
+        {{hash=60a32cd5fa44af52bd57f89f099bca97}{%
+           family={Manmatha},
+           familyi={M\bibinitperiod},
+           given={R},
+           giveni={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{10659c7e01313477723d646ca63ce3bd}
+      \strng{fullhash}{14c522f672022078828aa611fe4d3e9d}
+      \strng{fullhashraw}{14c522f672022078828aa611fe4d3e9d}
+      \strng{bibnamehash}{10659c7e01313477723d646ca63ce3bd}
+      \strng{authorbibnamehash}{10659c7e01313477723d646ca63ce3bd}
+      \strng{authornamehash}{10659c7e01313477723d646ca63ce3bd}
+      \strng{authorfullhash}{14c522f672022078828aa611fe4d3e9d}
+      \strng{authorfullhashraw}{14c522f672022078828aa611fe4d3e9d}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{arXiv preprint arXiv:2004.08955}
+      \field{title}{Resnest: Split-attention networks}
+      \field{year}{2020}
+    \endentry
+    \entry{wang2020towards}{inproceedings}{}{}
+      \name{author}{5}{}{%
+        {{hash=ca0724a3010f0a8c774baf95fdd595df}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Zhongdao},
+           giveni={Z\bibinitperiod}}}%
+        {{hash=7f1ed47c0c1b22e46324b0745b5b65eb}{%
+           family={Zheng},
+           familyi={Z\bibinitperiod},
+           given={Liang},
+           giveni={L\bibinitperiod}}}%
+        {{hash=e0c544f9d75927521d513d97d25970ad}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Yixuan},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=95f1a26a96227bb4e2c0accb49469e2f}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Yali},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=ee9eef9295a174fc1778569bd56008f9}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Shengjin},
+           giveni={S\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{2d651f26dee4b7bbf39511ea20cd9bef}
+      \strng{fullhash}{eb4c0b96b76c9c074ed831899d85b571}
+      \strng{fullhashraw}{eb4c0b96b76c9c074ed831899d85b571}
+      \strng{bibnamehash}{eb4c0b96b76c9c074ed831899d85b571}
+      \strng{authorbibnamehash}{eb4c0b96b76c9c074ed831899d85b571}
+      \strng{authornamehash}{2d651f26dee4b7bbf39511ea20cd9bef}
+      \strng{authorfullhash}{eb4c0b96b76c9c074ed831899d85b571}
+      \strng{authorfullhashraw}{eb4c0b96b76c9c074ed831899d85b571}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Computer Vision--ECCV 2020: 16th European Conference, Glasgow, UK, August 23--28, 2020, Proceedings, Part XI 16}
+      \field{title}{Towards real-time multi-object tracking}
+      \field{year}{2020}
+      \field{pages}{107\bibrangedash 122}
+      \range{pages}{16}
+    \endentry
+    \entry{kuhn1955hungarian}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=9ed32c5059c74c243ab6d851d2010faf}{%
+           family={Kuhn},
+           familyi={K\bibinitperiod},
+           given={Harold\bibnamedelima W},
+           giveni={H\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Wiley Online Library}%
+      }
+      \strng{namehash}{9ed32c5059c74c243ab6d851d2010faf}
+      \strng{fullhash}{9ed32c5059c74c243ab6d851d2010faf}
+      \strng{fullhashraw}{9ed32c5059c74c243ab6d851d2010faf}
+      \strng{bibnamehash}{9ed32c5059c74c243ab6d851d2010faf}
+      \strng{authorbibnamehash}{9ed32c5059c74c243ab6d851d2010faf}
+      \strng{authornamehash}{9ed32c5059c74c243ab6d851d2010faf}
+      \strng{authorfullhash}{9ed32c5059c74c243ab6d851d2010faf}
+      \strng{authorfullhashraw}{9ed32c5059c74c243ab6d851d2010faf}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Naval research logistics quarterly}
+      \field{number}{1-2}
+      \field{title}{The Hungarian method for the assignment problem}
+      \field{volume}{2}
+      \field{year}{1955}
+      \field{pages}{83\bibrangedash 97}
+      \range{pages}{15}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

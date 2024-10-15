@@ -1,12 +1,14 @@
 \centering
 \resizebox{1\linewidth}{!}{
-\begin{tikzpicture}[node distance=1.5cm]
+\begin{tikzpicture}[node distance=1.5cm, 
+    arrow/.style={thick,->,>=stealth, rounded corners} % Definisi lokal
+    ]
 
     % Backbone Nodes
     \node (input) [label] {Input};
     \node (cbs0) [cbs, above of=input, yshift=1cm] {CBS\\k=3, s=2, p=1};
     \node (cbs1) [cbs, above of=cbs0] {CBS\\k=3, s=2, p=1};
-    \node (c3k2_1) [c3k2, above of=cbs1] {C3K2\\C3k=False};
+    \node (c3k2_1) [c3k2, above of=cbs1] {C3K2\\C3k=Fa  lse};
     \node (cbs2) [cbs, above of=c3k2_1] {CBS\\k=3, s=2, p=1};
     \node (c3k2_2) [c3k2, above of=cbs2] {C3K2\\C3k=False};
     \node (cbs3) [cbs, above of=c3k2_2] {CBS\\k=3, s=2, p=1};
@@ -87,7 +89,7 @@
     \node (PSABlock) [label, above of=C2PSA] {PSABlock};
     \node (Detect) [label, right of=C2PSA, xshift=7.1cm] {Detect};
     \node (CBS) [label, above of=Detect, yshift=8.3cm] {CBS};
-    \node (legend) [label, font=\small, left of=CBS, xshift=-2.9cm] {$kernel size(k), stride(s), padding(p)$};
+    \node (legend) [label, font=\small, left of=CBS, xshift=-2.8cm] {$kernel size(k), stride(s), padding(p)$};
     \node (Head) [label, above of=CBS, yshift=1.2cm] {Head};
     \node (Neck) [label, left of=Head, xshift=-1.7cm] {Neck};
 
