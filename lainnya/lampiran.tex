@@ -2,11 +2,32 @@
     \Large
     \textbf{LAMPIRAN}
 \end{center}
-  
+
+\phantomsection
 \addcontentsline{toc}{chapter}{LAMPIRAN}
 
 \vspace{2ex}
 
 \textbf{Kode Program}
+
+\phantomsection
 \addcontentsline{toc}{section}{Kode Program}
+
+\lstinputlisting[
+  language=Python,
+  caption={Program Deteksi Fusi pada Unit Kontrol.},
+  label={lst:deteksifusi}
+]{program/pameran.py}
+
+\lstinputlisting[
+  language=C++,
+  caption={Program Stream Frame dan Forward Kode Instruksi.},
+  label={lst:ESP32CAM}
+]{program/ESP32-Camera-AP.ino}
+
+\lstinputlisting[
+  language=C++,
+  caption={Program Pengolahan Kode Instruksi Pada Motor.},
+  label={lst:ESP32Motor}
+]{program/ESP-NOW-Motor.ino}
 

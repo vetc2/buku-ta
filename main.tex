@@ -41,7 +41,7 @@
 
 \usepackage{tikz}
 \usepackage{relsize}
-\usetikzlibrary{shapes.geometric, arrows}
+\usetikzlibrary{shapes.geometric, arrows, positioning, decorations.pathreplacing, calc}
 
 \tikzset{
   person/.style={
@@ -69,7 +69,15 @@
                 text centered, text width=2.5cm, draw=black, fill=blue!30},
   process/.style={rectangle, minimum width=3cm, minimum height=1cm, text centered, text width=4cm, draw=black, fill=orange!30},
   decision/.style={diamond, aspect=2, minimum width=3cm, minimum height=1cm, inner sep=0, text centered, text width=3cm, draw=black, fill=yellow!30},
-  arrow/.style={thick,->,>=stealth}
+  arrow/.style={thick,->,>=stealth},
+  layer/.style={rectangle, rounded corners, minimum width=3cm, minimum height=1cm, text centered, align=center, draw=black, fill=blue!30},
+  label/.style={align=right, font=\large, anchor=north},
+  cbs/.style={rectangle, rounded corners, minimum width=3cm, minimum height=1cm, text centered, align=center, draw=black, fill=blue!20},
+  c3k2/.style={rectangle, rounded corners, minimum width=3cm, minimum height=1cm, text centered, align=center, draw=black, fill=yellow!30},
+  upsample/.style={rectangle, rounded corners, minimum width=3cm, minimum height=1cm, text centered, draw=black, fill=red!30},
+  concat/.style={rectangle, draw=black, fill=blue!50, minimum width=2cm, text centered, minimum height=1cm},
+  detect/.style={rectangle, rounded corners, minimum width=1.5cm, minimum height=1cm, text centered, draw=black},
+  conv2D/.style={rectangle, rounded corners, minimum width=2cm, minimum height=1cm, text centered, draw=black, fill=magenta!50}
 }
 
 % Definisi untuk "Hati ini sengaja dikosongkan"
@@ -238,8 +246,8 @@
 \cleardoublepage
 
 % Daftar program
-\renewcommand*\lstlistingname{DAFTAR PROGRAM}
-\addcontentsline{toc}{chapter}{\lstlistingname}
+\renewcommand{\lstlistlistingname}{DAFTAR PROGRAM}
+\addcontentsline{toc}{chapter}{\lstlistlistingname}
 \lstlistoflistings
 \cleardoublepage
 

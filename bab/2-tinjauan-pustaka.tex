@@ -152,22 +152,14 @@ Arsitektur \emph{YOLOv10} dikembangkan dengan memperkenalkan beberapa peningkata
   \label{fig:ArsitekturYolov10}
 \end{figure}
 
-\emph{YOLOv10} memperkenalkan modul \emph{Path Aggregation Network} (\emph{PSA}) yang membantu dalam menggabungkan fitur dari berbagai jalur dalam jaringan, meningkatkan konteks dan skala dari fitur yang diekstraksi. Formula dasar dari \emph{PSA} adalah:
+\emph{YOLOv10} memperkenalkan modul \emph{Path Aggregation Network} (\emph{PSA}) yang membantu dalam menggabungkan fitur dari berbagai jalur dalam jaringan, meningkatkan konteks dan skala dari fitur yang diekstraksi.
 
-\begin{equation}
-  F_{\mathrm{aggregated}} = \mathrm{Concat}(F_{\mathrm{low-level}}, F_{\mathrm{mid-level}}, F_{\mathrm{high-level}})
-\end{equation}
+\subsection{YOLOv11}
+\label{subsec:YOLOv11}
 
-Di mana \( F_{\mathrm{low-level}} \), \( F_{\mathrm{mid-level}} \), dan \( F_{\mathrm{high-level}} \) adalah fitur yang diekstraksi dari berbagai level jaringan. Selain itu, modul \emph{Improved Convolutional Block} (\emph{C2fCIB}) meningkatkan efisiensi jaringan dengan formula:
-
-\begin{equation}
-  \mathrm{C2fCIB}(x) = x + \mathrm{ConvBlock}(\mathrm{ConvBlock}(x))
-\end{equation}
-
-Di mana \( x \) adalah input, dan \( \mathrm{ConvBlock} \) adalah blok konvolusi yang berisi lapisan konvolusi, normalisasi, dan fungsi aktivasi. Fungsi \emph{loss} pada \emph{YOLOv10} dioptimalkan lebih lanjut untuk mengakomodasi arsitektur baru ini, dengan formula umum sebagai berikut:
-\begin{equation}
-  \mathbf{Loss} = \lambda_{\mathrm{coord}} L_{\mathrm{coord}} + \lambda_{\mathrm{conf}} L_{\mathrm{conf}} + \lambda_{\mathrm{class}} L_{\mathrm{class}}
-\end{equation}
+\begin{figure}[H]
+  \input{gambar/arsitektur-yolov11.tex}
+\end{figure}
 
 
 \section{MediaPipe}
