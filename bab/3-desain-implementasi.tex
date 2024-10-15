@@ -374,42 +374,33 @@ Untuk ESP32 CAM, sistem dimulai dengan inisialisasi kamera yang terhubung ke ESP
 
 \begin{figure}[H]
   \centering
-  \resizebox{0.7\linewidth}{!}{
+  \resizebox{0.5\linewidth}{!}{
   \begin{tikzpicture}[node distance=2cm]
+
+    % Nodes
     \node (start) [startstop] {Mulai};
-    \node (camera) [process, below of=start] {Inisialisasi Kamera};
-    \node (wifi) [process, below of=camera] {Set Wi-Fi sebagai Access Point dan Station};
-    \node (server) [process, below of=wifi] {Mulai Wifi Server di port 80 dan 81};
-    \node (espNow) [process, below of=server] {Inisialisasi ESP-NOW dengan Peer ESP B};
-    \node (A) [connector, below of=espNow, xshift=3cm] {A};
+    \node (wifi) [process, below of=start] {Sambungkan ke Wi-Fi};
+    \node (wifiCheck) [decision, below of=wifi, text width=2cm] {Wi-Fi Terhubung?};
+    \node (mdns) [process, below of=wifiCheck] {Setup mDNS dan Port};
+    \node (A) [connector, below of=mdns] {A};
 
-    \node (A0) [connector, right of=start, xshift=4cm] {A};
-    \node (stream) [decision, below of=A0, text width=2cm] {Stream Terhubung?};
-    \node (peer) [io, below of=stream, text width=4.5cm] {Stream frame via 192.168.4.1:81/stream};
-    \node (client) [decision, below of=peer, text width=2cm] {Client Terhubung?};
-    \node (readData) [process, right of=client, xshift=3cm] {Baca Data dari Client di port 80};
-    \node (sendESPNow) [io, below of=readData, text width=3cm] {Kirim Data via ESP-NOW};
-    \node (clientStop) [process, below of=client] {Client Terputus};
-
-    \node (stop) [startstop, right of=stream, xshift=3cm] {Selesai};
+    \node (A0) [connector, right of=start, xshift=3cm] {A};
+    \node (cameraInit) [process, below of=A0] {Inisialisasi Kamera};
+    \node (serverStart) [process, below of=cameraInit] {Mulai Server Kamera};
+    \node (ready) [process, below of=serverStart] {Tampilkan URL\\untuk Akses Stream};
+    \node (end) [startstop, below of=ready] {Selesai};
 
     % Arrows
-    \draw [arrow] (start) -- (camera);
-    \draw [arrow] (camera) -- (wifi);
-    \draw [arrow] (wifi) -- (server);
-    \draw [arrow] (server) -- (espNow);
-    \draw [arrow] (espNow) |- ++(0,-1cm) -| (A);
+    \draw [arrow] (start) -- (wifi);
+    \draw [arrow] (wifi) -- (wifiCheck);
+    \draw [arrow] (wifiCheck) -- node[anchor=west] {Ya} (mdns);
+    \draw [arrow] (mdns) -- (A);
+    \draw [arrow] (A0) -- (cameraInit);
+    \draw [arrow] (cameraInit) -- (serverStart);
+    \draw [arrow] (serverStart) -- (ready);
+    \draw [arrow] (ready) -- (end);
 
-    \draw [arrow] (A0) -- (stream);
-    \draw [arrow] (stream) -- node[anchor=south] {Tidak} (stop);
-    \draw [arrow] (stream) -- node[anchor=east] {Ya} (peer);
-    \draw [arrow] (peer) -- (client);
-
-    \draw [arrow] (client) -- node[anchor=north] {Ya} (readData);
-    \draw [arrow] (client) -- node[anchor=east] {Tidak} (clientStop);
-    \draw [arrow] (readData) -- (sendESPNow);
-    \draw [arrow] (sendESPNow) -- (clientStop);
-    \draw [arrow] (clientStop) |- ++(0,-1cm) -| (A);
+    \draw [arrow] (wifiCheck.west) -| node[anchor=north west] {Tidak} ++(-1,0) |- (wifi.west);
   \end{tikzpicture}
   }
   \caption{Flowchart ESP A}
