@@ -32,7 +32,7 @@ Fitur utama dari penelitian ini adalah kombinasi antara \emph{ESP32-CAM} dan \em
 
 \emph{Object detection} atau deteksi objek adalah teknologi inti dalam banyak aplikasi modern seperti sistem pengawasan, pengenalan wajah, dan kendaraan otonom. Teknologi ini digunakan untuk mendeteksi dan mengklasifikasikan berbagai objek dalam gambar atau video. Dalam konteks penelitian ini, \emph{object detection} berperan penting untuk mendeteksi keberadaan manusia sehingga kursi roda otonom dapat mengikuti gerakan pengguna secara real-time. Perkembangan pesat dalam \emph{deep learning}, terutama dengan penggunaan \emph{Convolutional Neural Network} (CNN), telah mengoptimalkan kemampuan \emph{object detection}. \emph{CNN}, dengan berbagai lapisannya seperti lapisan konvolusi, aktivasi, \emph{pooling}, dan \emph{fully connected}, menjadi fondasi dari banyak metode deteksi objek saat ini, termasuk \emph{YOLO} (You Only Look Once).
 
-\emph{YOLO}, salah satu metode deteksi objek paling populer, mampu melakukan deteksi dengan kecepatan tinggi dan akurasi yang baik, menjadikannya sangat cocok untuk aplikasi \emph{real-time} seperti kursi roda otonom. \emph{YOLOv8}, versi terbaru dari keluarga \emph{YOLO}, menawarkan peningkatan signifikan dalam kecepatan dan akurasi, serta tambahan fitur seperti \emph{YOLOv8 pose} untuk deteksi pose manusia. Selain itu, metode pelacakan objek seperti \emph{DeepSORT} yang menggunakan \emph{Kalman Filter} dan \emph{Hungarian Algorithm}, serta teknologi lainnya seperti \emph{MediaPipe Pose}, semakin memperkuat kemampuan sistem kursi roda otonom dalam melacak dan mengikuti gerakan manusia dengan presisi tinggi.
+\emph{YOLO}, salah satu metode deteksi objek paling populer, mampu melakukan deteksi dengan kecepatan tinggi dan akurasi yang baik, menjadikannya sangat cocok untuk aplikasi \emph{real-time} seperti kursi roda otonom. \emph{YOLOv11}, versi terbaru dari keluarga \emph{YOLO}, menawarkan peningkatan signifikan dalam kecepatan dan akurasi, serta tambahan fitur seperti \emph{YOLO pose} untuk deteksi pose manusia. Selain itu, metode pelacakan objek seperti \emph{DeepSORT} yang menggunakan \emph{Kalman Filter} dan \emph{Hungarian Algorithm}, serta teknologi lainnya seperti \emph{MediaPipe Pose}, semakin memperkuat kemampuan sistem kursi roda otonom dalam melacak dan mengikuti gerakan manusia dengan presisi tinggi.
 
 \section{Convolutional Neural Network (CNN)}
 \label{sec:cnn}
@@ -276,7 +276,7 @@ AP dihitung dengan mencari area di bawah kurva \emph{precision-recall} (\emph{PR
 
 Di mana \(N\) : Jumlah kelas dalam dataset dan \(AP_i\) : \emph{Average precision} untuk kelas ke-i.
 
-\emph{mAP} memberikan gambaran yang lebih luas mengenai performa detektor objek, karena metrik ini mempertimbangkan baik \emph{precision} maupun \emph{recall} secara bersamaan. Dalam konteks \emph{YOLOv8} yang digunakan pada kursi roda otonom, \emph{mAP} menjadi acuan untuk mengevaluasi performa sistem dalam mendeteksi berbagai objek seperti manusia, rintangan, dan lingkungan sekitar.
+\emph{mAP} memberikan gambaran yang lebih luas mengenai performa detektor objek, karena metrik ini mempertimbangkan baik \emph{precision} maupun \emph{recall} secara bersamaan. Nilai \emph{mAP} ini akan menjadi acuan untuk mengevaluasi performa sistem, seperti mendeteksi berbagai objek seperti manusia, rintangan, dan lingkungan sekitar.
 
 \subsection{Intersection over Union (IoU)}
 \label{subsec:IoU}
