@@ -1,0 +1,47 @@
+\begin{tikzpicture}[node distance=2cm]
+\node (start) [startstop] {Mulai};
+\node (initVars) [process, below of=start] {Inisialisasi Variabel dan Hardware};
+\node (captureFrame) [io, below of=initVars] {Ambil Frame dari Kamera};
+\node (yoloDetect) [process, below of=captureFrame] {Deteksi Objek Menggunakan Yolo};
+\node (A) [connector, below of=yoloDetect] {A};
+\node (C0) [connector, left of=initVars, xshift=-1.5cm, yshift=-1cm] {C};
+
+\node (A0) [connector, right of=start, xshift=4.5cm] {A};
+\node (checkBoxes) [decision, below of=A0] {Deteksi Objek?};
+\node (processBox) [process, below of=checkBoxes] {Proses Bounding Box};
+\node (trackingID) [process, below of=processBox] {Proses Tracking ID};
+\node (mediapipeProcessing) [process, below of=trackingID] {Deteksi Landmark Pose pada MediaPipe};
+\node (B) [connector, below of=mediapipeProcessing, xshift=1.5cm] {B};
+
+\node (B0) [connector, right of=A0, xshift=3.5cm] {B};
+\node (calcDirection) [process, below of=B0] {Proses Kalkulasi Arah dan Jarak};
+\node (controlWheelchair) [io, below of=calcDirection] {Kirim Data ke Kursi Roda};
+\node (display) [io, below of=controlWheelchair] {Gambar Arah pada Frame};
+\node (endLoop) [decision, below of=display, yshift=-.5cm] {Tombol 'q' Ditekan?};
+\node (C) [connector, right of=endLoop, xshift=1cm, yshift=-1.5cm] {C};
+\node (end) [startstop, below of=endLoop, yshift=-1cm] {Selesai};
+
+\node (searchPerson) [process, below of=mediapipeProcessing, xshift=-3cm] {Memuat Arah dan Jarak Sebelumnya};
+
+\draw [arrow] (start) -- (initVars);
+\draw [arrow] (initVars) -- (captureFrame);
+\draw [arrow] (captureFrame) -- (yoloDetect);
+\draw [arrow] (yoloDetect) -- (A);
+\draw [arrow] (C0) |- (captureFrame);
+
+\draw [arrow] (A0) -- (checkBoxes);
+\draw [arrow] (checkBoxes) -- node[anchor=west] {Ya} (processBox);
+\draw [arrow] (processBox) -- (trackingID);
+\draw [arrow] (trackingID) -- (mediapipeProcessing);
+\draw [arrow] (mediapipeProcessing) -- +(0,-2cm);
+
+\draw [arrow] (B0) -- (calcDirection);
+\draw [arrow] (calcDirection) -- (controlWheelchair);
+\draw [arrow] (controlWheelchair) -- (display);
+\draw [arrow] (display) -- (endLoop);
+\draw [arrow] (endLoop) -| node[anchor=south east] {Tidak} (C);
+\draw [arrow] (endLoop) -- node[anchor=west] {Ya} (end);
+
+\draw [arrow] (checkBoxes) -| node[anchor=south west] {Tidak} (searchPerson);
+\draw [arrow] (searchPerson) -- (B);
+\end{tikzpicture}

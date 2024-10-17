@@ -1,0 +1,32 @@
+\begin{tikzpicture}[node distance=2cm]
+% Nodes
+\node (start) [startstop] {Mulai};
+\node (init) [process, below of=start] {Inisialisasi Arduino, WiFi, PWM dan Pin};
+\node (connect) [process, below of=init] {Menyambungkan Serial WiFi dan Server};
+\node (setup) [process, below of=connect] {Setup PinMode, ledc-Setup, ledcAttachPin};
+\node (A) [connector, below of=setup, xshift=3cm, yshift=-.5cm] {A};
+
+\node (A0) [connector, right of=start, xshift=4cm] {A};
+\node (connected?) [decision, below of=A0, text width=2cm] {Perangkat Terhubung?};
+\node (msg?) [decision, below of=connected?, yshift=-.5cm] {Pesan Diterima?};
+
+\node (stop) [startstop, right of=connected?, xshift=3cm] {Stop};
+\node (readstr) [process, right of=msg?, xshift=3cm] {Read String sampai terdapat '\textbackslash n'};
+\node (extract) [process, below of=readstr] {Ekstrak String menjadi Arah dan Kecepatan};
+\node (move) [io, below of=msg?, text width=3.5cm] {Menggerakkan Motor Kursi Roda};
+
+% Arrows
+\draw [arrow] (start) -- (init);
+\draw [arrow] (init) -- (connect);
+\draw [arrow] (connect) -- (setup);
+\draw [arrow] (setup) |- ++(0,-1.55cm) -| (A);
+
+\draw [arrow] (A0) -- (connected?);
+\draw [arrow] (connected?) -- node[anchor=east] {Ya} (msg?);
+\draw [arrow] (connected?) -- node[anchor=south] {Tidak} (stop);
+\draw [arrow] (msg?) -- node[anchor=south] {Ya} (readstr);
+\draw [arrow] (msg?.west) -| node[anchor=north west] {Tidak} (A);
+\draw [arrow] (readstr) -- (extract);
+\draw [arrow] (extract) -- (move);
+\draw [arrow] (move.south) |- ++(0,-.5) -| (A);
+\end{tikzpicture}

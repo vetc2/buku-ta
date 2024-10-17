@@ -1,0 +1,37 @@
+\begin{tikzpicture}[node distance=2cm]
+\node (start) [startstop] {Mulai};
+\node (getCurrentTime) [io, below of=start] {Ambil Waktu\\Saat ini};
+\node (check_delay) [decision, below of=getCurrentTime, text width=2.5cm] {\emph{delay} \(\lor\) Data: C?};
+\node (check_sent) [decision, below of=check_delay, yshift=-.5cm] {Sudah dikirim?};
+\node (A) [connector, left of=check_sent, xshift=-1cm] {A};
+\node (send_data) [process, below of=check_sent] {Mengirim data};
+\node (sent_true) [process, below of=send_data] {Penanda data sudah dikirim};
+
+\node (A0) [connector, right of=start, xshift=4cm, yshift=-.5cm] {A};
+\node (check_update) [decision, below of=A0] {Data berubah?};
+\node (send_C) [process, below of=check_update] {Mengirim 'C\textbackslash n'};
+\node (check_input) [decision, below of=send_C] {Input: C?};
+\node (update_data) [io, below of=check_input, text width=2.7cm] {Data diperbarui};
+\node (sent_false) [process, below of=update_data] {Penanda data belum dikirim};
+\node (stop) [startstop, below of=sent_false, xshift=-3cm] {Selesai};
+
+\draw [arrow] (start) -- (getCurrentTime);
+\draw [arrow] (getCurrentTime) -- (check_delay);
+\draw [arrow] (check_delay) -- node[anchor=west] {Tidak} (check_sent);
+\draw [arrow] (check_sent) -- node[anchor=west] {Tidak} (send_data);
+\draw [arrow] (send_data) -- (sent_true);
+\draw [arrow] (check_sent) -- node[anchor=north] {Ya} (A);
+
+\draw [arrow] (A0) -- (check_update);
+\draw [arrow] (check_update) -- node[anchor=west] {Ya} (send_C);
+\draw [arrow] (send_C) -- (check_input);
+\draw [arrow] (check_input) -- node[anchor=west] {Tidak} (update_data);
+\draw [arrow] (update_data) -- (sent_false);
+
+\draw [arrow] (check_delay) -| node[anchor=north east] {Ya} (stop);
+\draw [arrow] (check_update) -| node[anchor=north west] {Tidak} (stop);
+\draw [arrow] (check_input) -| node[anchor=north west] {Ya} (stop);
+\draw [arrow] (sent_true) |- +(3cm,-1cm) -- (stop);
+\draw [arrow] (sent_false) |- +(-3cm,-1cm) -- (stop);
+
+\end{tikzpicture}

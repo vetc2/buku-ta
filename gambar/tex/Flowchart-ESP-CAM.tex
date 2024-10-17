@@ -1,0 +1,27 @@
+\begin{tikzpicture}[node distance=2cm]
+
+% Nodes
+\node (start) [startstop] {Mulai};
+\node (wifi) [process, below of=start] {Sambungkan ke Wi-Fi};
+\node (wifiCheck) [decision, below of=wifi, text width=2cm] {Wi-Fi Terhubung?};
+\node (mdns) [process, below of=wifiCheck] {Setup mDNS dan Port};
+\node (A) [connector, below of=mdns] {A};
+
+\node (A0) [connector, right of=start, xshift=4cm] {A};
+\node (cameraInit) [process, below of=A0] {Inisialisasi Kamera};
+\node (serverStart) [process, below of=cameraInit] {Mulai Server Kamera};
+\node (ready) [io, below of=serverStart, text width=3.5cm] {Tampilkan URL\\untuk Akses Stream};
+\node (end) [startstop, below of=ready] {Selesai};
+
+% Arrows
+\draw [arrow] (start) -- (wifi);
+\draw [arrow] (wifi) -- (wifiCheck);
+\draw [arrow] (wifiCheck) -- node[anchor=west] {Ya} (mdns);
+\draw [arrow] (mdns) -- (A);
+\draw [arrow] (A0) -- (cameraInit);
+\draw [arrow] (cameraInit) -- (serverStart);
+\draw [arrow] (serverStart) -- (ready);
+\draw [arrow] (ready) -- (end);
+
+\draw [arrow] (wifiCheck.west) -| node[anchor=north west] {Tidak} ++(-1,0) |- (wifi.west);
+\end{tikzpicture}

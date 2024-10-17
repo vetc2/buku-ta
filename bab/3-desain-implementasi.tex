@@ -48,29 +48,31 @@ Kamera yang digunakan dalam sistem ini adalah OV5640, sebuah sensor kamera CMOS 
 
 Selain resolusinya yang tinggi, OV5640 juga dilengkapi dengan berbagai fitur canggih untuk pengolahan gambar otomatis. Berdasarkan datasheet, fitur seperti auto white balance, auto exposure, dan auto focus memungkinkan kamera ini beradaptasi secara otomatis terhadap perubahan kondisi pencahayaan dan jarak, sehingga tetap menghasilkan gambar berkualitas tinggi dalam berbagai situasi. OV5640 juga mendukung fitur face detection dan image scaling, yang sangat berguna dalam mendeteksi objek atau target manusia secara cepat dan akurat.
 
-\subsection{Laptop}
-\label{subsec:laptop}
-Pada sistem ini, unit kontrol utama yang digunakan adalah laptop pribadi yang berperan sebagai pengolah data utama selama pengujian. Laptop ini memiliki spesifikasi yang dirancang untuk menangani beban komputasi tinggi, sangat cocok untuk pengolahan data secara real-time, sebagaimana ditunjukkan pada tabel.
+\subsection{Unit Kontrol}
+\label{subsec:UnitKontrol}
+% Pada sistem ini, unit kontrol utama yang digunakan adalah laptop pribadi yang berperan sebagai pengolah data utama selama pengujian. Laptop ini memiliki spesifikasi yang dirancang untuk menangani beban komputasi tinggi, sangat cocok untuk pengolahan data secara real-time, sebagaimana ditunjukkan pada tabel.
 
-\begin{table}[H]
-  \centering
-  \caption{Spesifikasi Laptop MSI GF63 untuk Unit Kontrol}
-  \begin{tabular}{|l|l|}
-  \hline
-  \textbf{Komponen}       & \textbf{Spesifikasi}                     \\ \hline
-  Model Laptop            & MSI GF63                                 \\ \hline
-  Prosesor                & Intel Core i7-10750H, 6 core, 12 threads \\ \hline
-  GPU                     & NVIDIA RTX 3050                          \\ \hline
-  RAM                     & 16GB DDR4, 3200 MHz                      \\ \hline
-  Penyimpanan             & SSD M.2                                  \\ \hline
-  Konektivitas WiFi       & WiFi 802.11ac (MU-MIMO)                  \\ \hline
-  Pengolahan Data         & Inferensi model, ESP dan Python (venv)   \\ \hline
-  \end{tabular}
-\end{table}
+% \begin{table}[H]
+%   \centering
+%   \caption{Spesifikasi Laptop MSI GF63 untuk Unit Kontrol}
+%   \begin{tabular}{|l|l|}
+%   \hline
+%   \textbf{Komponen}       & \textbf{Spesifikasi}                     \\ \hline
+%   Model Laptop            & MSI GF63                                 \\ \hline
+%   Prosesor                & Intel Core i7-10750H, 6 core, 12 threads \\ \hline
+%   GPU                     & NVIDIA RTX 3050                          \\ \hline
+%   RAM                     & 16GB DDR4, 3200 MHz                      \\ \hline
+%   Penyimpanan             & SSD M.2                                  \\ \hline
+%   Konektivitas WiFi       & WiFi 802.11ac (MU-MIMO)                  \\ \hline
+%   Pengolahan Data         & Inferensi model, ESP dan Python (venv)   \\ \hline
+%   \end{tabular}
+% \end{table}
 
-Salah satu aspek penting dari unit kontrol dalam proyek ini adalah dukungan WiFi yang cepat dan stabil dalam komunikasi antar perangkat. Sistem bergantung pada data video yang dikirim oleh kamera OV5640 melalui ESP32 ke laptop untuk diolah, dan proses ini harus berlangsung tanpa hambatan. Konektivitas WiFi yang disediakan oleh laptop ini memungkinkan pengiriman data dalam waktu nyata dengan minim latensi, yang sangat penting untuk deteksi target secara cepat.
+Unit kontrol pada sistem ini, berperan sebagai pengolah data utama selama pengujian, dengan spesifikasi yang dirancang untuk menangani beban komputasi tinggi dan cocok untuk pengolahan data secara real-time.
 
-Kemampuan untuk menjaga kestabilan koneksi WiFi pada jarak yang lebih jauh dari router juga penting dalam pengujian di area yang luas. Laptop ini mampu menangani beberapa perangkat yang terhubung secara simultan, memungkinkan komunikasi yang efisien antara ESP32 tanpa penurunan performa. Teknologi ini sangat penting untuk memastikan bahwa laptop dapat terus memproses data video yang dikirimkan oleh kamera dan memberikan instruksi dengan respons yang cepat.
+Salah satu aspek penting dari unit kontrol dalam proyek ini adalah dukungan WiFi yang cepat dan stabil dalam komunikasi antar perangkat. Sistem bergantung pada data video yang dikirim oleh kamera OV5640 melalui ESP32 ke laptop untuk diolah, dan proses ini harus berlangsung tanpa hambatan. Konektivitas WiFi yang disediakan juga memungkinkan pengiriman data dalam waktu nyata dengan minim latensi, yang sangat penting untuk deteksi target secara cepat.
+
+Kemampuan untuk menjaga kestabilan koneksi WiFi pada jarak yang lebih jauh dari router juga penting dalam pengujian di area yang luas. Seperti dengan menangani beberapa perangkat yang terhubung secara simultan, memungkinkan komunikasi yang efisien antara ESP32 tanpa penurunan performa. Teknologi ini sangat penting untuk memastikan bahwa sistem dapat terus memproses data video yang dikirimkan oleh kamera dan memberikan instruksi dengan respons yang cepat.
 
 Data citra yang didapatkan menggunakan kamera OV5640, selanjutnya akan diproses melalui serangkaian pengolahan data citra menggunakan model deteksi yang telah dilatih sebelumnya. Model ini dilatih menggunakan arsitektur YOLOv11. Model yang digunakan diberi nama Best.pt, yang merupakan file hasil pelatihan yang telah di \emph{training} untuk mendeteksi kelas Manusia.
 
@@ -259,111 +261,18 @@ Kode program yang digunakan dalam penelitian ini dimulai dengan inisialisasi var
 \begin{figure}[H]
   \centering
   \resizebox{0.8\linewidth}{!}{
-    \begin{tikzpicture}[node distance=2cm]
-      \node (start) [startstop] {Mulai};
-      \node (initVars) [process, below of=start] {Inisialisasi Variabel dan Hardware};
-      \node (captureFrame) [io, below of=initVars] {Ambil Frame dari Kamera};
-      \node (yoloDetect) [process, below of=captureFrame] {Deteksi Objek Menggunakan Yolo};
-      \node (A) [connector, below of=yoloDetect] {A};
-      \node (C0) [connector, left of=initVars, xshift=-1.5cm, yshift=-1cm] {C};
-  
-      \node (A0) [connector, right of=start, xshift=4.5cm] {A};
-      \node (checkBoxes) [decision, below of=A0] {Deteksi Objek?};
-      \node (processBox) [process, below of=checkBoxes] {Proses Bounding Box};
-      \node (trackingID) [process, below of=processBox] {Proses Tracking ID};
-      \node (mediapipeProcessing) [process, below of=trackingID] {Deteksi Landmark Pose pada MediaPipe};
-      \node (B) [connector, below of=mediapipeProcessing, xshift=1.5cm] {B};
-  
-      \node (B0) [connector, right of=A0, xshift=3.5cm] {B};
-      \node (calcDirection) [process, below of=B0] {Proses Kalkulasi Arah dan Jarak};
-      \node (controlWheelchair) [io, below of=calcDirection] {Kirim Data ke Kursi Roda};
-      \node (display) [io, below of=controlWheelchair] {Gambar Arah pada Frame};
-      \node (endLoop) [decision, below of=display, yshift=-.5cm] {Tombol 'q' Ditekan?};
-      \node (C) [connector, right of=endLoop, xshift=1cm, yshift=-1.5cm] {C};
-      \node (end) [startstop, below of=endLoop, yshift=-1cm] {Selesai};
-  
-      \node (searchPerson) [process, below of=mediapipeProcessing, xshift=-3cm] {Memuat Arah dan Jarak Sebelumnya};
-      
-      \draw [arrow] (start) -- (initVars);
-      \draw [arrow] (initVars) -- (captureFrame);
-      \draw [arrow] (captureFrame) -- (yoloDetect);
-      \draw [arrow] (yoloDetect) -- (A);
-      \draw [arrow] (C0) |- (captureFrame);
-  
-      \draw [arrow] (A0) -- (checkBoxes);
-      \draw [arrow] (checkBoxes) -- node[anchor=west] {Ya} (processBox);
-      \draw [arrow] (processBox) -- (trackingID);
-      \draw [arrow] (trackingID) -- (mediapipeProcessing);
-      \draw [arrow] (mediapipeProcessing) -- +(0,-2cm);
-  
-      \draw [arrow] (B0) -- (calcDirection);
-      \draw [arrow] (calcDirection) -- (controlWheelchair);
-      \draw [arrow] (controlWheelchair) -- (display);
-      \draw [arrow] (display) -- (endLoop);
-      \draw [arrow] (endLoop) -| node[anchor=south east] {Tidak} (C);
-      \draw [arrow] (endLoop) -- node[anchor=west] {Ya} (end);
-      
-      \draw [arrow] (checkBoxes) -| node[anchor=south west] {Tidak} (searchPerson);
-      \draw [arrow] (searchPerson) -- (B);
-    \end{tikzpicture}
+    \input{gambar/tex/flowchart-py.tex}
   }
   \caption{Flowchart program python}
 \end{figure}
 
 Program kemudian menghitung arah dan jarak target, yang digunakan untuk menentukan instruksi pergerakan kursi roda. Instruksi tersebut dikirimkan ke ESP32, yang mengendalikan motor kursi roda untuk mengikuti manusia secara otomatis. Selain itu, arah pergerakan digambarkan pada frame video yang ditampilkan sebagai bentuk visualisasi dari proses yang sedang berjalan. Program akan terus melakukan loop, menangkap gambar baru, memproses deteksi, dan mengirimkan perintah hingga pengguna menekan tombol 'q' untuk mengakhiri program.
 
+
 \begin{figure}[H]
   \centering
-  \resizebox{0.9\linewidth}{!}{
-  \begin{tikzpicture}[node distance=2cm]
-
-    \node (start) [startstop] {Mulai};
-    \node (getCurrentTime) [io, below of=start] {Ambil Waktu\\Saat ini};
-    \node (checkSocket) [decision, below of=getCurrentTime, yshift=-.5cm] {Socket Tersedia?};
-    \node (checkData) [decision, below of=checkSocket, yshift=-1cm] {Arah Tersedia?};
-    \node (A) [connector, below of=checkData, xshift=-2.5cm] {A};
-    \node (B) [connector, below of=checkData, xshift=2.5cm] {B};
-
-    \node (A0) [connector, right of=start, xshift=5.5cm] {A};
-    \node (setTime) [process, below of=A0] {Penanda berada dalam \emph{delay} yang ditentukan};
-    \node (compareData) [decision, below of=setTime, yshift=-.5cm] {Arah Berubah?};
-    \node (sendC) [io, below of=compareData, xshift=2.5cm] {Kirim 'C\textbackslash n' \\ke Socket};
-    \node (setSentFalse) [process, below of=sendC] {Penanda Belum dikirim};
-    \node (C) [connector, below of=setSentFalse, xshift=-5cm, yshift=1cm] {C};
-
-    \node (B0) [connector, right of=A0, xshift=3cm] {B};
-
-    \node (C0) [connector, right of=B0, xshift=3cm] {C};
-    \node (setData) [process, below of=C0] {Simpan Arah untuk referensi selanjutnya};
-    \node (checkInterval) [decision, below of=setData, yshift=-.5cm] {Sudah dikirim \(\lor\) \emph{delay}?};
-    \node (sendData) [io, below of=checkInterval, xshift=3cm] {Kirim Arah \\ke Socket};
-    \node (setSentTrue) [process, below of=sendData] {Penanda \\Sudah dikirim};
-    \node (end) [startstop, below of=setSentTrue, xshift=-6cm, yshift=-1cm] {Selesai};
-    
-    \draw [arrow] (start) -- (getCurrentTime);
-    \draw [arrow] (getCurrentTime) -- (checkSocket);
-    \draw [arrow] (checkSocket) -- node[anchor=east] {Ya} (checkData);
-    \draw [arrow] (checkData) -| node[anchor=north west] {Ya} (A);
-    \draw [arrow] (checkData) -| node[anchor=north east] {Tidak} (B);
-
-    \draw [arrow] (A0) -- (setTime);
-    \draw [arrow] (setTime) -- (compareData);
-    \draw [arrow] (compareData) -| node[anchor=north east] {Ya} (sendC);
-    \draw [arrow] (sendC) -- (setSentFalse);
-    \draw [arrow] (compareData) -| node[anchor=north west] {Tidak} (C);
-    \draw [arrow] (setSentFalse.west) -- +(-2.9cm,0);
-
-    \draw [arrow] (C0) -- (setData);
-    \draw [arrow] (setData) -- (checkInterval);
-    \draw [arrow] (checkInterval) -| node[anchor=north east] {Tidak} (sendData);
-    \draw [arrow] (checkInterval) -| node[anchor=north west] {Ya} (end);
-    \draw [arrow] (sendData) -- (setSentTrue);
-    \draw [arrow] (setSentTrue.south) |- +(-6cm,-1.5cm);
-
-    \draw [arrow] (B0) |- +(5cm,-3cm);
-    \draw [arrow] (checkSocket.east) -| node[anchor=north east] {Tidak} +(2cm,0) |-  +(12.7cm,-6.05cm);
-  
-  \end{tikzpicture}
+  \resizebox{0.5\linewidth}{!}{
+    \input{gambar/tex/Flowchart-send-data.tex}
   }
   \caption{Flowchart regulasi arah}
 \end{figure}
@@ -375,40 +284,12 @@ Untuk ESP32 CAM, sistem dimulai dengan inisialisasi kamera yang terhubung ke ESP
 \begin{figure}[H]
   \centering
   \resizebox{0.5\linewidth}{!}{
-  \begin{tikzpicture}[node distance=2cm]
-
-    % Nodes
-    \node (start) [startstop] {Mulai};
-    \node (wifi) [process, below of=start] {Sambungkan ke Wi-Fi};
-    \node (wifiCheck) [decision, below of=wifi, text width=2cm] {Wi-Fi Terhubung?};
-    \node (mdns) [process, below of=wifiCheck] {Setup mDNS dan Port};
-    \node (A) [connector, below of=mdns] {A};
-
-    \node (A0) [connector, right of=start, xshift=3cm] {A};
-    \node (cameraInit) [process, below of=A0] {Inisialisasi Kamera};
-    \node (serverStart) [process, below of=cameraInit] {Mulai Server Kamera};
-    \node (ready) [process, below of=serverStart] {Tampilkan URL\\untuk Akses Stream};
-    \node (end) [startstop, below of=ready] {Selesai};
-
-    % Arrows
-    \draw [arrow] (start) -- (wifi);
-    \draw [arrow] (wifi) -- (wifiCheck);
-    \draw [arrow] (wifiCheck) -- node[anchor=west] {Ya} (mdns);
-    \draw [arrow] (mdns) -- (A);
-    \draw [arrow] (A0) -- (cameraInit);
-    \draw [arrow] (cameraInit) -- (serverStart);
-    \draw [arrow] (serverStart) -- (ready);
-    \draw [arrow] (ready) -- (end);
-
-    \draw [arrow] (wifiCheck.west) -| node[anchor=north west] {Tidak} ++(-1,0) |- (wifi.west);
-  \end{tikzpicture}
+    \input{gambar/tex/Flowchart-ESP-CAM.tex}
   }
-  \caption{Flowchart ESP A}
+  \caption{Flowchart ESP-CAM}
 \end{figure}
 
-Sistem ini memanfaatkan \emph{ESP32S3-CAM} sebagai \emph{WiFi Access Point} dan menerapkan protokol \emph{mDNS (Multicast DNS)} untuk secara otomatis memberikan nama unik pada setiap kamera. Setiap kamera terhubung dengan nama berbeda, seperti \emph{camera.local}, \emph{camera2.local}, dan seterusnya. Alokasi port untuk streaming diatur secara otomatis, misalnya melalui port \emph{81}, \emph{82}, dan seterusnya, dengan akses langsung ke \emph{endpoint} \emph{/stream}.
-
-Pendekatan ini memudahkan penambahan kamera tanpa perlu konfigurasi manual. Dengan proses pendaftaran otomatis, sistem dapat menyesuaikan diri untuk berbagai kebutuhan, seperti pemantauan dari berbagai sudut atau penggunaan kamera cadangan sebagai redundansi. Setiap perangkat diakses melalui jaringan lokal menggunakan URL unik, yang menyederhanakan manajemen dan akses kamera dalam jaringan.
+Sistem ini menerapkan protokol \emph{mDNS (Multicast DNS)} untuk secara otomatis memberikan nama unik pada setiap kamera. Setiap kamera terhubung dengan nama berbeda, seperti \emph{camera.local}, \emph{camera2.local}, dan seterusnya. Alokasi port untuk streaming diatur secara otomatis, misalnya melalui port \emph{81}, \emph{82}, dan seterusnya, dengan akses langsung ke \emph{endpoint} \emph{/stream}. Pendekatan ini memudahkan penambahan kamera tanpa perlu konfigurasi manual. Dengan proses pendaftaran otomatis, sistem dapat menyesuaikan diri untuk berbagai kebutuhan, seperti pemantauan dari berbagai sudut atau penggunaan kamera cadangan sebagai redundansi. Setiap perangkat diakses melalui jaringan lokal menggunakan URL unik, yang menyederhanakan manajemen dan akses kamera dalam jaringan.
 
 Selain itu, penggunaan server WiFi memungkinkan unit kontrol (seperti komputer atau laptop) mengakses data gambar secara langsung melalui jaringan lokal. Hal ini sangat berguna untuk menganalisis gambar secara lebih rinci dan mengambil keputusan kontrol yang lebih kompleks, seperti perubahan arah atau kecepatan kursi roda berdasarkan posisi target dalam frame. Dengan demikian, proses ini memberikan fleksibilitas yang tinggi dalam mengatur pergerakan kursi roda berdasarkan data yang diperoleh dari kamera.
 
@@ -419,41 +300,9 @@ Frame yang ditangkap oleh kamera dikirim melalui alamat lokal tertentu yang juga
 \begin{figure}[H]
   \centering
   \resizebox{0.7\linewidth}{!}{
-  \begin{tikzpicture}[node distance=2cm]
-    % Nodes
-    \node (start) [startstop] {Mulai};
-    \node (init) [process, below of=start] {Inisialisasi Arduino, WiFi, PWM dan Pin};
-    \node (connect) [process, below of=init] {Menyambungkan Serial WiFi dan Server};
-    \node (setup) [process, below of=connect] {Setup PinMode, ledc-Setup, ledcAttachPin};
-    \node (A) [connector, below of=setup, xshift=3cm, yshift=-.5cm] {A};
-
-    \node (A0) [connector, right of=start, xshift=4cm] {A};
-    \node (connected?) [decision, below of=A0, text width=2cm] {Perangkat Terhubung?};
-    \node (msg?) [decision, below of=connected?, yshift=-.5cm] {Pesan Diterima?};
-
-    \node (stop) [startstop, right of=connected?, xshift=3cm] {Stop};
-    \node (readstr) [process, right of=msg?, xshift=3cm] {Read String sampai terdapat '\textbackslash n'};
-    \node (extract) [process, below of=readstr] {Ekstrak String menjadi Arah dan Kecepatan};
-    \node (move) [io, below of=msg?, text width=3.5cm] {Menggerakkan Motor Kursi Roda};
-
-
-    % Arrows
-    \draw [arrow] (start) -- (init);
-    \draw [arrow] (init) -- (connect);
-    \draw [arrow] (connect) -- (setup);
-    \draw [arrow] (setup) |- ++(0,-1.55cm) -| (A);
-
-    \draw [arrow] (A0) -- (connected?);
-    \draw [arrow] (connected?) -- node[anchor=east] {Ya} (msg?);
-    \draw [arrow] (connected?) -- node[anchor=south] {Tidak} (stop);
-    \draw [arrow] (msg?) -- node[anchor=south] {Ya} (readstr);
-    \draw [arrow] (msg?.west) -| node[anchor=north west] {Tidak} (A);
-    \draw [arrow] (readstr) -- (extract);
-    \draw [arrow] (extract) -- (move);
-    \draw [arrow] (move.south) |- ++(0,-.5) -| (A);
-  \end{tikzpicture}
+    \input{gambar/tex/Flowchart ESP-Motor.tex}
   }
-  \caption{Flowchart ESP B}
+  \caption{Flowchart ESP Motor}
 \end{figure}
 
 Pada sisi ESP32 Motor, perangkat dimulai dengan inisialisasi berbagai komponen, seperti PWM, WiFi, dan pin untuk mengendalikan motor. Setelah terhubung ke WiFi, ESP32 B menunggu pesan dari server yang berfungsi sebagai pusat kendali. Jika pesan diterima, string yang mengandung informasi arah dan kecepatan akan diekstrak, kemudian diolah untuk menentukan pergerakan motor kursi roda. Sistem menggunakan data ini untuk mengatur arah dan kecepatan motor, yang memastikan kursi roda dapat mengikuti target secara akurat dan responsif. Proses ini dilakukan secara berulang untuk setiap update data yang diterima, memungkinkan kursi roda menyesuaikan gerakan dengan perubahan posisi target secara real-time.

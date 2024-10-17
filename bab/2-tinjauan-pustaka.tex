@@ -160,7 +160,10 @@ YOLO11 adalah terobosan terbaru dalam seri detektor objek real-time dari Ultraly
 Efisiensi dan kecepatan juga dipertajam melalui arsitektur yang disempurnakan dan \emph{pipeline} pelatihan yang lebih optimal, sehingga pemrosesan menjadi lebih cepat tanpa mengorbankan akurasi dan performa. \emph{YOLO11} mendukung implementasi di berbagai platform, mulai dari perangkat \emph{edge}, platform \emph{cloud}, hingga sistem dengan \emph{GPU NVIDIA}, membuatnya fleksibel untuk digunakan di berbagai lingkungan. Selain itu, \emph{YOLO11} mendukung beragam tugas, termasuk deteksi objek, segmentasi \emph{instance}, klasifikasi gambar, estimasi \emph{pose}, dan deteksi objek terorientasi (\emph{OBB}). Salah satu pembaruan utama dalam arsitektur \emph{YOLO11} adalah pengenalan modul \emph{C3K2} yang menggantikan modul \emph{C2F} pada \emph{YOLOv8}, serta penambahan modul \emph{C2PSA} setelah modul \emph{SPPF} untuk meningkatkan kapabilitas deteksi lebih lanjut.
 
 \begin{figure}[H]
-  \input{gambar/arsitektur-yolov11.tex}
+  \centering
+  \resizebox{1\linewidth}{!}{
+    \input{gambar/tex/arsitektur-yolov11.tex}
+  }
   \caption{Arsitektur Yolov11}
   \label{fig:ArsitekturYolov11}
 \end{figure}
@@ -174,8 +177,7 @@ Arsitektur \emph{C3K2} merupakan versi yang dimodifikasi dari modul \emph{C2F}. 
   \label{fig:c3k2}
 \end{figure}
 
-Lapisan \emph{feedforward} mengubah fitur input ke dalam ruang berdimensi lebih tinggi, memungkinkan model untuk menangkap hubungan non-linear yang kompleks.
-
+Fitur input diubah pada lapisan \emph{feedforward} ke dalam ruang berdimensi lebih tinggi, sehingga hubungan non-linear yang kompleks dapat tertangkap dengan lebih stabil.
 
 \section{MediaPipe}
 \label{sec:MediaPipe}
