@@ -1,3 +1,6 @@
+log_belokan.csv
+*.pt
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof

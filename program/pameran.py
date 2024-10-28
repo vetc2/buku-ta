@@ -7,14 +7,14 @@ import csv
 from enum import Enum
 from ultralytics import YOLO
 
-source = "http://192.168.4.1:81/stream"
+source = "http://camera.local:81/stream"
 # source = 0
 host = "192.168.4.1" 
 port = 80 
 
 # Initialize MediaPipe Pose
 mp_pose = mp.solutions.pose
-pose = mp_pose.Pose(static_image_mode=False, min_detection_confidence=0.7)
+pose = mp_pose.Pose(static_image_mode=False, min_detection_confidence=0.5)
 mirror = True
 
 fp = 481  # Focal length in pixelsCV2
@@ -22,7 +22,7 @@ tb = 175  # Real-world height of the object in cm
 k = 24.422  # Calibration factor for MediaPipe
 
 # Load YOLO model
-model = YOLO("yolov10m.pt")
+model = YOLO("best.pt")
 
 def hitung_jarak(tinggi_bounding_box, focal_length_pixel, tinggi_objek_nyata):
     if tinggi_bounding_box == 0:
@@ -47,8 +47,11 @@ class SocketCommunicator:
         self.interval = 0
         self.data = 'C\n'.encode()
         self.sent = True
+        self.sentr = True
         self.host = host
         self.port = port
+        self.ex_time = 0
+        self.ex_data = 'C\n'.encode()
         self.create_socket()
 
     def create_socket(self):
@@ -63,26 +66,43 @@ class SocketCommunicator:
             print(".", end="", flush=True)
             time.sleep(1)
 
-    def send_data(self, data, ms=500):
-        current_time = time.time()
-        if self.socket:
-            if data != self.data:
+    def send_data(self, data, regulator='C\n'):
+        run = False
+        over_delay = (time.time() - self.interval) > .25
+        if over_delay and self.socket and self.data != regulator:
+            if not self.sent:
+                self.ex_time = self.interval
                 self.interval = time.time()
-                self.socket.send('C\n'.encode())
-                self.sent = False
-                self.data = data
-            elif (current_time - self.interval) * 1000 < ms and not self.sent:
                 self.socket.send(self.data.encode())
+                self.ex_data = self.data
                 self.sent = True
+                self.sentr = True
+                run = True
+            elif self.data != data:
+                self.ex_time = self.interval
+                self.interval = time.time()
+                if (data != regulator): 
+                    self.data = data
+                    self.sent = False
+                if self.sentr == True:
+                    self.socket.send(regulator.encode())
+                    self.ex_data = regulator
+                    self.sentr = False
+                    run = True
+        return run
 
 # Prepare CSV file
 csv_file = open('log_belokan.csv', mode='w', newline='')
 csv_writer = csv.writer(csv_file)
-csv_writer.writerow(['Waktu', 'Inference Time', 'Jarak YOLO', 'Jarak MediaPipe', 'Arah'])
+csv_writer.writerow(['Waktu', 'Inference Time', 
+        'Jarak YOLO', 'Jarak MediaPipe',
+        'Regulasi Waktu', 'Menyimpan', 'Terkirim'
+        'Mencari', 'Keterangan'])
 
 # Initialize video capture
 cap = cv2.VideoCapture(source)
-# \
+cap.set(3, 1366)
+cap.set(4, 768)
 
 class Direction(Enum):
     DIAM = 0
@@ -117,14 +137,14 @@ def draw_arrow(img, direction):
 
 # Initialize the wheelchair controller
 controller = SocketCommunicator(host, port)
-controller.send_data('2\n') # Speed level .140
+controller.send_data('3\n') # Speed level .140
 
 while True:
     success, frame = cap.read()
     if not success:
         break
 
-    frame = cv2.rotate(frame,cv2.ROTATE_180)
+    # frame =  cv2.rotate(frame, cv2.ROTATE_180) if source else frame
     img = cv2.flip(frame,1) if mirror else frame
 
     img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -142,6 +162,7 @@ while True:
     results = model.track(img, classes=0, stream=True, persist=True, conf=0.7)
     inference_time = time.time() - start_inference_time
 
+    lf = False
     arah = 'C\n'
     arah_log = "Stop"   # Default value
     jarak_mediapipe = 0 # Default value
@@ -186,73 +207,59 @@ while True:
                 cv2.putText(img, f"MP Distance: {jarak_mediapipe:.2f} m", (10, 90), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
                 
                 cp_Shape = lebar_img / img.shape[1]
-                print(cp_Shape)
                 center_x = (x1 + x2) // 2
 
                 if jarak_mediapipe > 1.0:
-                    if cp_Shape > 0.5 :
-                        print("Kursi roda berhenti")
-                        # arah = 'C\n'
-                        cv2.putText(img, "Kursi roda berhenti", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
-                        arah_log = "BatasDekat"
-                        direction = Direction.DIAM
-                        posisi_terakhir = PosisiManusiaTerakhir.DIAM
-                    elif center_x > right_bound:
-                        print("Kursi roda belok Kiri")
+                    if center_x < left_bound:
                         arah = 'A\n'
-                        cv2.putText(img, "Kursi roda belok Kiri", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
-                        arah_log = "BelokKiri"
+                        arah_log = "Kursi roda belok Kiri"
                         direction = Direction.BELIKIRI
                         posisi_terakhir = PosisiManusiaTerakhir.KIRI
-                    elif center_x < left_bound:
-                        print("Kursi roda belok Kanan")
+                    elif center_x > right_bound:
                         arah = 'E\n'
-                        cv2.putText(img, "Kursi roda belok Kanan", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
-                        arah_log = "BelokKanan"
+                        arah_log = "Kursi roda belok Kanan"
                         direction = Direction.BELIKANAN
                         posisi_terakhir = PosisiManusiaTerakhir.KANAN
                     else:
                         arah = 'B\n'
-                        print("Kursi roda Maju")
-                        cv2.putText(img,  "Kursi roda Maju", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
-                        arah_log = "Maju"
+                        arah_log = "Kursi roda Maju"
                         direction = Direction.MAJU
                         posisi_terakhir = PosisiManusiaTerakhir.MAJU
-                    # delay(200)
                 else:
-                    # delay(200)
-                    arah_log = "Stop"
-                    direction = Direction.MAJU
+                    arah_log = "Menunggu jarak aman"
+                    direction = Direction.DIAM
         else:
+            lf = True
             if posisi_terakhir == PosisiManusiaTerakhir.KIRI:
-                print("Mencari manusia ke Kiri")
                 arah = 'A\n'
-                cv2.putText(img, "Mencari manusia ke Kiri", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
+                arah_log = "Mencari manusia ke Kiri"
                 direction = Direction.BELIKIRI
             elif posisi_terakhir == PosisiManusiaTerakhir.KANAN:
-                print("Mencari manusia ke Kanan")
                 arah = 'E\n'
-                cv2.putText(img, "Mencari manusia ke Kanan", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
+                arah_log = "Mencari manusia ke Kanan"
                 direction = Direction.BELIKANAN
             elif posisi_terakhir == PosisiManusiaTerakhir.MAJU:
-                print("Mencari manusia ke Depan")
                 arah = 'B\n'
-                cv2.putText(img, "Mencari manusia ke Depan", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
+                arah_log = "Mencari manusia ke Depan"
                 direction = Direction.MAJU
             elif posisi_terakhir == PosisiManusiaTerakhir.DIAM:
-                print("Menunggu jarak aman")
-                # arah = 'C\n'
-                cv2.putText(img, "Menunggu jarak aman", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
-                direction = Direction.MAJU
-            
+                arah_log = "Menunggu jarak aman"
+                direction = Direction.DIAM
 
-    # Write log to CSV
-    waktu = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-    csv_writer.writerow([waktu, inference_time, jarak_yolo, jarak_mediapipe, arah_log])
-    csv_file.flush()  # Ensure data is written immediately
+        cv2.putText(img, arah_log, (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
 
-    controller.send_data(arah)
-    draw_arrow(img, direction)
+        # Send and Write log to CSV
+    if controller.send_data(arah):
+        waktu = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        text_lf = "luar frame" if lf else "dalam frame"
+        inter_send = time.time() - controller.ex_time
+        csv_writer.writerow([waktu, inference_time, 
+                jarak_yolo, jarak_mediapipe, 
+                inter_send, arah, 
+                controller.ex_data, 
+                text_lf, arah_log])
+        csv_file.flush()  # Ensure data is written immediately
+        draw_arrow(img, direction)
 
     cv2.imshow('Webcam', img)
     if cv2.waitKey(1) & 0xFF == ord('q'):
