@@ -67,36 +67,40 @@ class SocketCommunicator:
             time.sleep(1)
 
     def send_data(self, data, regulator='C\n'):
-        run = False
+        verbose = False
         over_delay = (time.time() - self.interval) > .25
-        if over_delay and self.socket and self.data != regulator:
+        if over_delay and self.data != regulator:
             if not self.sent:
+                verbose = True
                 self.ex_time = self.interval
                 self.interval = time.time()
-                self.socket.send(self.data.encode())
+                if self.socket:
+                    self.socket.send(self.data.encode())
                 self.ex_data = self.data
+                print("Mengirim ", self.data.encode())
                 self.sent = True
                 self.sentr = True
-                run = True
             elif self.data != data:
+                verbose = True
                 self.ex_time = self.interval
                 self.interval = time.time()
                 if (data != regulator): 
                     self.data = data
                     self.sent = False
                 if self.sentr == True:
-                    self.socket.send(regulator.encode())
+                    if self.socket:
+                        self.socket.send(regulator.encode())
                     self.ex_data = regulator
+                    print("Mengirim ", regulator.encode())
                     self.sentr = False
-                    run = True
-        return run
+        return verbose
 
 # Prepare CSV file
 csv_file = open('log_belokan.csv', mode='w', newline='')
 csv_writer = csv.writer(csv_file)
 csv_writer.writerow(['Waktu', 'Inference Time', 
-        'Jarak YOLO', 'Jarak MediaPipe',
-        'Regulasi Waktu', 'Menyimpan', 'Terkirim'
+        'Jarak YOLO', 'Jarak MediaPipe', 'x-mid', 'near',
+        'Regulasi Waktu', 'Menyimpan', 'Terkirim',
         'Mencari', 'Keterangan'])
 
 # Initialize video capture
@@ -159,7 +163,7 @@ while True:
     cv2.line(img, (right_bound, 0), (right_bound, height), (0, 255, 0), 2)
 
     start_inference_time = time.time()
-    results = model.track(img, classes=0, stream=True, persist=True, conf=0.7)
+    results = model.track(img, classes=0, stream=True, persist=True, conf=0.7, verbose=False)
     inference_time = time.time() - start_inference_time
 
     lf = False
@@ -167,6 +171,7 @@ while True:
     arah_log = "Stop"   # Default value
     jarak_mediapipe = 0 # Default value
     jarak_yolo = 0
+    center_x = 0
     direction = Direction.DIAM  # Default direction
 
     for r in results:
@@ -202,7 +207,7 @@ while True:
                 lebar_img = person_img_rgb.shape[1]
                 jarak_mediapipe = hitung_lebar_mediapipe(pose_results, lebar_img)
 
-                print(f"YOLO Distance: {jarak_yolo:.2f} m, MediaPipe Distance: {jarak_mediapipe:.2f} m")
+                # print(f"YOLO Distance: {jarak_yolo:.2f} m, MediaPipe Distance: {jarak_mediapipe:.2f} m")
                 cv2.putText(img, f"YOLO Distance: {jarak_yolo:.2f} m", (10, 180), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
                 cv2.putText(img, f"MP Distance: {jarak_mediapipe:.2f} m", (10, 90), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
                 
@@ -249,18 +254,20 @@ while True:
         cv2.putText(img, arah_log, (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
 
         # Send and Write log to CSV
-    if controller.send_data(arah):
+    if controller.send_data(arah): 
         waktu = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         text_lf = "luar frame" if lf else "dalam frame"
         inter_send = time.time() - controller.ex_time
-        csv_writer.writerow([waktu, inference_time, 
-                jarak_yolo, jarak_mediapipe, 
-                inter_send, arah, 
-                controller.ex_data, 
-                text_lf, arah_log])
+        near_bound = 0 if not center_x else\
+            left_bound if abs(center_x-left_bound)\
+            < abs(center_x-right_bound) else right_bound
+        csv_writer.writerow([waktu, inference_time,
+            jarak_yolo, jarak_mediapipe, center_x, near_bound,
+            inter_send, arah.encode(), controller.ex_data.encode(),
+            text_lf, arah_log])
         csv_file.flush()  # Ensure data is written immediately
-        draw_arrow(img, direction)
-
+    
+    draw_arrow(img, direction)
     cv2.imshow('Webcam', img)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
