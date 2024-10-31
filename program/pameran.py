@@ -2,6 +2,7 @@ import cv2
 import math
 import mediapipe as mp
 import socket
+import torch
 import time
 import csv
 from enum import Enum
@@ -77,7 +78,6 @@ class SocketCommunicator:
                 if self.socket:
                     self.socket.send(self.data.encode())
                 self.ex_data = self.data
-                print("Mengirim ", self.data.encode())
                 self.sent = True
                 self.sentr = True
             elif self.data != data:
@@ -91,7 +91,6 @@ class SocketCommunicator:
                     if self.socket:
                         self.socket.send(regulator.encode())
                     self.ex_data = regulator
-                    print("Mengirim ", regulator.encode())
                     self.sentr = False
         return verbose
 
@@ -162,17 +161,20 @@ while True:
     cv2.line(img, (left_bound, 0), (left_bound, height), (0, 255, 0), 2)
     cv2.line(img, (right_bound, 0), (right_bound, height), (0, 255, 0), 2)
 
+    if torch.cuda.is_available(): torch.cuda.synchronize()
     start_inference_time = time.time()
     results = model.track(img, classes=0, stream=True, persist=True, conf=0.7, verbose=False)
+    
+    if torch.cuda.is_available(): torch.cuda.synchronize()
     inference_time = time.time() - start_inference_time
 
     lf = False
     arah = 'C\n'
-    arah_log = "Stop"   # Default value
-    jarak_mediapipe = 0 # Default value
-    jarak_yolo = 0
     center_x = 0
-    direction = Direction.DIAM  # Default direction
+    jarak_yolo = 0
+    jarak_mediapipe = 0
+    arah_log = "Menunggu jarak aman"
+    direction = Direction.DIAM
 
     for r in results:
         min_id = None
@@ -231,8 +233,7 @@ while True:
                         direction = Direction.MAJU
                         posisi_terakhir = PosisiManusiaTerakhir.MAJU
                 else:
-                    arah_log = "Menunggu jarak aman"
-                    direction = Direction.DIAM
+                    posisi_terakhir = PosisiManusiaTerakhir.DIAM
         else:
             lf = True
             if posisi_terakhir == PosisiManusiaTerakhir.KIRI:
@@ -256,7 +257,7 @@ while True:
         # Send and Write log to CSV
     if controller.send_data(arah): 
         waktu = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-        text_lf = "luar frame" if lf else "dalam frame"
+        text_lf = "Luar frame" if lf else "Dalam frame"
         inter_send = time.time() - controller.ex_time
         near_bound = 0 if not center_x else\
             left_bound if abs(center_x-left_bound)\
