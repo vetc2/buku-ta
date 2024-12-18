@@ -140,7 +140,7 @@ def draw_arrow(img, direction):
 
 # Initialize the wheelchair controller
 controller = SocketCommunicator(host, port)
-controller.send_data('3\n') # Speed level .140
+controller.send_data('2\n') # Speed level .140
 
 while True:
     success, frame = cap.read()

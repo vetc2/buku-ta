@@ -286,3 +286,6 @@ TSWLatexianTemp*
 # option is specified. Footnotes are the stored in a file with suffix Notes.bib.
 # Uncomment the next line to have this generated file ignored.
 #*Notes.bib
+program/test.py
+morning_data.csv
+dataset_updated_logic_filtered.csv

@@ -3,8 +3,25 @@
 
 % Ubah bagian-bagian berikut dengan isi dari pengujian dan analisis
 
-Pada penelitian ini dipaparkan skenario pengujian yang dilakukan, termasuk kondisi lingkungan pengujian, perangkat keras dan perangkat lunak yang digunakan, serta parameter-parameter yang diuji. Informasi detail mengenai konfigurasi dan prosedur pengujian disajikan agar hasil pengujian dapat direplikasi dengan konsisten.
+Pada bab ini, akan dijelaskan mengenai hasil pengujian dan pembahasan dari penelitian yang telah diuraikan pada metodologi. Selain itu, akan dipaparkan juga mengenai skenario pengujian yang dilakukan untuk mengevaluasi performa sistem secara keseluruhan. Pengujian ini dilakukan dengan tujuan untuk memastikan bahwa sistem yang dirancang mampu berfungsi dengan baik dalam berbagai kondisi dan situasi yang mungkin dihadapi dalam penggunaannya.
 
+\section{Skenario Pengujian}
+\label{sec:skenariopengujian}
+
+Pengujian dilakukan untuk mengetahui performa model dalam melakukan deteksi dan mengikuti objek oleh kursi roda otonom. Skenario pengujian ini dirancang untuk mengukur berbagai aspek dari sistem, termasuk akurasi deteksi, kecepatan pemrosesan, respons sistem terhadap objek, dan tingkat keberhasilan mengidentifikasi tracking. Skenario pengujian yang akan dilakukan adalah sebagai berikut:
+
+\begin{enumerate}
+    \item Hasil Pengujian Performa Model
+    \item Pengujian Berdasarkan FPS
+    \item Pengujian Berdasarkan Hasil Response Time
+    \item Pengujian Keberhasilan Tracking
+    \item Pengujian Tingkat Pencahayaan
+    \item Pengujian Kesesuaian Jarak Deteksi
+    \item Performa Pergerakan Mengikuti Objek
+    \item Performa Keberhasilan Mengikuti Objek
+\end{enumerate}
+
+\newpage
 \section{Hasil Pengujian Performa Menggunakan Confusion Matrix}
 \label{sec:hasilperformaconfisionMatrix}
 
@@ -20,40 +37,124 @@ Pengujian ini dilakukan untuk menganalisis kecepatan pemrosesan sistem dalam sat
 
 Bagian ini mengukur waktu yang dibutuhkan sistem untuk merespons setiap perubahan lingkungan atau perintah yang diterima. Response Time sangat penting untuk mengukur responsivitas sistem dalam skenario dinamis.
 
-\section{Performa Keberhasilan Tracking}
-\label{sec:performakeberhasiltracking}
+\section{Pengujian Keberhasilan Tracking}
+\label{sec:pengujiankeberhasiltracking}
 
 Bagian ini mengevaluasi keberhasilan sistem dalam melakukan tracking terhadap objek target. Tingkat keberhasilan dianalisis untuk mengetahui keandalan sistem dalam berbagai skenario.
+
+\section{Pengujian Tingkat Pencahayaan}
+\label{sec:pengujiantingkatpencahayaan}
 
 \section{Pengujian Kesesuaian Jarak Deteksi}
 \label{sec:pengujiankesesuaianjarakdeteksi}
 
 Pengujian dilakukan untuk mengukur kemampuan sistem dalam mendeteksi objek pada berbagai jarak  dan menganalisis performa sistem pada jarak-jarak tersebut.
 
+\begin{table}[H]
+    \centering
+    \caption{Data Jarak (\textless 1m) untuk Diam}
+    \label{tab:jarak_diam}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+    \hline
+    Waktu & Reg (s) & YOLO (m) & MP (m) & x (px) & Deteksi & Terkirim & Keterangan \\ \hline
+    17:41:34 & 0.3036 & 1.4339 & 0.9447 & 647 & b'C\textbackslash n' & b'C\textbackslash n' & Waiting \\ \hline
+    17:41:35 & 0.3326 & 1.4291 & 0.8357 & 642 & b'C\textbackslash n' & b'C\textbackslash n' & Waiting \\ \hline
+    17:41:36 & 0.3588 & 1.4389 & 0.8222 & 672 & b'C\textbackslash n' & b'C\textbackslash n' & Waiting \\ \hline
+    17:41:45 & 0.3092 & 1.3913 & 0.7249 & 640 & b'C\textbackslash n' & b'C\textbackslash n' & Waiting \\ \hline
+    17:42:04 & 15.5192 & 1.4563 & 0.5955 & 213 & b'C\textbackslash n' & b'C\textbackslash n' & Waiting \\ \hline
+    17:42:05 & 0.3336 & 1.5473 & 0.6562 & 212 & b'C\textbackslash n' & b'C\textbackslash n' & Waiting \\ \hline
+    \end{tabular}
+    \end{table}
+
 \section{Performa Pergerakan Mengikuti Objek}
 \label{sec:performaakurasiobjek}
 
 Analisis dilakukan untuk mengukur seberapa akurat sistem dapat mengikuti objek target, termasuk mempertahankan jarak yang tepat dan tidak kehilangan objek dalam berbagai kondisi.
 
-\subsection{Belok Kiri saat berada didalam frame}
-\label{subsec:belokkiridalamframe}
+\subsection{Percobaan Dalam Frame}
+\label{subsec:percobaandalamframe}
 
-Bagian ini membahas kemampuan sistem dalam mengikuti objek saat berbelok ke kiri. Tantangan yang dihadapi dan solusi yang diterapkan diuraikan.
+Bagian ini membahas kemampuan sistem dalam mengikuti objek yang berada di dalam frame kamera. Fokus utamanya adalah pada pengamatan perilaku sistem ketika objek dipantau secara langsung tanpa keluar dari bidang pandang. Tantangan yang dihadapi meliputi deteksi posisi, pengenalan gerakan, dan stabilitas pengendalian kursi roda. Solusi yang diterapkan melibatkan kalibrasi ulang parameter pengenalan dan pengendalian, serta pengujian berulang untuk memastikan keandalan sistem saat objek tetap berada di dalam frame.
 
-\subsection{Belok Kiri saat berada diluar frame}
-\label{subsec:belokkiriluarframe}
+\begin{table}[H]
+    \centering
+    \caption{Data Status Frame (Dalam Frame)}
+    \label{tab:status_dalam_frame}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+    \hline
+    Waktu & Reg (s) & YOLO (m) & MP (m) & x (px) & Deteksi & Terkirim & Keterangan \\ \hline
+    17:41:32 & 0.2815 & 1.5305 & 1.0854 & 806 & b'B\textbackslash n' & b'C\textbackslash n' & Forward \\ \hline
+    17:41:33 & 0.2810 & 2.1149 & 0 & 0 & b'C\textbackslash n' & b'C\textbackslash n' & Stop \\ \hline
+    17:41:33 & 0.3330 & 1.5704 & 1.1939 & 984 & b'E\textbackslash n' & b'C\textbackslash n' & Turn Right \\ \hline
+    17:41:34 & 0.3036 & 1.4339 & 1.0447 & 647 & b'C\textbackslash n' & b'E\textbackslash n' & Waiting \\ \hline
+    17:41:35 & 0.3326 & 1.4291 & 1.1357 & 1012 & b'E\textbackslash n' & b'C\textbackslash n' & Turn Right \\ \hline
+    17:41:35 & 0.2626 & 1.5763 & 1.1916 & 1043 & b'E\textbackslash n' & b'E\textbackslash n' & Turn Right \\ \hline
+    17:41:36 & 0.3588 & 1.4389 & 1.0222 & 672 & b'C\textbackslash n' & b'C\textbackslash n' & Waiting \\ \hline
+    17:41:45 & 0.3092 & 1.3913 & 1.1249 & 640 & b'C\textbackslash n' & b'C\textbackslash n' & Waiting \\ \hline
+    17:41:46 & 0.2782 & 1.85 & 1.4291 & 713 & b'B\textbackslash n' & b'C\textbackslash n' & Forward \\ \hline
+    17:41:46 & 0.2667 & 1.6869 & 1.2863 & 207 & b'C\textbackslash n' & b'C\textbackslash n' & Waiting \\ \hline
+    17:41:48 & 1.2047 & 1.7179 & 1.1249 & 199 & b'A\textbackslash n' & b'C\textbackslash n' & Turn Left \\ \hline
+    17:42:04 & 15.5192 & 1.4563 & 1.0955 & 213 & b'C\textbackslash n' & b'C\textbackslash n' & Waiting \\ \hline
+    17:42:06 & 0.2811 & 1.8219 & 1.4714 & 607 & b'B\textbackslash n' & b'C\textbackslash n' & Forward \\ \hline
+    17:42:07 & 0.4503 & 1.6735 & 0 & 0 & b'C\textbackslash n' & b'C\textbackslash n' & Stop \\ \hline
+    \end{tabular}
+\end{table}
 
-Bagian ini membahas kemampuan sistem dalam mengikuti objek saat berbelok ke kiri. Tantangan yang dihadapi dan solusi yang diterapkan diuraikan.
+\subsection{Percobaan Luar Frame}
+\label{subsec:percobaanluarframe}
 
-\subsection{Belok Kanan saat berada didalam frame}
-\label{subsec:belokkanandalamframe}
+Bagian ini membahas kemampuan sistem dalam menghadapi kondisi ketika objek keluar dari bidang pandang kamera (luar frame). Tantangan yang muncul adalah hilangnya data visual tentang posisi dan gerakan objek, sehingga sistem harus mampu memprediksi posisi berikutnya atau melakukan penyesuaian strategi pencarian. Solusi yang digunakan mencakup pengintegrasian algoritma prediksi lintasan serta inisialisasi ulang posisi, yang membantu sistem untuk kembali melacak objek setelah objek kembali ke dalam frame.
 
-Bagian ini membahas kemampuan sistem dalam mengikuti objek saat berbelok ke kanan, mirip dengan bagian sebelumnya.
+\begin{table}[H]
+    \centering
+    \caption{Data Status Frame (Luar Frame)}
+    \label{tab:status_luar_frame}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+    \hline
+    Waktu & YOLO (m) & MP (m) & x (px) & Reg (s) & Deteksi & Terkirim & Keterangan \\ \hline
+    17:41:30 & 2.8414 & 0 & 0 & 0 & b'C\textbackslash n' & b'C\textbackslash n' & Waiting \\ \hline
+    17:41:30 & 0.2732 & 0 & 0 & 0 & b'C\textbackslash n' & b'C\textbackslash n' & Waiting \\ \hline
+    17:41:33 & 0.2683 & 0 & 0 & 0 & b'E\textbackslash n' & b'E\textbackslash n' & Turn Right \\ \hline
+    17:41:34 & 0.2531 & 0 & 0 & 0 & b'B\textbackslash n' & b'C\textbackslash n' & Forward \\ \hline
+    17:41:34 & 0.2539 & 0 & 0 & 0 & b'E\textbackslash n' & b'B\textbackslash n' & Turn Right \\ \hline
+    17:41:46 & 0.2544 & 0 & 0 & 0 & b'B\textbackslash n' & b'B\textbackslash n' & Forward \\ \hline
+    17:42:06 & 0.2698 & 0 & 0 & 0 & b'B\textbackslash n' & b'B\textbackslash n' & Forward \\ \hline
+    \end{tabular}
+\end{table}
 
-\subsection{Belok Kanan saat berada diluar frame}
-\label{subsec:belokkananluarframe}
+\subsection{Percobaan Belok Kiri}
+\label{subsec:percobaanbelokkiri}
 
-Bagian ini membahas kemampuan sistem dalam mengikuti objek saat berbelok ke kanan, mirip dengan bagian sebelumnya.
+Bagian ini membahas kemampuan sistem dalam mengikuti objek saat berbelok ke kiri. Pada kondisi ini, tantangan yang muncul meliputi perubahan posisi relatif yang terjadi lebih cepat, potensi kehilangan objek dari frame, serta perlunya adaptasi kecepatan motor penggerak. Solusi yang diterapkan adalah penyesuaian parameter kontrol, algoritma pendeteksi pose yang lebih adaptif, serta strategi gerak yang mempertimbangkan arah belok objek sehingga sistem dapat mempertahankan jarak optimal dan ketepatan manuver ke kiri.
+
+\begin{table}[H]
+    \centering
+    \caption{Data Performa Belok (Kiri)}
+    \label{tab:performa_belok_kiri}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+    \hline
+    Waktu & Reg (s) & YOLO (m) & MP (m) & x (px) & Deteksi & Terkirim & Keterangan \\ \hline
+    17:41:48 & 1.2047 & 1.7179 & 1.1249 & 199 & b'A\textbackslash n' & b'C\textbackslash n' & Turn Left \\ \hline
+    17:41:48 & 0.3264 & 1.6033 & 1.0265 & 220 & b'A\textbackslash n' & b'A\textbackslash n' & Turn Left \\ \hline
+    \end{tabular}
+\end{table}
+
+\subsection{Percobaan Belok Kanan}
+\label{subsec:percobaanbelokkanan}
+
+Bagian ini membahas kemampuan sistem dalam mengikuti objek saat berbelok ke kanan, yang pada dasarnya serupa dengan kondisi belok kiri. Tantangan yang dihadapi adalah bagaimana sistem mempertahankan objek dalam frame sambil melakukan penyesuaian sudut belok yang diperlukan. Solusinya meliputi pemanfaatan fusi data dari YOLOv11 dan MediaPipe Pose, serta penerapan algoritma kontrol yang mampu melakukan koreksi arah tepat waktu, sehingga sistem dapat mengikuti objek yang berbelok ke kanan dengan stabil dan akurat.
+
+\begin{table}[H]
+    \centering
+    \caption{Data Performa Belok (Kanan)}
+    \label{tab:performa_belok_kanan}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+    \hline
+    Waktu & Reg (s) & YOLO (m) & MP (m) & x (px) & Deteksi & Terkirim & Keterangan \\ \hline
+    17:41:35 & 0.3326 & 1.4291 & 1.1357 & 1012 & b'E\textbackslash n' & b'C\textbackslash n' & Turn Right \\ \hline
+    17:41:35 & 0.2626 & 1.5763 & 1.0916 & 1043 & b'E\textbackslash n' & b'E\textbackslash n' & Turn Right \\ \hline
+    \end{tabular}
+\end{table}
 
 \section{Performa Keberhasilan Mengikuti}
 \label{sec:performamengikuti}
@@ -80,10 +181,15 @@ Menganalisis kecepatan pemrosesan secara keseluruhan dan pengaruhnya terhadap pe
 
 Membahas hasil pengujian response time dan faktor-faktor yang mempengaruhi waktu respons.
 
-\subsection{Performa Keberhasilan Tracking}
+\subsection{Keberhasilan Tracking}
 \label{sec:performatracking}
 
 Membahas tingkat keberhasilan sistem dalam melacak objek dan kondisi yang mempengaruhi performa.
+
+\subsection{Kesesuaian Tingkat Pencahayaan}
+\label{sec:kesesuaianpencahayaan}
+
+Membahas tingkat keberhasilan sistem dalam melacak objek pada kondisi pencahayaan yang berbeda.
 
 \subsection{Kesesuaian Jarak Deteksi}
 \label{sec:kesesuaianjarak}
