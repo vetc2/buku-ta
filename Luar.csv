@@ -1,0 +1,30 @@
+,Waktu,Inference Time,Jarak YOLO,Jarak MediaPipe,x-mid,near,Regulasi Waktu,Deteksi,Terkirim,Mencari,Keterangan
+2,2024-12-18 12:48:08,0.0,0.0,0.0,0,0,0.2758433818817138,b'B\n',b'C\n',Luar frame,Mencari manusia ke Depan
+3,2024-12-18 12:48:08,0.0,0.0,0.0,0,0,0.3151235580444336,b'B\n',b'B\n',Luar frame,Mencari manusia ke Depan
+13,2024-12-18 12:48:15,0.0010015964508056,0.0,0.0,0,0,0.2930710315704345,b'A\n',b'A\n',Luar frame,Mencari manusia ke Kiri
+15,2024-12-18 12:48:18,0.0,0.0,0.0,0,0,0.3001105785369873,b'B\n',b'B\n',Luar frame,Mencari manusia ke Depan
+16,2024-12-18 12:50:43,0.3924257755279541,0.0,0.0,0,0,1.7365820407867432,b'C\n',b'3\n',Luar frame,Menunggu jarak aman
+17,2024-12-18 12:50:43,0.0,0.0,0.0,0,0,0.373211145401001,b'C\n',b'C\n',Luar frame,Menunggu jarak aman
+18,2024-12-18 12:50:44,0.0,0.0,0.0,0,0,0.2571282386779785,b'C\n',b'C\n',Luar frame,Menunggu jarak aman
+19,2024-12-18 12:50:44,0.0,0.0,0.0,0,0,0.3522408008575439,b'C\n',b'C\n',Luar frame,Menunggu jarak aman
+20,2024-12-18 12:50:44,0.0009992122650146,0.0,0.0,0,0,0.3647413253784179,b'C\n',b'C\n',Luar frame,Menunggu jarak aman
+21,2024-12-18 12:50:45,0.0,0.0,0.0,0,0,0.3504025936126709,b'C\n',b'C\n',Luar frame,Menunggu jarak aman
+25,2024-12-18 12:50:49,0.0,0.0,0.0,0,0,0.3535428047180176,b'A\n',b'A\n',Luar frame,Mencari manusia ke Kiri
+44,2024-12-18 12:51:07,0.0,0.0,0.0,0,0,0.3517744541168213,b'E\n',b'E\n',Luar frame,Mencari manusia ke Kanan
+49,2024-12-18 12:51:11,0.0,0.0,0.0,0,0,0.289675235748291,b'E\n',b'E\n',Luar frame,Mencari manusia ke Kanan
+59,2024-12-18 12:51:26,0.0,0.0,0.0,0,0,0.318514347076416,b'B\n',b'B\n',Luar frame,Mencari manusia ke Depan
+63,2024-12-18 12:51:30,0.0,0.0,0.0,0,0,0.2686831951141357,b'B\n',b'B\n',Luar frame,Mencari manusia ke Depan
+64,2024-12-18 12:51:31,0.0,0.0,0.0,0,0,0.2615323066711426,b'E\n',b'C\n',Luar frame,Mencari manusia ke Kanan
+65,2024-12-18 12:51:31,0.0,0.0,0.0,0,0,0.2711107730865478,b'E\n',b'E\n',Luar frame,Mencari manusia ke Kanan
+68,2024-12-18 12:51:38,0.0,0.0,0.0,0,0,0.2502021789550781,b'A\n',b'C\n',Luar frame,Mencari manusia ke Kiri
+69,2024-12-18 12:51:38,0.0,0.0,0.0,0,0,0.2617368698120117,b'A\n',b'A\n',Luar frame,Mencari manusia ke Kiri
+95,2024-12-18 12:52:05,0.0,0.0,0.0,0,0,0.6562023162841797,b'B\n',b'B\n',Luar frame,Mencari manusia ke Depan
+139,2024-12-18 12:58:09,0.0,0.0,0.0,0,0,0.3319065570831299,b'B\n',b'B\n',Luar frame,Mencari manusia ke Depan
+141,2024-12-18 12:58:11,0.0,0.0,0.0,0,0,0.2506439685821533,b'A\n',b'A\n',Luar frame,Mencari manusia ke Kiri
+163,2024-12-18 13:00:57,0.0,0.0,0.0,0,0,0.3573510646820068,b'C\n',b'C\n',Luar frame,Menunggu jarak aman
+178,2024-12-18 13:01:07,0.0,0.0,0.0,0,0,0.2856118679046631,b'A\n',b'C\n',Luar frame,Mencari manusia ke Kiri
+185,2024-12-18 13:01:12,0.0,0.0,0.0,0,0,0.2638773918151855,b'B\n',b'B\n',Luar frame,Mencari manusia ke Depan
+189,2024-12-18 13:01:16,0.0,0.0,0.0,0,0,1.3213903903961182,b'C\n',b'C\n',Luar frame,Menunggu jarak aman
+190,2024-12-18 13:01:16,0.0,0.0,0.0,0,0,0.3158814907073974,b'C\n',b'C\n',Luar frame,Menunggu jarak aman
+191,2024-12-18 13:01:17,0.0,0.0,0.0,0,0,0.3360249996185303,b'C\n',b'C\n',Luar frame,Menunggu jarak aman
+199,2024-12-18 13:01:19,0.0,0.0,0.0,0,0,0.2638311386108398,b'C\n',b'C\n',Luar frame,Menunggu jarak aman

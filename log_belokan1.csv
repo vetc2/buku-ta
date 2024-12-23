@@ -198,5 +198,4 @@ Waktu,Inference Time,Jarak YOLO,Jarak MediaPipe,x-mid,near,Regulasi Waktu,Deteks
 2024-12-18 13:01:18,0.0,1.1642461964038728,0,0,0,0.45786094665527344,b'C\n',b'C\n',Dalam frame,Menunggu jarak aman
 2024-12-18 13:01:19,0.0,1.0988903394255873,0.7700066052653289,856,682,0.2718970775604248,b'C\n',b'C\n',Dalam frame,Menunggu jarak aman
 2024-12-18 13:01:19,0.0,1.1452380952380952,0.5782292558967105,856,682,0.2509012222290039,b'C\n',b'C\n',Dalam frame,Menunggu jarak aman
-2024-12-18 13:01:19,0.0,0,0,0,0,0.26383113861083984,b'C\n',b'C\n',Luar frame,Menunggu jarak aman
 2024-12-18 13:01:19,0.0,1.1253342245989304,0,0,0,0.29680371284484863,b'C\n',b'C\n',Dalam frame,Menunggu jarak aman
