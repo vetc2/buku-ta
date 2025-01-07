@@ -677,7 +677,7 @@ Evaluasi dilakukan untuk menilai kemampuan sistem dalam mendeteksi objek secara 
     \item Pada kondisi bergerak maju, instruksi ‘Forward’ terkirim dengan persentase kesalahan transmisi yang sangat kecil, yaitu hanya 1.5\%.
     \item Pada kondisi belok kiri, sistem mencatat data terkirim sebagai register ‘C’ sebesar 10.5\%, dengan kesalahan transmisi sebesar 2.0\%.
     \item Pada kondisi belok kanan, sistem mencatat data terkirim sebagai register ‘C’ sebesar 6.7\%, dengan kesalahan transmisi sebesar 1.5\%.
-    \item Saat objek keluar dari frame, sistem mencatat sebagian besar data dengan nilai deteksi nol, dan prioritas diberikan untuk mengirimkan instruksi "Stop".
+    \item Saat objek keluar dari frame, sistem mencatat sebagian besar data dengan nilai deteksi nol, dan prioritas diberikan untuk mengirimkan instruksi sebelumnya.
 \end{itemize}
 
 Hasil pengujian menunjukkan bahwa sistem memiliki performa yang sangat baik dalam mendeteksi dan mengikuti objek di berbagai skenario, baik saat dalam frame, bergerak maju, maupun berbelok. Sistem mampu menunjukkan stabilitas tinggi dalam transmisi data dan respons yang sesuai terhadap deteksi. Meski demikian, diperlukan perbaikan lebih lanjut dalam menangani kondisi luar frame, terutama untuk mencegah pengiriman instruksi yang tidak relevan atau tidak aman. Dengan pengoptimalan tersebut, sistem akan semakin andal dan aman untuk diterapkan pada berbagai kondisi operasional.
