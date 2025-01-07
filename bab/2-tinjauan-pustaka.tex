@@ -32,12 +32,17 @@ Fitur utama dari penelitian ini adalah kombinasi antara \emph{ESP32-CAM} dan \em
 
 \emph{Object detection} atau deteksi objek adalah teknologi inti dalam banyak aplikasi modern seperti sistem pengawasan, pengenalan wajah, dan kendaraan otonom. Teknologi ini digunakan untuk mendeteksi dan mengklasifikasikan berbagai objek dalam gambar atau video. Dalam konteks penelitian ini, \emph{object detection} berperan penting untuk mendeteksi keberadaan manusia sehingga kursi roda otonom dapat mengikuti gerakan pengguna secara real-time. Perkembangan pesat dalam \emph{deep learning}, terutama dengan penggunaan \emph{Convolutional Neural Network} (CNN), telah mengoptimalkan kemampuan \emph{object detection}. \emph{CNN}, dengan berbagai lapisannya seperti lapisan konvolusi, aktivasi, \emph{pooling}, dan \emph{fully connected}, menjadi fondasi dari banyak metode deteksi objek saat ini, termasuk \emph{YOLO} (You Only Look Once).
 
-\emph{YOLO}, salah satu metode deteksi objek paling populer, mampu melakukan deteksi dengan kecepatan tinggi dan akurasi yang baik, menjadikannya sangat cocok untuk aplikasi \emph{real-time} seperti kursi roda otonom. \emph{YOLOv11}, versi terbaru dari keluarga \emph{YOLO}, menawarkan peningkatan signifikan dalam kecepatan dan akurasi, serta tambahan fitur seperti \emph{YOLO pose} untuk deteksi pose manusia. Selain itu, metode pelacakan objek seperti \emph{DeepSORT} yang menggunakan \emph{Kalman Filter} dan \emph{Hungarian Algorithm}, serta teknologi lainnya seperti \emph{MediaPipe Pose}, semakin memperkuat kemampuan sistem kursi roda otonom dalam melacak dan mengikuti gerakan manusia dengan presisi tinggi.
-
 \section{Convolutional Neural Network (CNN)}
 \label{sec:cnn}
 
-\emph{Convolutional Neural Network} (CNN) adalah jenis jaringan saraf tiruan yang dirancang khusus untuk pengolahan data yang memiliki struktur grid, seperti gambar. CNN terdiri dari serangkaian lapisan yang bekerja sama untuk mengekstraksi dan menganalisis fitur dari data input, membuatnya sangat efektif dalam tugas-tugas seperti klasifikasi gambar, segmentasi, dan deteksi objek.
+\emph{Convolutional Neural Network} (CNN) adalah jenis jaringan saraf tiruan yang dirancang khusus untuk pengolahan data yang memiliki struktur grid, seperti gambar. CNN terdiri dari serangkaian lapisan yang bekerja sama untuk mengekstraksi dan menganalisis fitur dari data input, membuatnya sangat efektif dalam tugas-tugas seperti klasifikasi gambar, segmentasi, dan deteksi objek\cite{oshea2015cnn}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=.7\textwidth]{gambar/tex/simplecnn.pdf}
+  \caption{An simple CNN architecture.}
+  \label{fig:simplecnn}
+\end{figure}
 
 \subsection{Lapisan Konvolusi (\emph{Convolutional Layer})}
 \label{subsec:Convolutional Layer}
@@ -71,7 +76,7 @@ Lapisan \emph{fully connected} adalah lapisan terakhir dalam CNN yang menghubung
   y = f\left(\sum_{i=1}^{n} w_i x_i + b\right)
 \end{equation}
 
-Dimana \( w_i \) adalah bobot, \( x_i \) adalah input, \( b \) adalah bias, dan \( f \) adalah fungsi aktivasi.
+Dimana \( w_i \) adalah bobot, \( x_i \) adalah input, \( b \) adalah bias, dan \( f \) adalah fungsi aktivasi. Kombinasi antara fungsi aktivasi yang tepat dan pengaturan hyperparameter yang optimal akan semakin meningkatkan performa lapisan fully connected dalam berbagai tugas seperti klasifikasi, deteksi objek, dan lainnya.
 
 \section{Pose Estimation}
 \label{sec:Pose Estimation}
@@ -90,14 +95,16 @@ Dalam penelitian ini, \emph{pose estimation} digunakan untuk memastikan gerakan 
 
 \emph{YOLOv8} adalah salah satu model deteksi objek yang sangat efisien, menggabungkan kecepatan tinggi dengan akurasi yang relatif tinggi. Arsitektur ini terdiri dari beberapa lapisan utama: \emph{Backbone}, \emph{Neck}, dan \emph{Head}. \emph{Backbone} bertugas untuk mengekstraksi fitur-fitur dasar dari gambar input. Kemudian, \emph{Neck} menggabungkan informasi dari berbagai lapisan untuk menghasilkan representasi fitur yang lebih kaya, yang kemudian diproses oleh \emph{Head} untuk menghasilkan prediksi \emph{bounding box}, label kelas, dan skor \emph{confidence}.
 
+Gambar \ref{fig:ArsitekturYOLOv8} menunjukkan arsitektur lengkap \emph{YOLOv8}, dimulai dari input gambar dengan resolusi 640x640x3. Input ini diproses melalui serangkaian lapisan konvolusi dalam \emph{Backbone}, yang bertugas mengekstraksi fitur penting dari gambar. \emph{Backbone} dirancang untuk secara efisien menangkap informasi visual dari berbagai tingkat abstraksi, yang nantinya menjadi dasar untuk langkah-langkah pemrosesan berikutnya.
+
+Setelah melalui \emph{Backbone}, fitur-fitur tersebut diteruskan ke \emph{Neck}, yang bertugas menggabungkan dan mengolah informasi dari berbagai level resolusi. \emph{Neck} menghasilkan representasi multi-skala yang kaya, memungkinkan jaringan untuk memahami konteks dari objek dalam gambar dengan lebih baik. Akhirnya, \emph{Head} memproses representasi tersebut untuk melakukan prediksi akhir, seperti menentukan \emph{bounding boxes}, label kelas, dan \emph{confidence score} dengan akurasi tinggi.
+
 \begin{figure}[H] 
   \centering 
-  \includegraphics[scale=0.5]{gambar/YoloV8Architecture.jpg} 
+  \includegraphics[scale=0.55]{gambar/YoloV8Architecture.jpg} 
   \caption{Arsitektur YOLOv8.} 
   \label{fig:ArsitekturYOLOv8} 
 \end{figure}
-
-Gambar menunjukkan arsitektur lengkap \emph{YOLOv8}, dimulai dari input gambar dengan resolusi 640x640x3, yang diproses melalui serangkaian lapisan konvolusi dalam \emph{Backbone} untuk mengekstraksi fitur penting. Kemudian, fitur-fitur ini diteruskan melalui \emph{Neck} yang menggabungkan dan mengolah informasi dari berbagai level resolusi, menghasilkan representasi multi-skala yang kaya. Akhirnya, \emph{Head} bertanggung jawab untuk melakukan prediksi akhir, seperti \emph{bounding boxes}, label kelas, dan \emph{confidence score}.
 
 \emph{YOLOv8} memprediksi \emph{bounding box} menggunakan kombinasi antara koordinat pusat \((bx, by)\), dimensi \emph{bounding box} \((bw, bh)\), dan skor \emph{confidence} \(p_c\). Formula untuk menghitung koordinat \emph{bounding box} berdasarkan \emph{output} jaringan adalah:
 

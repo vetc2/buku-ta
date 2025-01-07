@@ -6,29 +6,29 @@
 \section{Kesimpulan}
 \label{sec:kesimpulan}
 
-Berdasarkan hasil pengujian yang \lipsum[1][1-3] sebagai berikut:
+Berdasarkan hasil pengujian yang telah dilakukan, dapat diambil kesimpulan sebagai berikut:
 
 \begin{enumerate}[nolistsep]
-
-  \item Pembuatan \lipsum[2][1-3]
-
-  \item \lipsum[2][4-6]
-
-  \item \lipsum[2][7-10]
+  \item Model YOLOv11 menunjukkan performa deteksi yang tinggi dengan skor mAP mencapai 81.85\% pada threshold 0.5.
+  \item Sistem mampu memproses frame secara real-time dengan rata-rata FPS sekitar 40, menunjukkan kecepatan pemrosesan yang memadai untuk aplikasi lapangan.
+  \item Pengujian regulator time menunjukkan bahwa 66.17\% respons berada dalam waktu yang relatif singkat, namun 34\% lainnya melebihi 0.5 detik.
+  \item Sistem berhasil mengunci target (Locked Detection) sebanyak 4 kali dari 15 percobaan, menghasilkan tingkat keberhasilan sebesar 26.67\%.
+  \item Sistem menunjukkan kinerja terbaik pada kondisi pencahayaan optimal, namun kinerja menurun pada kondisi pencahayaan rendah.
+  \item Sistem mampu mendeteksi objek dengan jarak kurang dari 1 meter secara konsisten dan mengirimkan instruksi "Stop" untuk mencegah tabrakan.
+  \item Sistem memiliki performa yang sangat baik dalam mendeteksi dan mengikuti objek di berbagai skenario, baik saat dalam frame, bergerak maju, maupun berbelok.
+  \item Sistem mampu mengikuti objek dengan baik di seluruh kondisi jalur yang diuji, dengan tingkat keberhasilan mencapai 100\%.
 
 \end{enumerate}
 
 \section{Saran}
 \label{chap:saran}
 
-Untuk pengembangan lebih lanjut pada \lipsum[1][1-3] antara lain:
+Untuk pengembangan lebih lanjut pada penelitian selanjutnya, adapun saran yang bisa diberikan antara lain:
 
 \begin{enumerate}[nolistsep]
-
-  \item Memperbaiki \lipsum[2][1-3]
-
-  \item \lipsum[2][4-6]
-
-  \item \lipsum[2][7-10]
-
+  \item Meningkatkan fungsi \texttt{track()} untuk menjaga konsistensi identitas ID objek yang terdeteksi, guna meningkatkan akurasi pelacakan.
+  \item Menggunakan pencahayaan tambahan yang tidak menyebabkan overexposure dapat dipertimbangkan untuk meningkatkan kinerja deteksi pada kondisi pencahayaan rendah.
+  \item Memberikan optimisasi lebih lanjut pada sistem untuk mengurangi waktu respons yang melebihi 0.5 detik, guna meningkatkan stabilitas dan konsistensi kinerja.
+  \item Menuliskan algoritma yang lebih adaptif untuk menangani kondisi luar frame, sehingga dapat mencegah pengiriman instruksi yang tidak relevan atau tidak aman.
+  \item Implementasi sistem pada skenario nyata dengan berbagai kondisi operasional untuk menguji dan memastikan keandalan serta keamanan sistem secara menyeluruh.
 \end{enumerate}

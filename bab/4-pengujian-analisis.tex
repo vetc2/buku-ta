@@ -13,7 +13,7 @@ Pengujian dilakukan untuk mengetahui performa model dalam melakukan deteksi dan 
 \begin{enumerate}
     \item Hasil Pengujian Performa Model
     \item Pengujian Berdasarkan FPS
-    \item Pengujian Berdasarkan Hasil Response Time
+    \item Pengujian Berdasarkan Hasil Regulator Time
     \item Pengujian Keberhasilan Tracking
     \item Pengujian Tingkat Pencahayaan
     \item Pengujian Kesesuaian Jarak Deteksi
@@ -29,37 +29,220 @@ Sebanyak 15163 citra manusia dan 590 data validasi digunakan sebagai data latih 
 
 Proses pelatihan model dimulai setelah seluruh dataset dimuat. Selama pelatihan, beberapa parameter digunakan dan hasilnya dibandingkan menggunakan nilai confusion matrix serta metrik akurasi deteksi seperti mAP score, precision, dan box loss. Layer input pertama dijelaskan sebagai tahap awal pelatihan model.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{gambar/inputlayerbab4.jpg}
+    \caption{Input Layer Pelatihan Pertama}
+    \label{fig:Input Layer Pelatihan Pertama}
+\end{figure}
+
 Pelatihan dilakukan selama 100 epoch pertama dengan ukuran batch sebesar 16 piksel, dan data diubah ukurannya menjadi 800 x 800 piksel selama preprocessing. Tujuan dari pelatihan ini adalah untuk mengevaluasi seberapa besar peningkatan performa model terlatih sebelumnya dalam mendeteksi manusia berdasarkan jumlah epoch yang dilakukan. Pada akhir 100 epoch, nilai box loss yang dihasilkan adalah 0,82978, yang menunjukkan kemampuan model untuk memprediksi bounding box dengan baik di sekitar objek. Penurunan nilai box loss selama pelatihan menunjukkan bahwa model berhasil belajar mengidentifikasi koordinat bounding box secara akurat.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.4]{gambar/loss.png}
+    \caption{Loss Plot}
+    \label{fig:Loss Plot}
+\end{figure}
 
 Selama validasi, nilai box loss tercatat sebesar 1,199, yang mengindikasikan kemampuan model dalam mengenali objek pada data uji. Penurunan box loss pada tahap validasi mencerminkan kemampuan model untuk mendeteksi objek secara general, tidak hanya pada data latih. Nilai mAP score divisualisasikan pada Gambar, dengan hasil skor mAP sebesar 81,85% untuk IoU minimum 0,5, yang menegaskan akurasi tinggi dalam mendeteksi objek.
 
 Secara keseluruhan, hasil pelatihan model dirangkum pada Gambar. Nilai box loss pada pelatihan adalah 0,82978, nilai cls loss adalah 0,57615, dan dfl loss sebesar 1,1197. Metrik lainnya meliputi precision (0,84974), recall (0,72608), mAP50 (0,81855), dan mAP50-95 (0,53527). Selama validasi, nilai box loss tercatat sebesar 1,199, cls loss sebesar 0,86314, dan dfl loss sebesar 1,4956.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.4]{gambar/results.png}
+    \caption{Summary of Training Results}
+    \label{fig:Summary of Training Results}
+\end{figure}
+
 Visualisasi hasil model disajikan melalui confusion matrix yang menggambarkan kinerja deteksi secara rinci. Matrix ini menunjukkan 1.806 data sebagai True Positive (manusia terdeteksi dengan benar), 483 data sebagai False Positive (objek salah terdeteksi sebagai manusia), dan 475 data sebagai False Negative (manusia yang tidak terdeteksi).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.4]{gambar/confusion_matrix.png}
+    \caption{Confusion Matrix}
+    \label{fig:Confusion Matrix}
+\end{figure}
 
 Kurva F1-Confidence yang dihasilkan selama pelatihan menunjukkan hubungan antara confidence score dan F1-score. Model mencapai nilai F1-score tertinggi sebesar 0,78 pada confidence score 0,450, mengindikasikan keseimbangan optimal antara precision dan recall. Namun, kurva menunjukkan penurunan signifikan setelah confidence score mencapai sekitar 0,8, yang menandakan bahwa pada tingkat confidence yang sangat tinggi, model cenderung mengabaikan banyak true positives, sehingga menurunkan F1-score keseluruhan.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.4]{gambar/F1_curve.png}
+    \caption{F1-Confidence Curve}
+    \label{fig:F1-Confidence Curve}
+\end{figure}
+
 Inferensi terhadap data uji juga dilakukan menggunakan model yang telah dilatih. Hasilnya menunjukkan tingkat confidence yang tinggi pada deteksi objek manusia, sebagaimana divisualisasikan dalam gambar hasil pengujian
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.2]{gambar/pred.jpg}
+    \caption{Inference Results}
+    \label{fig:Inference Results}
+\end{figure}
 
 \section{Pengujian Berdasarkan FPS}
 \label{sec:pengujianberdasarkanfps}
+Pengujian ini dilakukan dengan menggunakan laptop MSI GF63 yang memiliki spesifikasi seperti yang tertera pada Tabel \ref{tab:spesifikasilaptop}. Laptop ini digunakan sebagai unit kontrol untuk menjalankan program dan mengirimkan instruksi ke unit eksekusi.
 
-Pengujian ini dilakukan untuk menganalisis kecepatan pemrosesan sistem dalam satuan Frame per Second (FPS). FPS yang tinggi menunjukkan bahwa sistem dapat bekerja dengan baik secara real-time. Grafik hasil pengujian disertakan untuk memudahkan visualisasi performa.
+\begin{table}[H]
+    \centering
+    \caption{Spesifikasi Laptop MSI GF63 untuk Unit Kontrol}
+    \label{tab:spesifikasilaptop}
+    \begin{tabular}{|l|l|}
+        \hline
+        \rowcolor[HTML]{C0C0C0}
+        \textbf{Komponen} & \textbf{Spesifikasi}  \\
+        \hline
+        Model Laptop            & MSI GF63                                 \\ \hline
+        Prosesor                & Intel Core i7-10750H, 6 core, 12 threads \\ \hline
+        GPU                     & NVIDIA RTX 3050                          \\ \hline
+        RAM                     & 16GB DDR4, 3200 MHz                      \\ \hline
+    \end{tabular}
+\end{table}
 
-\section{Pengujian Berdasarkan Response Time}
-\label{sec:pengujianberdasarkanresponsetime}
+Output yang dihasilkan setiap kali sistem memproses frame diperoleh dari verbose yang mencatat detail penting, seperti resolusi frame, jumlah objek yang terdeteksi, dan waktu pemrosesan dalam milidetik untuk setiap frame. Dalam pengujian ini, hanya 30 data pertama yang diambil dari hasil verbose tersebut untuk dianalisis lebih lanjut guna mengevaluasi konsistensi dan performa sistem dalam mendeteksi objek secara real-time.
 
-Bagian ini mengukur waktu yang dibutuhkan sistem untuk merespons setiap perubahan lingkungan atau perintah yang diterima. Response Time sangat penting untuk mengukur responsivitas sistem dalam skenario dinamis.
+\begin{lstlisting}[language=c]
+0: 480x640 1 person, 16.0ms
+0: 480x640 1 person, 23.5ms
+0: 480x640 1 person, 36.0ms
+0: 480x640 1 person, 18.0ms
+0: 480x640 1 person, 17.5ms
+\end{lstlisting}
 
+Dari grafik \ref{fig:fps_trend}, terlihat bahwa sistem mampu mencapai FPS tertinggi sebesar 62,5 dan FPS terendah sebesar 23,81. Fluktuasi ini disebabkan oleh variasi waktu pemrosesan (dalam milidetik) untuk setiap frame, yang dipengaruhi oleh kondisi lingkungan, kompleksitas objek yang terdeteksi, dan performa perangkat keras yang digunakan.
+Hasil ini menunjukkan bahwa sistem secara konsisten dapat memproses frame dengan rata-rata FPS di atas 40. Kestabilan nilai pada laptop menandakan bahwa performa sistem yang dijalankan pada laptop berjalan dengan sangat baik dan efisien.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.6\textwidth]{gambar/tex/fps.pdf}
+    \caption{FPS Trend}
+    \label{fig:fps_trend}
+\end{figure}
+
+\newpage
+\section{Pengujian Berdasarkan Regulator Time}
+\label{sec:pengujianberdasarkanregulatorsetime}
+
+Bagian ini mengukur waktu yang dibutuhkan sistem untuk meregulasi setiap perubahan lingkungan atau perintah yang diterima.
+Output yang dihasilkan setiap kali pengiriman data berisi Arah dan time stamp pada Ardruino IDE dan Visual Studio code. Berikut merupakan contoh data mentah untuk kedua hasil output: 
+\begin{lstlisting}[language=c]
+22:18:32.273 -> Stop
+22:18:32.948 -> Arah : E
+22:18:33.131 -> Kanan
+22:18:33.759 -> Arah : C
+22:18:33.936 -> Stop
+22:18:34.748 -> Arah : B
+22:18:35.121 -> Maju
+22:18:35.439 -> Arah : C
+22:18:35.815 -> Stop
+22:18:36.410 -> Arah : E
+22:18:36.616 -> Kanan
+\end{lstlisting}
+
+
+Output yang didapatkan pada ardruino berisikan Timestamp. Timestamp yang dihasilkan yaitu \emph{Timestamp Receive ESP} dan \emph{Timestamp Receive Motor}. Selain pada ardruino pada vscode juga didapatkan nilai time stamp \emph{sent}, contoh outputnya dapat dilihat sebagai berikut.
+
+\begin{lstlisting}[language=python]
+BELOK KANAN,0.8,2024-05-08 22:18:14.263
+MAJU,0.4,2024-05-08 22:18:18.762
+BELOK KANAN,0.0,2024-05-08 22:18:28.614
+MAJU,0.0,2024-05-08 22:18:30.940
+BELOK KANAN,1.2,2024-05-08 22:18:32.899
+MAJU,0.8,2024-05-08 22:18:34.728
+BELOK KANAN,0.0,2024-05-08 22:18:36.392
+\end{lstlisting}
+
+Data yang dihasilkan selama pengujian kemudian diolah dan divisualisasikan dalam bentuk plot untuk mempermudah analisis. Plot ini menunjukkan distribusi waktu yang dibutuhkan oleh sistem untuk merespons setiap perintah yang diterima.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.6\textwidth]{gambar/tex/plot.pdf}
+    \caption{Regulator Time Plot}
+    \label{fig:regulator_time_plot}
+\end{figure}
+
+Plot menunjukkan bahwa sekitar 66,17\% dari seluruh pengujian mampu merespons dengan cepat, berada dalam waktu yang relatif singkat.
+Persentase ini menunjukkan performa sistem yang cukup baik dalam hal kecepatan respons terhadap perubahan lingkungan atau perintah. Namun, sisa 34\% data yang berada di atas 0,5 detik menunjukkan adanya variasi atau potensi keterlambatan.
+% Distribusi ini dapat menjadi indikator yang baik untuk mengevaluasi stabilitas dan konsistensi sistem dalam pengujian lebih lanjut.
+
+\newpage
 \section{Pengujian Keberhasilan Tracking}
 \label{sec:pengujiankeberhasiltracking}
 
-Bagian ini mengevaluasi keberhasilan sistem dalam melakukan tracking terhadap objek target. Tingkat keberhasilan dianalisis untuk mengetahui keandalan sistem dalam berbagai skenario.
+Bagian ini mengevaluasi keberhasilan sistem dalam melakukan tracking terhadap objek target. Pengujian ini dilakukan dengan 15 kali percobaan untuk mengukur keandalan sistem dalam menjaga deteksi terhadap objek target secara konsisten. Tingkat keberhasilan diukur berdasarkan keberhasilan sistem dalam mengunci deteksi objek target (Locked Detection) atau kehilangan fokus pada objek target (Distracted Detection).
+
+Tabel \ref{tab:tracking_success} menunjukkan data keberhasilan tracking selama pengujian. Data ini mencakup hasil tracking pada setiap percobaan, yang divisualisasikan dalam bentuk tabel dengan kode warna. Warna hijau menunjukkan bahwa sistem berhasil mengunci deteksi objek, sedangkan warna merah menunjukkan bahwa sistem gagal mengunci deteksi objek. Data ini memberikan gambaran kinerja sistem dalam mengikuti objek target, termasuk kecepatan respons, akurasi deteksi, dan ketepatan instruksi yang dikirimkan.
+
+\begin{table}[H]
+    \centering
+    \caption{Data Tracking Success}
+    \label{tab:tracking_success}
+    \begin{tabular}{|c|c|}
+        \hline 
+        \cellcolor[HTML]{C0C0C0}Trial & \cellcolor[HTML]{C0C0C0}Result \\ \hline
+        1 & \cellcolor[HTML]{7cFF7c}Locked Detection \\ \hline
+        2 & \cellcolor[HTML]{7cFF7c}Locked Detection \\ \hline
+        3 & \cellcolor[HTML]{FF7c7c}Distracted Detection \\ \hline
+        4 & \cellcolor[HTML]{FF7c7c}Distracted Detection \\ \hline
+        5 & \cellcolor[HTML]{FF7c7c}Distracted Detection \\ \hline
+        6 & \cellcolor[HTML]{FF7c7c}Distracted Detection \\ \hline
+        7 & \cellcolor[HTML]{7cFF7c}Locked Detection \\ \hline
+        8 & \cellcolor[HTML]{7cFF7c}Locked Detection \\ \hline
+        9 & \cellcolor[HTML]{FF7c7c}Distracted Detection \\ \hline 
+        10 & \cellcolor[HTML]{FF7c7c}Distracted Detection \\ \hline
+        11 & \cellcolor[HTML]{FF7c7c}Distracted Detection \\ \hline
+        12 & \cellcolor[HTML]{FF7c7c}Distracted Detection \\ \hline
+        13 & \cellcolor[HTML]{FF7c7c}Distracted Detection \\ \hline
+        14 & \cellcolor[HTML]{FF7c7c}Distracted Detection \\ \hline
+        15 & \cellcolor[HTML]{FF7c7c}Distracted Detection \\ \hline
+    \end{tabular}
+\end{table}
+
+Kemampuan BotSORT pada YOLO dalam melakukan tracking objek manusia terlihat dari 15 kali percobaan. Sistem berhasil mengunci deteksi objek sebanyak 4 kali, sedangkan 11 kali gagal mengunci deteksi objek secara akumulasi. Hasil ini menunjukkan bahwa sistem mampu melakukan tracking objek dengan tingkat keberhasilan sebesar 26,67\%. Namun, terdapat 73,33\% kegagalan dalam mengunci deteksi objek, yang menunjukkan adanya kekurangan dalam sistem.
+
+Hasil ini menunjukkan bahwa sistem masih memiliki keterbatasan dalam menjaga stabilitas pelacakan terhadap objek target secara konsisten. Ketidakkonsistenan dalam pelacakan objek sering kali menyebabkan sistem kehilangan fokus pada target dan menghasilkan nomor ID baru untuk setiap deteksi ulang. Namun, meskipun terjadi kegagalan pelacakan, penggunaan ID terkecil memungkinkan identifikasi objek tetap dilakukan dengan tingkat akurasi yang memadai. Pendekatan ini membantu proses pengujian tetap berjalan dengan acuan identitas objek yang konsisten meskipun terdapat keterbatasan dalam menjaga kesinambungan pelacakan.
+
+\begin{figure}[H]
+    \centering
+  
+    % Ubah dengan nama file gambar dan ukuran yang akan digunakan
+    \includegraphics[scale=0.4]{gambar/Track.png}
+
+    \caption{Tracking Numeral}
+    \label{fig:tracking_numeral}
+\end{figure}
+
+Gambar \ref{fig:tracking_numeral} menunjukkan peningkatan nomor track yang terus bertambah. Hal ini disebabkan oleh performa yang kurang optimal dari fungsi \texttt{model.track()} pada YOLO. Ketidakmampuan model untuk secara konsisten melacak objek menyebabkan nomor track baru dibuat setiap kali objek gagal terdeteksi, sehingga menghasilkan peningkatan jumlah track yang tidak diinginkan. 
+Akan tetapi penguncian ini masih bisa digunakan walau tidak seperti satu id tiap object dan masih bisa digunakan dengan id terkecil sebagai penguncian. Hal ini menunjukkan bahwa meskipun sistem tidak selalu memberikan ID yang konsisten untuk setiap objek, ID terkecil yang diberikan dapat digunakan sebagai referensi untuk penguncian objek. Dengan demikian, sistem masih dapat melacak objek dengan tingkat keberhasilan tertentu meskipun terdapat beberapa kekurangan dalam konsistensi ID.
+
 
 \section{Pengujian Tingkat Pencahayaan}
 \label{sec:pengujiantingkatpencahayaan}
 
 Pengujian dilakukan untuk mengukur kemampuan sistem dalam mendeteksi objek pada berbagai tingkat pencahayaan. Fokus pengujian ini adalah memastikan bahwa sistem dapat berfungsi dengan baik dalam kondisi pencahayaan yang berbeda.
+
+\begin{table}[H]
+    \centering
+    \caption{Lighting Level Evaluation}
+    \label{tab:lighting_level_evaluation}
+    \begin{tabular}{|c|c|c|c|c|c|}
+        \hline 
+        \rowcolor[HTML]{C0C0C0} 
+        \multicolumn{1}{|c|}{\cellcolor[HTML]{C0C0C0}}& \multicolumn{3}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{Lux}} & \multicolumn{2}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{Conf.}}  \\ \cline{2-6} 
+        \rowcolor[HTML]{C0C0C0} 
+        \multicolumn{1}{|c|}{\multirow{-2}{*}{\cellcolor[HTML]{C0C0C0}\textbf{Time of Day}}} & \multicolumn{1}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{Min}} & \multicolumn{1}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{Avg}} & \multicolumn{1}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{Max}} & \multicolumn{1}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{YOLO}} & \multicolumn{1}{c|}{\cellcolor[HTML]{C0C0C0}\textbf{MP}} \\ \hline
+        \cellcolor[HTML]{C0C0C0} \textbf{Morning} & 100 & 300 & 500 & 0.73 & 0.71 \\ \hline
+        \cellcolor[HTML]{C0C0C0} \textbf{Afternoon} & 2622 & 3753 & 5574 & 0.82 & 0.76 \\ \hline
+        \cellcolor[HTML]{C0C0C0} \textbf{Evening} & 50 & 200 & 400 & 0.75 & 0.70 \\ \hline
+        \cellcolor[HTML]{C0C0C0} \textbf{Night} & 26 & 215 & 538 & 0.60 & 0.56 \\ \hline
+    \end{tabular}
+\end{table}
+
+Tabel \ref{tab:lighting_level_evaluation} menunjukkan data tingkat pencahayaan yang diukur pada berbagai waktu sepanjang hari. Data ini mencakup tingkat pencahayaan minimum, rata-rata, dan maksimum yang diukur dalam lux, serta tingkat kepercayaan deteksi yang dihasilkan oleh YOLOv11 dan MediaPipe Pose. Data ini memberikan gambaran kinerja sistem dalam berbagai kondisi pencahayaan, termasuk akurasi deteksi, kecepatan respons, dan ketepatan instruksi yang dikirimkan.
 
 \newpage
 \section{Pengujian Kesesuaian Jarak Deteksi}
@@ -371,7 +554,7 @@ Tabel \ref{tab:right_turn_data_transmission_detection} merangkum data transmisi 
 \subsection{Percobaan Luar Frame}
 \label{subsec:percobaanluarframe}
 
-Bagian ini membahas kemampuan sistem dalam menghadapi kondisi ketika objek keluar dari bidang pandang kamera (luar frame). Tantangan yang muncul adalah hilangnya data visual tentang posisi dan gerakan objek, sehingga sistem harus mampu memprediksi posisi berikutnya atau melakukan penyesuaian strategi pencarian. Solusi yang digunakan mencakup pengintegrasian algoritma prediksi lintasan serta inisialisasi ulang posisi, yang membantu sistem untuk kembali melacak objek setelah objek kembali ke dalam frame.
+Bagian ini membahas kemampuan sistem dalam menghadapi kondisi ketika objek keluar dari bidang pandang kamera (luar frame). Tantangan yang muncul adalah hilangnya data visual tentang posisi dan gerakan objek, sehingga sistem harus mampu memprediksi posisi berikutnya atau melakukan penyesuaian strategi pencarian dengan mengintegrasikan algoritma prediksi lintasan serta inisialisasi ulang posisi yang membantu sistem untuk kembali melacak objek setelah objek kembali ke dalam frame.
 
 \begin{table}[H]
     \centering
@@ -419,49 +602,87 @@ Beberapa data telah difilter untuk menampilkan data yang menunjukkan sistem beke
 \section{Performa Keberhasilan Mengikuti}
 \label{sec:performamengikuti}
 
-Bagian ini menguji apakah sistem dapat mengikuti objek pada lajur khusus, seperti jalur sempit atau berbelok yang membutuhkan manuver khusus.
+Bagian ini menguji apakah sistem dapat mengikuti objek pada jalur khusus, seperti koridor, area dalam ruangan yang luas, dan jalur landai di sekitar Tower 2 di ITS. Gambar \ref{fig:doc_jalur} merupakan contoh foto sampel yang akan digunakan.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{gambar/sc_all.png}
+    \caption{Dokumentasi Jalur}
+    \label{fig:doc_jalur}
+\end{figure}
+
+Pada pengujian ini hasil pengamatan kemudian dirangkum dalam bentuk visual untuk menunjukkan tingkat keberhasilan sistem secara keseluruhan.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \pie[color={green},text=inside, radius=2]{
+            100/Sukses
+        }
+    \end{tikzpicture}
+    \caption{Pie Chart Performa Keberhasilan Sistem}
+    \label{fig:piechart}
+\end{figure}
+
+Hasil pengujian menunjukkan bahwa sistem mampu mengikuti objek dengan baik di seluruh kondisi jalur yang diuji. Visualisasi dalam bentuk pie chart pada Gambar \ref{fig:piechart} mengonfirmasi tingkat keberhasilan sistem mencapai 100\%. Hal ini mencerminkan bahwa sistem memiliki performa yang stabil dan dapat diandalkan untuk beroperasi pada berbagai jenis lingkungan yang telah disimulasikan selama pengujian. Keberhasilan ini menegaskan efektivitas sistem dalam memenuhi tujuan pengembangan untuk mengikuti objek dengan konsisten.
 
 \section{Pembahasan Hasil}
 \label{sec:pembahasanhasil}
 
-Bagian ini membahas hasil-hasil pengujian secara keseluruhan dan memberikan insight mengenai performa sistem.
+Pada bagian ini, akan dibahas hasil pengujian yang telah dilakukan terhadap sistem kursi roda otonom berbasis teknik fusi gabungan YOLOv11 dan MediaPipe Pose untuk mendeteksi dan mengikuti manusia. Sistem ini dirancang untuk memanfaatkan kekuatan YOLOv11 dalam mendeteksi objek dengan presisi tinggi serta MediaPipe Pose untuk melacak posisi tubuh manusia secara real-time.
 
 \subsection{Performa Deteksi Objek}
 \label{sec:performadeteksiobjek}
 
-Bagian ini menjelaskan kekuatan dan kelemahan deteksi objek yang ditemukan selama pengujian.
+Berdasarkan hasil pengujian performa model menggunakan confusion matrix, terlihat bah- wa model YOLOv11 mampu mendeteksi objek manusia dengan tingkat akurasi yang baik. Pada pelatihan dengan 100 epoch, model memiliki box loss sebesar 0.82978 pada tahap training dan 1.199 pada tahap validasi. Skor mAP (mean Average Precision) pada threshold 0.5 mencapai 81.85\%, menunjukkan kemampuan model untuk mendeteksi objek dengan ketepatan yang tinggi.
+
+Visualisasi hasil training dengan confusion matrix menunjukkan bahwa dari 4359 data train dan 1023 data validasi, model berhasil mendeteksi 1806 citra sebagai true positive dan 483 citra sebagai false positive. Pengujian ini mengindikasikan bahwa model cukup efektif dalam mendeteksi manusia, meskipun masih terdapat beberapa kesalahan deteksi.
 
 \subsection{Kecepatan Pemrosesan (FPS)}
 \label{sec:kecepatanpemrosesan}
 
-Menganalisis kecepatan pemrosesan secara keseluruhan dan pengaruhnya terhadap performa sistem real-time.
+Pengujian kecepatan pemrosesan (FPS) dilakukan pada perangkat laptop sebagai unit komputasi menghasilkan data bahwa sistem mampu memproses frame secara real-time dengan mencatat resolusi frame, jumlah objek yang terdeteksi, dan waktu pemrosesan per frame. Dalam pengujian, sistem mencapai FPS tertinggi sebesar 62,5, dengan rata-rata FPS sekitar 40. Fluktuasi FPS dipengaruhi oleh kondisi lingkungan, kompleksitas objek, dan intensitas perhitungan.
 
-\subsection{Response Time}
-\label{sec:responsetime}
+\subsection{Regulator Time}
+\label{sec:regulatortime}
 
-Membahas hasil pengujian response time dan faktor-faktor yang mempengaruhi waktu respons.
+Pengujian ini mengukur waktu yang dibutuhkan sistem untuk meregulasi kode isntruksi sesuai dengan perubahan lingkungan, dengan mencatat data arah dan timestamp menggunakan Arduino IDE dan Visual Studio Code. Data yang dihasilkan, berupa Timestamp Receive ESP dan Timestamp Receive Motor, diolah menjadi plot distribusi waktu respons. Hasil pengujian menunjukkan bahwa 66,17\% respons berada dalam waktu yang relatif singkat, sedangkan 34\% lainnya melebihi 0,5 detik, menunjukkan adanya variasi kecil akibat kondisi lingkungan atau performa sistem.
 
 \subsection{Keberhasilan Tracking}
 \label{sec:performatracking}
 
-Membahas tingkat keberhasilan sistem dalam melacak objek dan kondisi yang mempengaruhi performa.
+Pengujian ini mengevaluasi keberhasilan sistem dalam melacak target menggunakan BotSORT dan YOLO pada 15 kali percobaan. Sistem berhasil mengunci target (Locked Detection) sebanyak 4 kali, sementara 11 kali terjadi kehilangan fokus (Distracted Detection), menghasilkan tingkat keberhasilan sebesar 26,67\%. Ketidakkonsistenan dalam pelacakan terlihat dari peningkatan nomor track pada setiap objek yang terdeteksi, yang disebabkan oleh kurang optimalnya fungsi \text{track()}. Ketidakmampuan model untuk menjaga identitas ID secara konsisten juga menjadi faktor yang mengurangi akurasi pelacakan secara keseluruhan.
+
+Meskipun demikian, ID yang terdeteksi tetap dapat dimanfaatkan sebagai referensi untuk verifikasi lebih lanjut atau sebagai dasar analisis data. Hal ini memungkinkan sistem untuk tetap memberikan nilai praktis, seperti mendukung identifikasi pola pergerakan atau pengambilan keputusan berbasis data di lingkungan tertentu. Hasil ini menunjukkan bahwa meskipun sistem masih memerlukan peningkatan dalam hal kestabilan pelacakan, termasuk akurasi deteksi, kecepatan respons, dan pengelolaan ID objek, sistem tetap dapat digunakan untuk aplikasi lapangan yang relevan dan memberikan manfaat signifikan.
 
 \subsection{Kesesuaian Tingkat Pencahayaan}
 \label{sec:kesesuaianpencahayaan}
 
-Membahas tingkat keberhasilan sistem dalam melacak objek pada kondisi pencahayaan yang berbeda.
+Pengujian ini mengevaluasi kemampuan sistem dalam mendeteksi objek pada kondisi pencahayaan yang berbeda, sistem menunjukkan kinerja terbaik pada siang hari ketika tingkat pencahayaan berada pada kondisi optimal, menghasilkan nilai kepercayaan yang lebih tinggi. Sebaliknya, kinerja sistem cenderung menurun pada malam hari akibat kurangnya pencahayaan, yang menyebabkan penurunan nilai kepercayaan pada deteksi objek.
+
+Namun, penggunaan pencahayaan tambahan, seperti senter atau lampu, tidak direkomendasikan karena dapat menyebabkan overexposure pada gambar. Kondisi ini dapat mengurangi akurasi deteksi sistem secara keseluruhan. Oleh karena itu, untuk mencapai performa optimal, penting untuk memastikan bahwa tingkat pencahayaan lingkungan berada dalam rentang yang sesuai tanpa menggunakan pencahayaan buatan yang berlebihan. Hasil pengujian ini menegaskan pentingnya faktor pencahayaan dalam mendukung akurasi sistem deteksi real-time.
 
 \subsection{Kesesuaian Jarak Deteksi}
 \label{sec:kesesuaianjarak}
 
-Diskusi tentang performa sistem dalam mendeteksi objek pada berbagai jarak yang telah diuji.
+Pengujian menunjukkan bahwa sistem mampu mendeteksi objek dengan jarak kurang dari 1 (satu) meter secara konsisten. Deteksi dilakukan menggunakan YOLOv11 dan MediaPipe Pose, dengan hasil berupa kode instruksi untuk menghentikan sistem ("Stop") guna mencegah tabrakan. Data mencakup waktu respons, jarak deteksi, dan ketepatan instruksi yang dikirimkan, menunjukkan bahwa sistem bekerja sesuai dengan parameter yang ditentukan. Verifikasi tambahan dilakukan dengan pengukuran manual dan perbandingan dengan alat ukur untuk memastikan akurasi deteksi.
 
 \subsection{Performa Pergerakan Mengikuti Objek}
 \label{sec:akurasiikutiobjek}
 
-Evaluasi akurasi dalam mengikuti objek target, termasuk kondisi yang dapat menyebabkan kegagalan.
+Evaluasi dilakukan untuk menilai kemampuan sistem dalam mendeteksi objek secara akurat, mengirimkan instruksi yang sesuai, serta menjaga konsistensi kinerja di berbagai kondisi dinamis. Hasil pengujian menunjukkan bahwa:
+
+\begin{itemize}
+    \item Pada pengujian dalam frame, sistem mencatat sebagian besar data terkirim sebagai register ‘C’ dengan persentase sebesar 55.4\%, sementara kesalahan transmisi hanya sebesar 6.3\%.
+    \item Pada kondisi bergerak maju, instruksi ‘Forward’ terkirim dengan persentase kesalahan transmisi yang sangat kecil, yaitu hanya 1.5\%.
+    \item Pada kondisi belok kiri, sistem mencatat data terkirim sebagai register ‘C’ sebesar 10.5\%, dengan kesalahan transmisi sebesar 2.0\%.
+    \item Pada kondisi belok kanan, sistem mencatat data terkirim sebagai register ‘C’ sebesar 6.7\%, dengan kesalahan transmisi sebesar 1.5\%.
+    \item Saat objek keluar dari frame, sistem mencatat sebagian besar data dengan nilai deteksi nol, dan prioritas diberikan untuk mengirimkan instruksi "Stop".
+\end{itemize}
+
+Hasil pengujian menunjukkan bahwa sistem memiliki performa yang sangat baik dalam mendeteksi dan mengikuti objek di berbagai skenario, baik saat dalam frame, bergerak maju, maupun berbelok. Sistem mampu menunjukkan stabilitas tinggi dalam transmisi data dan respons yang sesuai terhadap deteksi. Meski demikian, diperlukan perbaikan lebih lanjut dalam menangani kondisi luar frame, terutama untuk mencegah pengiriman instruksi yang tidak relevan atau tidak aman. Dengan pengoptimalan tersebut, sistem akan semakin andal dan aman untuk diterapkan pada berbagai kondisi operasional.
 
 \subsection{Performa Keberhasilan Mengikuti}
 \label{sec:keberhasilanmengikuti}
 
-Menguraikan keberhasilan sistem dalam mengikuti objek saat menghadapi belokan dan lajur khusus.
+Hasil pengujian menunjukkan bahwa sistem mampu mengikuti objek dengan baik di seluruh kondisi jalur yang diuji, termasuk koridor, area dalam ruangan, dan jalur landai, dengan tingkat keberhasilan mencapai 100\%. Keberhasilan ini menunjukkan efektivitas sistem dalam memenuhi tujuan pengembangan untuk mengikuti objek secara akurat dan stabil, memberikan dasar yang kuat untuk implementasi lebih lanjut pada aplikasi nyata.

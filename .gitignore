@@ -1,4 +1,5 @@
 log_belokan.csv
+*.avi
 *.pt
 
 ## Core latex/pdflatex auxiliary files:
@@ -289,3 +290,4 @@ TSWLatexianTemp*
 program/test.py
 morning_data.csv
 dataset_updated_logic_filtered.csv
+
