@@ -555,7 +555,6 @@ Tabel \ref{tab:right_turn_data_transmission_detection} merangkum data transmisi 
 \label{subsec:percobaanluarframe}
 
 Bagian ini membahas kemampuan sistem dalam menghadapi kondisi ketika objek keluar dari bidang pandang kamera (luar frame). Tantangan yang muncul adalah hilangnya data visual tentang posisi dan gerakan objek, sehingga sistem harus mampu memprediksi posisi berikutnya atau melakukan penyesuaian strategi pencarian dengan mengintegrasikan algoritma prediksi lintasan serta inisialisasi ulang posisi yang membantu sistem untuk kembali melacak objek setelah objek kembali ke dalam frame.
-
 \begin{table}[H]
     \centering
     \caption{Data Status Frame (Luar Frame)}
@@ -595,21 +594,30 @@ Bagian ini membahas kemampuan sistem dalam menghadapi kondisi ketika objek kelua
     13:01:19 & 0.2638 & 0.0 & 0.0 & 0 & b'C\textbackslash n' & b'C\textbackslash n' & Stop \\ \hline
     \end{tabular}
 \end{table}
-Tabel \ref{tab:status_luar_frame} menunjukkan data status sistem saat objek berada di luar frame. Data ini memperlihatkan saat nilai dari deteksi objek keduanya adalah 0 dan keterangan mengenai status objek. Data ini memberikan gambaran kinerja sistem dalam menghadapi kondisi ketika objek keluar dari bidang pandang kamera, termasuk kecepatan respons, akurasi deteksi, dan ketepatan instruksi yang dikirimkan.
-
-Beberapa data telah difilter untuk menampilkan data yang menunjukkan sistem bekerja dengan sempurna ketika tidak ada objek yang terdeteksi dan mengirimkan kode instruksi sebelumnya tanpa penundaan yang lama ke mesin. Namun, ada masalah serius di mana sistem terus-menerus mengirimkan kode instruksi maju tanpa jaminan bahwa objek akan terdeteksi untuk mengubah kode instruksi ke mesin. Hal ini dapat menyebabkan potensi risiko keselamatan dan ketidakefisienan dalam operasi sistem.
+Tabel \ref{tab:status_luar_frame} menunjukkan data status sistem saat objek berada di luar frame. Data ini memperlihatkan saat nilai dari deteksi objek keduanya adalah 0 dan keterangan mengenai status objek. Data ini memberikan gambaran kinerja sistem dalam menghadapi kondisi ketika objek keluar dari bidang pandang kamera.
 
 \section{Performa Keberhasilan Mengikuti}
 \label{sec:performamengikuti}
 
-Bagian ini menguji apakah sistem dapat mengikuti objek pada jalur khusus, seperti koridor, area dalam ruangan yang luas, dan jalur landai di sekitar Tower 2 di ITS. Gambar \ref{fig:doc_jalur} merupakan contoh foto sampel yang akan digunakan.
+Bagian ini menguji apakah sistem dapat mengikuti objek pada jalur khusus, seperti koridor, area dalam ruangan yang luas, dan jalur landai di sebuah bangunan. Gambar \ref{fig:rute} menunjukkan desain jalur yang disesuaikan untuk akses kursi roda di daerah Tower 2 ITS, mencakup area menuju dan di sekitar lift. Jalur ini memiliki dimensi yang terukur dengan lebar yang cukup untuk manuver kursi roda, termasuk tikungan, ruang untuk berhenti, dan pendekatan ke pintu lift. Jalur dirancang dengan mempertimbangkan radius belok, jarak aman, serta aksesibilitas ke berbagai titik penting seperti lobby dan lift, yang dilengkapi dengan tanda arah yang jelas. Akses ini memastikan kursi roda dapat bergerak dengan nyaman dan aman di seluruh area, termasuk transisi antar ruangan.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{gambar/rute.png}
+    \caption{Desain Jalur}
+    \label{fig:rute}
+\end{figure}
+
+Pada gambar \ref{fig:doc_jalur} menunjukkan keberhasilan pengujian kursi roda otonom yang mengikuti pengguna secara real-time. Gambar pertama memperlihatkan kursi roda dengan perangkat elektronik terpasang untuk mendukung fitur otonom, siap untuk diuji. Gambar kedua menunjukkan kursi roda berhasil mengikuti pengguna hingga ke depan lift, menandakan sistem deteksi dan navigasi bekerja dengan baik di lingkungan dalam ruangan. Gambar ketiga mengilustrasikan kursi roda mampu mengikuti pengguna di luar ruangan, termasuk melewati area berbatu dan taman, menunjukkan kemampuan sistem untuk beradaptasi dengan medan yang beragam. Keberhasilan ini mencerminkan integrasi teknologi yang efektif antara perangkat keras dan perangkat lunak.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{gambar/sc_all.png}
     \caption{Dokumentasi Jalur}
-    \label{fig:doc_jalur}
+    \label{fig:doc_jalur}   
 \end{figure}
+
+
 
 Pada pengujian ini hasil pengamatan kemudian dirangkum dalam bentuk visual untuk menunjukkan tingkat keberhasilan sistem secara keseluruhan.
 
@@ -665,7 +673,7 @@ Namun, penggunaan pencahayaan tambahan, seperti senter atau lampu, tidak direkom
 \subsection{Kesesuaian Jarak Deteksi}
 \label{sec:kesesuaianjarak}
 
-Pengujian menunjukkan bahwa sistem mampu mendeteksi objek dengan jarak kurang dari 1 (satu) meter secara konsisten. Deteksi dilakukan menggunakan YOLOv11 dan MediaPipe Pose, dengan hasil berupa kode instruksi untuk menghentikan sistem ("Stop") guna mencegah tabrakan. Data mencakup waktu respons, jarak deteksi, dan ketepatan instruksi yang dikirimkan, menunjukkan bahwa sistem bekerja sesuai dengan parameter yang ditentukan. Verifikasi tambahan dilakukan dengan pengukuran manual dan perbandingan dengan alat ukur untuk memastikan akurasi deteksi.
+Pengujian menunjukkan bahwa sistem mampu mendeteksi objek dengan jarak kurang dari 1 (satu) meter secara konsisten. Deteksi dilakukan menggunakan YOLOv11 dan MediaPipe Pose, dengan hasil berupa kode instruksi untuk menghentikan sistem ("Stop") guna mencegah tabrakan. Verifikasi tambahan dilakukan dengan pengukuran dan perbandingan dengan alat ukur untuk memastikan akurasi deteksi.
 
 \subsection{Performa Pergerakan Mengikuti Objek}
 \label{sec:akurasiikutiobjek}
